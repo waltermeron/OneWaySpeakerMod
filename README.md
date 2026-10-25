@@ -1,6 +1,7 @@
 # 老菊の音箱 Mod v1.3.0
 
-适配再再启程 / One Way Tickets 0.8.0.3，以及我另一个仓库的自制 DPS Mod v1.1.2。解压zip文件 覆盖到根目录，可直接启动。
+适配再再启程 / One Way Tickets 0.8.0.3，以及我另一个仓库的自制 DPS Mod v1.1.2。https://github.com/waltermeron/OneWayTickets-DPS-Mod
+解压zip文件 覆盖到根目录，可直接启动。
 
 ## v1.3.0 音乐渐变
 
