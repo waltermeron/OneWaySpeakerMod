@@ -1,0 +1,285 @@
+TYPE World.Helpers.Audio_Helper : System.Object
+METHOD System.Void World.Helpers.Audio_Helper::play_car_run_se()
+IL_0000: call !0 Foundations.Singleton`1<Foundations.Mission>::get_instance()
+IL_0005: ldstr "CaravanMgr"
+IL_000a: ldloca.s V_0
+IL_000c: callvirt System.Boolean Foundations.Mission::try_get_mgr<World.Caravans.CaravanMgr>(System.String,!!0&)
+IL_0011: pop
+IL_0012: ldloc.0
+IL_0013: ldfld World.Caravans.Caravan World.Caravans.CaravanMgr::cell
+IL_0018: ldfld AutoCodes.caravan_body World.Caravans.Caravan::_desc
+IL_001d: ldfld System.String AutoCodes.caravan_body::se_drive
+IL_0022: stloc.1
+IL_0023: ldloc.1
+IL_0024: brtrue IL_003a
+IL_0029: ldstr "未找到车量行驶音效："
+IL_002e: ldloc.1
+IL_002f: call System.String System.String::Concat(System.String,System.String)
+IL_0034: call System.Void UnityEngine.Debug::LogWarning(System.Object)
+IL_0039: ret
+IL_003a: ldloc.1
+IL_003b: ldloca.s V_2
+IL_003d: call System.Boolean Addrs.Addressable_Utility::try_load_asset<UnityEngine.AudioClip>(System.String,!!0&)
+IL_0042: pop
+IL_0043: call !0 Foundations.MonoBehaviourSingleton`1<Commons.AudioSystem>::get_instance()
+IL_0048: ldloc.2
+IL_0049: ldc.i4.1
+IL_004a: callvirt System.Void Commons.AudioSystem::PlayEngine(UnityEngine.AudioClip,System.Boolean)
+IL_004f: ret
+METHOD System.Void World.Helpers.Audio_Helper::stop_car_run_se()
+IL_0000: call !0 Foundations.Singleton`1<Foundations.Mission>::get_instance()
+IL_0005: ldstr "CaravanMgr"
+IL_000a: ldloca.s V_0
+IL_000c: callvirt System.Boolean Foundations.Mission::try_get_mgr<World.Caravans.CaravanMgr>(System.String,!!0&)
+IL_0011: pop
+IL_0012: ldloc.0
+IL_0013: ldfld World.Caravans.Caravan World.Caravans.CaravanMgr::cell
+IL_0018: ldfld AutoCodes.caravan_body World.Caravans.Caravan::_desc
+IL_001d: ldfld System.String AutoCodes.caravan_body::se_drive
+IL_0022: stloc.1
+IL_0023: ldloc.1
+IL_0024: brtrue IL_003a
+IL_0029: ldstr "未找到车量行驶音效："
+IL_002e: ldloc.1
+IL_002f: call System.String System.String::Concat(System.String,System.String)
+IL_0034: call System.Void UnityEngine.Debug::LogWarning(System.Object)
+IL_0039: ret
+IL_003a: call !0 Foundations.MonoBehaviourSingleton`1<Commons.AudioSystem>::get_instance()
+IL_003f: ldnull
+IL_0040: call System.Boolean UnityEngine.Object::op_Equality(UnityEngine.Object,UnityEngine.Object)
+IL_0045: brfalse IL_004b
+IL_004a: ret
+IL_004b: call !0 Foundations.MonoBehaviourSingleton`1<Commons.AudioSystem>::get_instance()
+IL_0050: ldc.i4.2
+IL_0051: ldloc.1
+IL_0052: callvirt System.Void Commons.AudioSystem::StopClip(Commons.SFXType,System.String)
+IL_0057: ret
+METHOD System.Void World.Helpers.Audio_Helper::update_car_run_se_by_carSpeed()
+IL_0000: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_0005: callvirt UnityEngine.Vector2 World.WorldContext::get_camera_velocity()
+IL_000a: ldfld System.Single UnityEngine.Vector2::x
+IL_000f: stloc.0
+IL_0010: call !0 Foundations.MonoBehaviourSingleton`1<Commons.AudioSystem>::get_instance()
+IL_0015: ldloc.0
+IL_0016: callvirt System.Void Commons.AudioSystem::SetCarSpeed(System.Single)
+IL_001b: ret
+METHOD System.Void World.Helpers.Audio_Helper::play_bgm(System.String)
+IL_0000: ldarg.0
+IL_0001: brfalse IL_0016
+IL_0006: ldarg.0
+IL_0007: ldstr ""
+IL_000c: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_0011: brfalse IL_0017
+IL_0016: ret
+IL_0017: ldarg.0
+IL_0018: ldloca.s V_0
+IL_001a: call System.Boolean Addrs.Addressable_Utility::try_load_asset<UnityEngine.AudioClip>(System.String,!!0&)
+IL_001f: pop
+IL_0020: call !0 Foundations.MonoBehaviourSingleton`1<Commons.AudioSystem>::get_instance()
+IL_0025: ldloc.0
+IL_0026: ldc.i4.1
+IL_0027: callvirt System.Void Commons.AudioSystem::PlaySceneBGM(UnityEngine.AudioClip,System.Boolean)
+IL_002c: ret
+METHOD System.Void World.Helpers.Audio_Helper::play_scene_bgm()
+IL_0000: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_0005: ldfld AutoCodes.scene World.WorldContext::r_scene
+IL_000a: stloc.0
+IL_000b: ldstr "{0}"
+IL_0010: ldloc.0
+IL_0011: ldfld System.UInt32 AutoCodes.scene::biome
+IL_0016: box System.UInt32
+IL_001b: call System.String System.String::Format(System.String,System.Object)
+IL_0020: ldloca.s V_1
+IL_0022: call System.Boolean AutoCodes.biomes::TryGetValue(System.String,AutoCodes.biome&)
+IL_0027: pop
+IL_0028: ldloc.1
+IL_0029: ldfld System.String AutoCodes.biome::bgm_default
+IL_002e: stloc.2
+IL_002f: ldloc.2
+IL_0030: brfalse IL_0045
+IL_0035: ldloc.2
+IL_0036: ldstr ""
+IL_003b: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_0040: brfalse IL_0046
+IL_0045: ret
+IL_0046: ldloc.2
+IL_0047: ldloca.s V_3
+IL_0049: call System.Boolean Addrs.Addressable_Utility::try_load_asset<UnityEngine.AudioClip>(System.String,!!0&)
+IL_004e: pop
+IL_004f: call !0 Foundations.MonoBehaviourSingleton`1<Commons.AudioSystem>::get_instance()
+IL_0054: ldloc.3
+IL_0055: ldc.i4.1
+IL_0056: callvirt System.Void Commons.AudioSystem::PlaySceneBGM(UnityEngine.AudioClip,System.Boolean)
+IL_005b: ldstr "========  已加载场景音乐："
+IL_0060: ldloc.2
+IL_0061: ldstr "  ========"
+IL_0066: call System.String System.String::Concat(System.String,System.String,System.String)
+IL_006b: call System.Void UnityEngine.Debug::Log(System.Object)
+IL_0070: ret
+METHOD System.Void World.Helpers.Audio_Helper::play_battle_bgm()
+IL_0000: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_0005: ldfld AutoCodes.scene World.WorldContext::r_scene
+IL_000a: stloc.0
+IL_000b: ldstr "{0}"
+IL_0010: ldloc.0
+IL_0011: ldfld System.UInt32 AutoCodes.scene::biome
+IL_0016: box System.UInt32
+IL_001b: call System.String System.String::Format(System.String,System.Object)
+IL_0020: ldloca.s V_1
+IL_0022: call System.Boolean AutoCodes.biomes::TryGetValue(System.String,AutoCodes.biome&)
+IL_0027: pop
+IL_0028: ldloc.1
+IL_0029: ldfld System.String AutoCodes.biome::bgm_battle_init
+IL_002e: stloc.2
+IL_002f: ldloc.2
+IL_0030: brfalse IL_0045
+IL_0035: ldloc.2
+IL_0036: ldstr ""
+IL_003b: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_0040: brfalse IL_0046
+IL_0045: ret
+IL_0046: ldloc.1
+IL_0047: ldfld System.String AutoCodes.biome::bgm_battle_loop
+IL_004c: stloc.3
+IL_004d: ldloc.3
+IL_004e: brfalse IL_0063
+IL_0053: ldloc.3
+IL_0054: ldstr ""
+IL_0059: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_005e: brfalse IL_0064
+IL_0063: ret
+IL_0064: ldloc.2
+IL_0065: ldloca.s V_4
+IL_0067: call System.Boolean Addrs.Addressable_Utility::try_load_asset<UnityEngine.AudioClip>(System.String,!!0&)
+IL_006c: pop
+IL_006d: ldloc.3
+IL_006e: ldloca.s V_5
+IL_0070: call System.Boolean Addrs.Addressable_Utility::try_load_asset<UnityEngine.AudioClip>(System.String,!!0&)
+IL_0075: pop
+IL_0076: call !0 Foundations.MonoBehaviourSingleton`1<Commons.AudioSystem>::get_instance()
+IL_007b: ldloc.s V_4
+IL_007d: ldloc.s V_5
+IL_007f: ldc.i4.1
+IL_0080: callvirt System.Void Commons.AudioSystem::PlayBattleBGM(UnityEngine.AudioClip,UnityEngine.AudioClip,System.Boolean)
+IL_0085: ldc.i4.5
+IL_0086: newarr System.String
+IL_008b: dup
+IL_008c: ldc.i4.0
+IL_008d: ldstr "========  已加载战斗音乐："
+IL_0092: stelem.ref
+IL_0093: dup
+IL_0094: ldc.i4.1
+IL_0095: ldloc.2
+IL_0096: stelem.ref
+IL_0097: dup
+IL_0098: ldc.i4.2
+IL_0099: ldstr " + "
+IL_009e: stelem.ref
+IL_009f: dup
+IL_00a0: ldc.i4.3
+IL_00a1: ldloc.3
+IL_00a2: stelem.ref
+IL_00a3: dup
+IL_00a4: ldc.i4.4
+IL_00a5: ldstr "  ========"
+IL_00aa: stelem.ref
+IL_00ab: call System.String System.String::Concat(System.String[])
+IL_00b0: call System.Void UnityEngine.Debug::Log(System.Object)
+IL_00b5: ret
+METHOD System.Void World.Helpers.Audio_Helper::play_engine_pitch()
+IL_0000: ldsfld Commons.Config Commons.Config::current
+IL_0005: stloc.0
+IL_0006: call !0 Foundations.MonoBehaviourSingleton`1<Commons.AudioSystem>::get_instance()
+IL_000b: ldc.i4.2
+IL_000c: ldloc.0
+IL_000d: ldfld System.String Commons.Config::se_car_engine
+IL_0012: ldc.i4.1
+IL_0013: callvirt System.Void Commons.AudioSystem::PlayClip(Commons.SFXType,System.String,System.Boolean)
+IL_0018: call System.Void World.Helpers.Audio_Helper::update_engine_pitch()
+IL_001d: ret
+METHOD System.Void World.Helpers.Audio_Helper::update_engine_pitch()
+IL_0000: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_0005: ldfld System.Single World.WorldContext::driving_lever
+IL_000a: stloc.0
+IL_000b: ldsfld Commons.Config Commons.Config::current
+IL_0010: stloc.1
+IL_0011: ldloc.1
+IL_0012: ldfld System.Single Commons.Config::car_pitch_min
+IL_0017: ldloc.1
+IL_0018: ldfld System.Single Commons.Config::car_pitch_max
+IL_001d: stloc.2
+IL_001e: ldloc.1
+IL_001f: ldfld System.Single Commons.Config::car_pitch_lever_min
+IL_0024: stloc.3
+IL_0025: ldloc.1
+IL_0026: ldfld System.Single Commons.Config::car_pitch_lever_max
+IL_002b: stloc.s V_4
+IL_002d: ldloc.2
+IL_002e: ldloc.3
+IL_002f: ldloc.s V_4
+IL_0031: ldloc.0
+IL_0032: call System.Single UnityEngine.Mathf::InverseLerp(System.Single,System.Single,System.Single)
+IL_0037: call System.Single UnityEngine.Mathf::Lerp(System.Single,System.Single,System.Single)
+IL_003c: stloc.s V_5
+IL_003e: call !0 Foundations.MonoBehaviourSingleton`1<Commons.AudioSystem>::get_instance()
+IL_0043: ldc.i4.2
+IL_0044: ldloc.1
+IL_0045: ldfld System.String Commons.Config::se_car_engine
+IL_004a: ldloc.s V_5
+IL_004c: callvirt System.Void Commons.AudioSystem::SetClipPitch(Commons.SFXType,System.String,System.Single)
+IL_0051: ret
+METHOD System.Void World.Helpers.Audio_Helper::stop_engine_pitch()
+IL_0000: call !0 Foundations.MonoBehaviourSingleton`1<Commons.AudioSystem>::get_instance()
+IL_0005: ldnull
+IL_0006: call System.Boolean UnityEngine.Object::op_Equality(UnityEngine.Object,UnityEngine.Object)
+IL_000b: brfalse IL_0011
+IL_0010: ret
+IL_0011: call !0 Foundations.MonoBehaviourSingleton`1<Commons.AudioSystem>::get_instance()
+IL_0016: ldc.i4.2
+IL_0017: ldsfld Commons.Config Commons.Config::current
+IL_001c: ldfld System.String Commons.Config::se_car_engine
+IL_0021: callvirt System.Void Commons.AudioSystem::StopClip(Commons.SFXType,System.String)
+IL_0026: ret
+METHOD System.Void World.Helpers.Audio_Helper::enter_safe_area()
+IL_0000: call !0 Foundations.MonoBehaviourSingleton`1<Commons.AudioSystem>::get_instance()
+IL_0005: ldnull
+IL_0006: call System.Boolean UnityEngine.Object::op_Equality(UnityEngine.Object,UnityEngine.Object)
+IL_000b: brfalse IL_0011
+IL_0010: ret
+IL_0011: call !0 Foundations.MonoBehaviourSingleton`1<Commons.AudioSystem>::get_instance()
+IL_0016: callvirt System.Void Commons.AudioSystem::StopWeatherSFX()
+IL_001b: call !0 Foundations.MonoBehaviourSingleton`1<Commons.AudioSystem>::get_instance()
+IL_0020: callvirt System.Void Commons.AudioSystem::StopAllClip()
+IL_0025: call !0 Foundations.MonoBehaviourSingleton`1<Commons.AudioSystem>::get_instance()
+IL_002a: ldc.r4 0.5
+IL_002f: ldc.r4 0.5
+IL_0034: callvirt System.Void Commons.AudioSystem::FadeSceneBgm(System.Single,System.Single)
+IL_0039: ret
+METHOD System.Void World.Helpers.Audio_Helper::exit_safe_area()
+IL_0000: call !0 Foundations.MonoBehaviourSingleton`1<Commons.AudioSystem>::get_instance()
+IL_0005: ldnull
+IL_0006: call System.Boolean UnityEngine.Object::op_Equality(UnityEngine.Object,UnityEngine.Object)
+IL_000b: brfalse IL_0011
+IL_0010: ret
+IL_0011: call !0 Foundations.MonoBehaviourSingleton`1<Commons.AudioSystem>::get_instance()
+IL_0016: callvirt System.Void Commons.AudioSystem::StopAllClip()
+IL_001b: call !0 Foundations.MonoBehaviourSingleton`1<Commons.AudioSystem>::get_instance()
+IL_0020: ldc.r4 1
+IL_0025: ldc.r4 0.5
+IL_002a: callvirt System.Void Commons.AudioSystem::FadeSceneBgm(System.Single,System.Single)
+IL_002f: ret
+METHOD System.Void World.Helpers.Audio_Helper::StopBgm()
+IL_0000: call !0 Foundations.MonoBehaviourSingleton`1<Commons.AudioSystem>::get_instance()
+IL_0005: ldnull
+IL_0006: call System.Boolean UnityEngine.Object::op_Equality(UnityEngine.Object,UnityEngine.Object)
+IL_000b: brfalse IL_0011
+IL_0010: ret
+IL_0011: call !0 Foundations.MonoBehaviourSingleton`1<Commons.AudioSystem>::get_instance()
+IL_0016: callvirt System.Void Commons.AudioSystem::StopBgm()
+IL_001b: call !0 Foundations.MonoBehaviourSingleton`1<Commons.AudioSystem>::get_instance()
+IL_0020: callvirt System.Void Commons.AudioSystem::StopWeatherSFX()
+IL_0025: ret
+METHOD System.Void World.Helpers.Audio_Helper::.ctor()
+IL_0000: ldarg.0
+IL_0001: call System.Void System.Object::.ctor()
+IL_0006: ret

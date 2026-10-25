@@ -1,0 +1,240 @@
+TYPE World.WorldRawImage : UnityEngine.MonoBehaviour
+FIELD UnityEngine.UI.RawImage World.WorldRawImage::rawImage
+FIELD System.Int32 World.WorldRawImage::width
+FIELD System.Int32 World.WorldRawImage::height
+FIELD System.Int32 World.WorldRawImage::depth
+FIELD UnityEngine.RenderTextureFormat World.WorldRawImage::format
+FIELD System.Boolean World.WorldRawImage::bind_every_frame
+FIELD System.Boolean World.WorldRawImage::auto_toggle_camera
+FIELD UnityEngine.RenderTexture World.WorldRawImage::rt
+FIELD UnityEngine.Camera World.WorldRawImage::uiCamera
+METHOD System.Void World.WorldRawImage::OnEnable()
+IL_0000: ldarg.0
+IL_0001: call System.Boolean World.WorldRawImage::Ensure()
+IL_0006: pop
+IL_0007: ret
+METHOD System.Void World.WorldRawImage::LateUpdate()
+IL_0000: ldarg.0
+IL_0001: call System.Boolean World.WorldRawImage::Ensure()
+IL_0006: brtrue IL_000c
+IL_000b: ret
+IL_000c: ldarg.0
+IL_000d: ldfld System.Boolean World.WorldRawImage::bind_every_frame
+IL_0012: brtrue IL_0018
+IL_0017: ret
+IL_0018: ldarg.0
+IL_0019: ldfld UnityEngine.UI.RawImage World.WorldRawImage::rawImage
+IL_001e: callvirt UnityEngine.Texture UnityEngine.UI.RawImage::get_texture()
+IL_0023: ldarg.0
+IL_0024: ldfld UnityEngine.RenderTexture World.WorldRawImage::rt
+IL_0029: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_002e: brfalse IL_0044
+IL_0033: ldarg.0
+IL_0034: ldfld UnityEngine.UI.RawImage World.WorldRawImage::rawImage
+IL_0039: ldarg.0
+IL_003a: ldfld UnityEngine.RenderTexture World.WorldRawImage::rt
+IL_003f: callvirt System.Void UnityEngine.UI.RawImage::set_texture(UnityEngine.Texture)
+IL_0044: ldarg.0
+IL_0045: ldfld UnityEngine.Camera World.WorldRawImage::uiCamera
+IL_004a: callvirt UnityEngine.RenderTexture UnityEngine.Camera::get_targetTexture()
+IL_004f: ldarg.0
+IL_0050: ldfld UnityEngine.RenderTexture World.WorldRawImage::rt
+IL_0055: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_005a: brfalse IL_0070
+IL_005f: ldarg.0
+IL_0060: ldfld UnityEngine.Camera World.WorldRawImage::uiCamera
+IL_0065: ldarg.0
+IL_0066: ldfld UnityEngine.RenderTexture World.WorldRawImage::rt
+IL_006b: callvirt System.Void UnityEngine.Camera::set_targetTexture(UnityEngine.RenderTexture)
+IL_0070: ldarg.0
+IL_0071: ldfld System.Boolean World.WorldRawImage::auto_toggle_camera
+IL_0076: brfalse IL_0097
+IL_007b: ldarg.0
+IL_007c: ldfld UnityEngine.Camera World.WorldRawImage::uiCamera
+IL_0081: callvirt System.Boolean UnityEngine.Behaviour::get_enabled()
+IL_0086: brtrue IL_0097
+IL_008b: ldarg.0
+IL_008c: ldfld UnityEngine.Camera World.WorldRawImage::uiCamera
+IL_0091: ldc.i4.1
+IL_0092: callvirt System.Void UnityEngine.Behaviour::set_enabled(System.Boolean)
+IL_0097: ret
+METHOD System.Void World.WorldRawImage::OnDisable()
+IL_0000: ldarg.0
+IL_0001: ldfld System.Boolean World.WorldRawImage::auto_toggle_camera
+IL_0006: brfalse IL_0043
+IL_000b: ldarg.0
+IL_000c: ldfld UnityEngine.Camera World.WorldRawImage::uiCamera
+IL_0011: ldnull
+IL_0012: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_0017: brfalse IL_0043
+IL_001c: ldarg.0
+IL_001d: ldfld UnityEngine.Camera World.WorldRawImage::uiCamera
+IL_0022: callvirt UnityEngine.RenderTexture UnityEngine.Camera::get_targetTexture()
+IL_0027: ldarg.0
+IL_0028: ldfld UnityEngine.RenderTexture World.WorldRawImage::rt
+IL_002d: call System.Boolean UnityEngine.Object::op_Equality(UnityEngine.Object,UnityEngine.Object)
+IL_0032: brfalse IL_0043
+IL_0037: ldarg.0
+IL_0038: ldfld UnityEngine.Camera World.WorldRawImage::uiCamera
+IL_003d: ldc.i4.0
+IL_003e: callvirt System.Void UnityEngine.Behaviour::set_enabled(System.Boolean)
+IL_0043: ldarg.0
+IL_0044: call System.Void World.WorldRawImage::ReleaseRT()
+IL_0049: ret
+METHOD System.Void World.WorldRawImage::OnDestroy()
+IL_0000: ldarg.0
+IL_0001: call System.Void World.WorldRawImage::ReleaseRT()
+IL_0006: ret
+METHOD System.Boolean World.WorldRawImage::Ensure()
+IL_0000: ldarg.0
+IL_0001: ldfld UnityEngine.Camera World.WorldRawImage::uiCamera
+IL_0006: ldnull
+IL_0007: call System.Boolean UnityEngine.Object::op_Equality(UnityEngine.Object,UnityEngine.Object)
+IL_000c: brfalse IL_0029
+IL_0011: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_0016: stloc.0
+IL_0017: ldloc.0
+IL_0018: brfalse IL_0029
+IL_001d: ldarg.0
+IL_001e: ldloc.0
+IL_001f: ldfld UnityEngine.Camera World.WorldContext::caravan_camera
+IL_0024: stfld UnityEngine.Camera World.WorldRawImage::uiCamera
+IL_0029: ldarg.0
+IL_002a: ldfld UnityEngine.Camera World.WorldRawImage::uiCamera
+IL_002f: ldnull
+IL_0030: call System.Boolean UnityEngine.Object::op_Equality(UnityEngine.Object,UnityEngine.Object)
+IL_0035: brfalse IL_003c
+IL_003a: ldc.i4.0
+IL_003b: ret
+IL_003c: ldarg.0
+IL_003d: ldfld UnityEngine.UI.RawImage World.WorldRawImage::rawImage
+IL_0042: ldnull
+IL_0043: call System.Boolean UnityEngine.Object::op_Equality(UnityEngine.Object,UnityEngine.Object)
+IL_0048: brfalse IL_005a
+IL_004d: ldarg.0
+IL_004e: ldarg.0
+IL_004f: ldc.i4.1
+IL_0050: call !!0 UnityEngine.Component::GetComponentInChildren<UnityEngine.UI.RawImage>(System.Boolean)
+IL_0055: stfld UnityEngine.UI.RawImage World.WorldRawImage::rawImage
+IL_005a: ldarg.0
+IL_005b: ldfld UnityEngine.UI.RawImage World.WorldRawImage::rawImage
+IL_0060: ldnull
+IL_0061: call System.Boolean UnityEngine.Object::op_Equality(UnityEngine.Object,UnityEngine.Object)
+IL_0066: brfalse IL_006d
+IL_006b: ldc.i4.0
+IL_006c: ret
+IL_006d: ldarg.0
+IL_006e: ldfld UnityEngine.RenderTexture World.WorldRawImage::rt
+IL_0073: ldnull
+IL_0074: call System.Boolean UnityEngine.Object::op_Equality(UnityEngine.Object,UnityEngine.Object)
+IL_0079: brtrue IL_008e
+IL_007e: ldarg.0
+IL_007f: ldfld UnityEngine.RenderTexture World.WorldRawImage::rt
+IL_0084: callvirt System.Boolean UnityEngine.RenderTexture::IsCreated()
+IL_0089: brtrue IL_0094
+IL_008e: ldarg.0
+IL_008f: call System.Void World.WorldRawImage::Recreate()
+IL_0094: ldarg.0
+IL_0095: ldfld UnityEngine.RenderTexture World.WorldRawImage::rt
+IL_009a: ldnull
+IL_009b: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_00a0: ret
+METHOD System.Void World.WorldRawImage::Recreate()
+IL_0000: ldarg.0
+IL_0001: call System.Void World.WorldRawImage::ReleaseRT()
+IL_0006: ldarg.0
+IL_0007: ldarg.0
+IL_0008: ldfld System.Int32 World.WorldRawImage::width
+IL_000d: ldarg.0
+IL_000e: ldfld System.Int32 World.WorldRawImage::height
+IL_0013: ldarg.0
+IL_0014: ldfld System.Int32 World.WorldRawImage::depth
+IL_0019: ldarg.0
+IL_001a: ldfld UnityEngine.RenderTextureFormat World.WorldRawImage::format
+IL_001f: newobj System.Void UnityEngine.RenderTexture::.ctor(System.Int32,System.Int32,System.Int32,UnityEngine.RenderTextureFormat)
+IL_0024: dup
+IL_0025: ldstr "CaravanUIRT_Runtime"
+IL_002a: callvirt System.Void UnityEngine.Object::set_name(System.String)
+IL_002f: stfld UnityEngine.RenderTexture World.WorldRawImage::rt
+IL_0034: ldarg.0
+IL_0035: ldfld UnityEngine.RenderTexture World.WorldRawImage::rt
+IL_003a: callvirt System.Boolean UnityEngine.RenderTexture::Create()
+IL_003f: pop
+IL_0040: ldarg.0
+IL_0041: ldfld UnityEngine.Camera World.WorldRawImage::uiCamera
+IL_0046: ldarg.0
+IL_0047: ldfld UnityEngine.RenderTexture World.WorldRawImage::rt
+IL_004c: callvirt System.Void UnityEngine.Camera::set_targetTexture(UnityEngine.RenderTexture)
+IL_0051: ldarg.0
+IL_0052: ldfld UnityEngine.UI.RawImage World.WorldRawImage::rawImage
+IL_0057: ldarg.0
+IL_0058: ldfld UnityEngine.RenderTexture World.WorldRawImage::rt
+IL_005d: callvirt System.Void UnityEngine.UI.RawImage::set_texture(UnityEngine.Texture)
+IL_0062: ret
+METHOD System.Void World.WorldRawImage::ReleaseRT()
+IL_0000: ldarg.0
+IL_0001: ldfld UnityEngine.Camera World.WorldRawImage::uiCamera
+IL_0006: ldnull
+IL_0007: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_000c: brfalse IL_0038
+IL_0011: ldarg.0
+IL_0012: ldfld UnityEngine.Camera World.WorldRawImage::uiCamera
+IL_0017: callvirt UnityEngine.RenderTexture UnityEngine.Camera::get_targetTexture()
+IL_001c: ldarg.0
+IL_001d: ldfld UnityEngine.RenderTexture World.WorldRawImage::rt
+IL_0022: call System.Boolean UnityEngine.Object::op_Equality(UnityEngine.Object,UnityEngine.Object)
+IL_0027: brfalse IL_0038
+IL_002c: ldarg.0
+IL_002d: ldfld UnityEngine.Camera World.WorldRawImage::uiCamera
+IL_0032: ldnull
+IL_0033: callvirt System.Void UnityEngine.Camera::set_targetTexture(UnityEngine.RenderTexture)
+IL_0038: ldarg.0
+IL_0039: ldfld UnityEngine.UI.RawImage World.WorldRawImage::rawImage
+IL_003e: ldnull
+IL_003f: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_0044: brfalse IL_0070
+IL_0049: ldarg.0
+IL_004a: ldfld UnityEngine.UI.RawImage World.WorldRawImage::rawImage
+IL_004f: callvirt UnityEngine.Texture UnityEngine.UI.RawImage::get_texture()
+IL_0054: ldarg.0
+IL_0055: ldfld UnityEngine.RenderTexture World.WorldRawImage::rt
+IL_005a: call System.Boolean UnityEngine.Object::op_Equality(UnityEngine.Object,UnityEngine.Object)
+IL_005f: brfalse IL_0070
+IL_0064: ldarg.0
+IL_0065: ldfld UnityEngine.UI.RawImage World.WorldRawImage::rawImage
+IL_006a: ldnull
+IL_006b: callvirt System.Void UnityEngine.UI.RawImage::set_texture(UnityEngine.Texture)
+IL_0070: ldarg.0
+IL_0071: ldfld UnityEngine.RenderTexture World.WorldRawImage::rt
+IL_0076: ldnull
+IL_0077: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_007c: brfalse IL_009e
+IL_0081: ldarg.0
+IL_0082: ldfld UnityEngine.RenderTexture World.WorldRawImage::rt
+IL_0087: callvirt System.Void UnityEngine.RenderTexture::Release()
+IL_008c: ldarg.0
+IL_008d: ldfld UnityEngine.RenderTexture World.WorldRawImage::rt
+IL_0092: call System.Void UnityEngine.Object::Destroy(UnityEngine.Object)
+IL_0097: ldarg.0
+IL_0098: ldnull
+IL_0099: stfld UnityEngine.RenderTexture World.WorldRawImage::rt
+IL_009e: ret
+METHOD System.Void World.WorldRawImage::.ctor()
+IL_0000: ldarg.0
+IL_0001: ldc.i4 408
+IL_0006: stfld System.Int32 World.WorldRawImage::width
+IL_000b: ldarg.0
+IL_000c: ldc.i4 324
+IL_0011: stfld System.Int32 World.WorldRawImage::height
+IL_0016: ldarg.0
+IL_0017: ldc.i4.s 24
+IL_0019: stfld System.Int32 World.WorldRawImage::depth
+IL_001e: ldarg.0
+IL_001f: ldc.i4.1
+IL_0020: stfld System.Boolean World.WorldRawImage::bind_every_frame
+IL_0025: ldarg.0
+IL_0026: ldc.i4.1
+IL_0027: stfld System.Boolean World.WorldRawImage::auto_toggle_camera
+IL_002c: ldarg.0
+IL_002d: call System.Void UnityEngine.MonoBehaviour::.ctor()
+IL_0032: ret

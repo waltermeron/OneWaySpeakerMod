@@ -1,0 +1,188 @@
+TYPE World.Caravans.CaravanView : UnityEngine.MonoBehaviour
+FIELD Spine.Unity.SkeletonAnimation World.Caravans.CaravanView::anim
+FIELD UnityEngine.Renderer World.Caravans.CaravanView::anim_renderer
+FIELD World.Caravans.Caravan World.Caravans.CaravanView::owner
+FIELD UnityEngine.GameObject World.Caravans.CaravanView::diascope_camera
+FIELD UnityEngine.GameObject World.Caravans.CaravanView::land_node
+METHOD Spine.Skeleton World.Caravans.CaravanView::World.Caravans.ICaravanView.get_sk()
+IL_0000: ldarg.0
+IL_0001: ldfld Spine.Unity.SkeletonAnimation World.Caravans.CaravanView::anim
+IL_0006: ldfld Spine.Skeleton Spine.Unity.SkeletonRenderer::skeleton
+IL_000b: ret
+METHOD System.Void World.Caravans.CaravanView::Foundations.MVVM.IModelView<World.Caravans.Caravan>.attach(World.Caravans.Caravan)
+IL_0000: ldarg.0
+IL_0001: ldarg.1
+IL_0002: stfld World.Caravans.Caravan World.Caravans.CaravanView::owner
+IL_0007: ldarg.1
+IL_0008: ldarg.0
+IL_0009: callvirt System.Void World.Caravans.Caravan::load_caravan_slots(World.Caravans.CaravanView)
+IL_000e: call !0 Foundations.MonoBehaviourSingleton`1<World.WorldSceneRoot>::get_instance()
+IL_0013: ldarg.0
+IL_0014: ldfld UnityEngine.GameObject World.Caravans.CaravanView::land_node
+IL_0019: stfld UnityEngine.GameObject World.WorldSceneRoot::caravan_land_node
+IL_001e: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_0023: ldarg.0
+IL_0024: ldfld UnityEngine.GameObject World.Caravans.CaravanView::diascope_camera
+IL_0029: callvirt !!0 UnityEngine.GameObject::GetComponent<UnityEngine.Camera>()
+IL_002e: stfld UnityEngine.Camera World.WorldContext::caravan_camera
+IL_0033: ret
+METHOD System.Void World.Caravans.CaravanView::Foundations.MVVM.IModelView<World.Caravans.Caravan>.detach(World.Caravans.Caravan)
+IL_0000: ldarg.0
+IL_0001: ldnull
+IL_0002: stfld World.Caravans.Caravan World.Caravans.CaravanView::owner
+IL_0007: ret
+METHOD System.Void World.Caravans.CaravanView::World.Caravans.ICaravanView.notify_on_tick1()
+IL_0000: ldarg.0
+IL_0001: call UnityEngine.Transform UnityEngine.Component::get_transform()
+IL_0006: ldarg.0
+IL_0007: ldfld World.Caravans.Caravan World.Caravans.CaravanView::owner
+IL_000c: callvirt UnityEngine.Vector3 World.Caravans.Caravan::get_view_pos()
+IL_0011: callvirt System.Void UnityEngine.Transform::set_localPosition(UnityEngine.Vector3)
+IL_0016: ldarg.0
+IL_0017: call UnityEngine.Transform UnityEngine.Component::get_transform()
+IL_001c: ldarg.0
+IL_001d: ldfld World.Caravans.Caravan World.Caravans.CaravanView::owner
+IL_0022: callvirt UnityEngine.Quaternion World.Caravans.Caravan::get_view_rotation()
+IL_0027: callvirt System.Void UnityEngine.Transform::set_localRotation(UnityEngine.Quaternion)
+IL_002c: ldarg.0
+IL_002d: ldfld Spine.Unity.SkeletonAnimation World.Caravans.CaravanView::anim
+IL_0032: ldc.r4 2
+IL_0037: ldc.r4 0.6
+IL_003c: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_0041: ldflda UnityEngine.Vector2 World.WorldContext::caravan_velocity
+IL_0046: call System.Single UnityEngine.Vector2::get_magnitude()
+IL_004b: ldc.r4 4
+IL_0050: div
+IL_0051: add
+IL_0052: call System.Single UnityEngine.Mathf::Min(System.Single,System.Single)
+IL_0057: stfld System.Single Spine.Unity.SkeletonAnimation::timeScale
+IL_005c: ldarg.0
+IL_005d: ldfld World.Caravans.Caravan World.Caravans.CaravanView::owner
+IL_0062: callvirt AutoCodes.spine_caravan World.Caravans.Caravan::get_anim_info()
+IL_0067: stloc.0
+IL_0068: ldarg.0
+IL_0069: ldfld Spine.Unity.SkeletonAnimation World.Caravans.CaravanView::anim
+IL_006e: callvirt System.String Spine.Unity.SkeletonAnimation::get_AnimationName()
+IL_0073: ldloc.0
+IL_0074: ldfld System.String AutoCodes.spine_caravan::anim_name
+IL_0079: call System.Boolean System.String::op_Inequality(System.String,System.String)
+IL_007e: brfalse IL_00a1
+IL_0083: ldarg.0
+IL_0084: ldfld Spine.Unity.SkeletonAnimation World.Caravans.CaravanView::anim
+IL_0089: ldfld Spine.AnimationState Spine.Unity.SkeletonAnimation::state
+IL_008e: ldc.i4.0
+IL_008f: ldloc.0
+IL_0090: ldfld System.String AutoCodes.spine_caravan::anim_name
+IL_0095: ldloc.0
+IL_0096: ldfld System.Boolean AutoCodes.spine_caravan::loop
+IL_009b: callvirt Spine.TrackEntry Spine.AnimationState::SetAnimation(System.Int32,System.String,System.Boolean)
+IL_00a0: pop
+IL_00a1: ldarg.0
+IL_00a2: ldfld Spine.Unity.SkeletonAnimation World.Caravans.CaravanView::anim
+IL_00a7: ldc.r4 0.008333334
+IL_00ac: callvirt System.Void Spine.Unity.SkeletonAnimation::Update(System.Single)
+IL_00b1: ret
+METHOD System.Void World.Caravans.CaravanView::World.Caravans.ICaravanView.notify_on_hurt()
+IL_0000: ldstr "caravan_hurt_fillPhase_stop"
+IL_0005: call System.Collections.Generic.IEnumerable`1<Foundations.Tickers.Request> Foundations.Tickers.Request_Helper::query_request(System.String)
+IL_000a: callvirt System.Collections.Generic.IEnumerator`1<!0> System.Collections.Generic.IEnumerable`1<Foundations.Tickers.Request>::GetEnumerator()
+IL_000f: stloc.0
+IL_0010: br IL_0020
+IL_0015: ldloc.0
+IL_0016: callvirt !0 System.Collections.Generic.IEnumerator`1<Foundations.Tickers.Request>::get_Current()
+IL_001b: callvirt System.Void Foundations.Tickers.Request::interrupt()
+IL_0020: ldloc.0
+IL_0021: callvirt System.Boolean System.Collections.IEnumerator::MoveNext()
+IL_0026: brtrue IL_0015
+IL_002b: leave IL_003d
+IL_0030: ldloc.0
+IL_0031: brfalse IL_003c
+IL_0036: ldloc.0
+IL_0037: callvirt System.Void System.IDisposable::Dispose()
+IL_003c: endfinally
+IL_003d: ldarg.0
+IL_003e: ldfld UnityEngine.Renderer World.Caravans.CaravanView::anim_renderer
+IL_0043: callvirt UnityEngine.Material UnityEngine.Renderer::get_material()
+IL_0048: ldstr "_FillPhase"
+IL_004d: ldc.r4 0.8
+IL_0052: callvirt System.Void UnityEngine.Material::SetFloat(System.String,System.Single)
+IL_0057: ldstr "caravan_hurt_fillPhase_stop"
+IL_005c: ldc.i4.s 40
+IL_005e: ldarg.0
+IL_005f: ldftn System.Void World.Caravans.CaravanView::<World.Caravans.ICaravanView.notify_on_hurt>b__10_0(Foundations.Tickers.Request)
+IL_0065: newobj System.Void System.Action`1<Foundations.Tickers.Request>::.ctor(System.Object,System.IntPtr)
+IL_006a: call Foundations.Tickers.Request Foundations.Tickers.Request_Helper::delay_do(System.String,System.Int32,System.Action`1<Foundations.Tickers.Request>)
+IL_006f: pop
+IL_0070: ldarg.0
+IL_0071: ldfld World.Caravans.Caravan World.Caravans.CaravanView::owner
+IL_0076: ldfld AutoCodes.caravan_body World.Caravans.Caravan::_desc
+IL_007b: ldfld System.Collections.Generic.List`1<System.String> AutoCodes.caravan_body::se_behit
+IL_0080: brfalse IL_00db
+IL_0085: ldarg.0
+IL_0086: ldfld World.Caravans.Caravan World.Caravans.CaravanView::owner
+IL_008b: ldfld AutoCodes.caravan_body World.Caravans.Caravan::_desc
+IL_0090: ldfld System.Collections.Generic.List`1<System.String> AutoCodes.caravan_body::se_behit
+IL_0095: callvirt System.Int32 System.Collections.Generic.List`1<System.String>::get_Count()
+IL_009a: ldc.i4.0
+IL_009b: ble IL_00db
+IL_00a0: call !0 Foundations.MonoBehaviourSingleton`1<Commons.AudioSystem>::get_instance()
+IL_00a5: ldc.i4.2
+IL_00a6: ldarg.0
+IL_00a7: ldfld World.Caravans.Caravan World.Caravans.CaravanView::owner
+IL_00ac: ldfld AutoCodes.caravan_body World.Caravans.Caravan::_desc
+IL_00b1: ldfld System.Collections.Generic.List`1<System.String> AutoCodes.caravan_body::se_behit
+IL_00b6: ldc.i4.0
+IL_00b7: ldarg.0
+IL_00b8: ldfld World.Caravans.Caravan World.Caravans.CaravanView::owner
+IL_00bd: ldfld AutoCodes.caravan_body World.Caravans.Caravan::_desc
+IL_00c2: ldfld System.Collections.Generic.List`1<System.String> AutoCodes.caravan_body::se_behit
+IL_00c7: callvirt System.Int32 System.Collections.Generic.List`1<System.String>::get_Count()
+IL_00cc: call System.Int32 UnityEngine.Random::Range(System.Int32,System.Int32)
+IL_00d1: callvirt !0 System.Collections.Generic.List`1<System.String>::get_Item(System.Int32)
+IL_00d6: callvirt System.Void Commons.AudioSystem::PlayOneShot(Commons.SFXType,System.String)
+IL_00db: ret
+METHOD System.Void World.Caravans.CaravanView::remove_diascope_camera()
+IL_0000: ldarg.0
+IL_0001: ldfld UnityEngine.GameObject World.Caravans.CaravanView::diascope_camera
+IL_0006: ldnull
+IL_0007: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_000c: brfalse IL_001c
+IL_0011: ldarg.0
+IL_0012: ldfld UnityEngine.GameObject World.Caravans.CaravanView::diascope_camera
+IL_0017: call System.Void UnityEngine.Object::DestroyImmediate(UnityEngine.Object)
+IL_001c: ret
+METHOD System.Void World.Caravans.CaravanView::World.Caravans.ICaravanView.notify_on_tick()
+IL_0000: ret
+METHOD System.Void World.Caravans.CaravanView::World.Caravans.ICaravanView.notify_on_in_safearea()
+IL_0000: ret
+METHOD System.Void World.Caravans.CaravanView::OnDestroy()
+IL_0000: ldstr "caravan_hurt_fillPhase_stop"
+IL_0005: call System.Collections.Generic.IEnumerable`1<Foundations.Tickers.Request> Foundations.Tickers.Request_Helper::query_request(System.String)
+IL_000a: callvirt System.Collections.Generic.IEnumerator`1<!0> System.Collections.Generic.IEnumerable`1<Foundations.Tickers.Request>::GetEnumerator()
+IL_000f: stloc.0
+IL_0010: br IL_0020
+IL_0015: ldloc.0
+IL_0016: callvirt !0 System.Collections.Generic.IEnumerator`1<Foundations.Tickers.Request>::get_Current()
+IL_001b: callvirt System.Void Foundations.Tickers.Request::interrupt()
+IL_0020: ldloc.0
+IL_0021: callvirt System.Boolean System.Collections.IEnumerator::MoveNext()
+IL_0026: brtrue IL_0015
+IL_002b: leave IL_003d
+IL_0030: ldloc.0
+IL_0031: brfalse IL_003c
+IL_0036: ldloc.0
+IL_0037: callvirt System.Void System.IDisposable::Dispose()
+IL_003c: endfinally
+IL_003d: ret
+METHOD System.Void World.Caravans.CaravanView::.ctor()
+IL_0000: ldarg.0
+IL_0001: call System.Void UnityEngine.MonoBehaviour::.ctor()
+IL_0006: ret
+METHOD System.Void World.Caravans.CaravanView::<World.Caravans.ICaravanView.notify_on_hurt>b__10_0(Foundations.Tickers.Request)
+IL_0000: ldarg.0
+IL_0001: ldfld UnityEngine.Renderer World.Caravans.CaravanView::anim_renderer
+IL_0006: callvirt UnityEngine.Material UnityEngine.Renderer::get_material()
+IL_000b: ldstr "_FillPhase"
+IL_0010: ldc.r4 0
+IL_0015: callvirt System.Void UnityEngine.Material::SetFloat(System.String,System.Single)
+IL_001a: ret

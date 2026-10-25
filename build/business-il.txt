@@ -1,0 +1,176 @@
+TYPE World.Business.DeviceBusinessView : UnityEngine.MonoBehaviour
+FIELD UnityEngine.Transform World.Business.DeviceBusinessView::content
+FIELD World.Business.SingleGoodsView World.Business.DeviceBusinessView::prefab
+FIELD System.Collections.Generic.List`1<World.Business.SingleGoodsView> World.Business.DeviceBusinessView::goods_list
+FIELD TMPro.TextMeshProUGUI World.Business.DeviceBusinessView::coin_text
+FIELD TMPro.TextMeshProUGUI World.Business.DeviceBusinessView::refresh_text
+FIELD World.Business.DeviceBusinessPanel World.Business.DeviceBusinessView::main_panel
+FIELD World.Business.DevicePurchaseView World.Business.DeviceBusinessView::dpv
+METHOD System.Void World.Business.DeviceBusinessView::Init()
+IL_0000: ldc.i4.0
+IL_0001: stloc.0
+IL_0002: br IL_0021
+IL_0007: ldarg.0
+IL_0008: ldfld System.Collections.Generic.List`1<World.Business.SingleGoodsView> World.Business.DeviceBusinessView::goods_list
+IL_000d: ldloc.0
+IL_000e: callvirt !0 System.Collections.Generic.List`1<World.Business.SingleGoodsView>::get_Item(System.Int32)
+IL_0013: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_0018: call System.Void UnityEngine.Object::Destroy(UnityEngine.Object)
+IL_001d: ldloc.0
+IL_001e: ldc.i4.1
+IL_001f: add
+IL_0020: stloc.0
+IL_0021: ldloc.0
+IL_0022: ldarg.0
+IL_0023: ldfld System.Collections.Generic.List`1<World.Business.SingleGoodsView> World.Business.DeviceBusinessView::goods_list
+IL_0028: callvirt System.Int32 System.Collections.Generic.List`1<World.Business.SingleGoodsView>::get_Count()
+IL_002d: blt IL_0007
+IL_0032: ldarg.0
+IL_0033: ldfld System.Collections.Generic.List`1<World.Business.SingleGoodsView> World.Business.DeviceBusinessView::goods_list
+IL_0038: callvirt System.Void System.Collections.Generic.List`1<World.Business.SingleGoodsView>::Clear()
+IL_003d: ldarg.0
+IL_003e: ldfld World.Business.DeviceBusinessPanel World.Business.DeviceBusinessView::main_panel
+IL_0043: ldfld World.Business.Business World.Business.DeviceBusinessPanel::owner
+IL_0048: ldfld System.Collections.Generic.List`1<World.Business.GoodsData> World.Business.Business::goods
+IL_004d: callvirt System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<World.Business.GoodsData>::GetEnumerator()
+IL_0052: stloc.1
+IL_0053: br IL_0092
+IL_0058: ldloca.s V_1
+IL_005a: call !0 System.Collections.Generic.List`1/Enumerator<World.Business.GoodsData>::get_Current()
+IL_005f: stloc.2
+IL_0060: ldarg.0
+IL_0061: ldfld World.Business.SingleGoodsView World.Business.DeviceBusinessView::prefab
+IL_0066: ldarg.0
+IL_0067: ldfld UnityEngine.Transform World.Business.DeviceBusinessView::content
+IL_006c: ldc.i4.0
+IL_006d: call !!0 UnityEngine.Object::Instantiate<World.Business.SingleGoodsView>(!!0,UnityEngine.Transform,System.Boolean)
+IL_0072: stloc.3
+IL_0073: ldloc.3
+IL_0074: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_0079: ldc.i4.1
+IL_007a: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_007f: ldloc.3
+IL_0080: ldloc.2
+IL_0081: callvirt System.Void World.Business.SingleGoodsView::Init(World.Business.GoodsData)
+IL_0086: ldarg.0
+IL_0087: ldfld System.Collections.Generic.List`1<World.Business.SingleGoodsView> World.Business.DeviceBusinessView::goods_list
+IL_008c: ldloc.3
+IL_008d: callvirt System.Void System.Collections.Generic.List`1<World.Business.SingleGoodsView>::Add(!0)
+IL_0092: ldloca.s V_1
+IL_0094: call System.Boolean System.Collections.Generic.List`1/Enumerator<World.Business.GoodsData>::MoveNext()
+IL_0099: brtrue IL_0058
+IL_009e: leave IL_00b1
+IL_00a3: ldloca.s V_1
+IL_00a5: constrained. System.Collections.Generic.List`1/Enumerator<World.Business.GoodsData>
+IL_00ab: callvirt System.Void System.IDisposable::Dispose()
+IL_00b0: endfinally
+IL_00b1: ldarg.0
+IL_00b2: ldfld World.Business.DevicePurchaseView World.Business.DeviceBusinessView::dpv
+IL_00b7: ldarg.0
+IL_00b8: ldfld World.Business.DeviceBusinessPanel World.Business.DeviceBusinessView::main_panel
+IL_00bd: ldfld World.Business.Business World.Business.DeviceBusinessPanel::owner
+IL_00c2: isinst World.Business.DeviceBusiness
+IL_00c7: callvirt System.Void World.Business.DevicePurchaseView::Init(World.Business.DeviceBusiness)
+IL_00cc: ldarg.0
+IL_00cd: ldfld TMPro.TextMeshProUGUI World.Business.DeviceBusinessView::coin_text
+IL_00d2: ldsfld Commons.Config Commons.Config::current
+IL_00d7: ldfld System.UInt32 Commons.Config::coin_id
+IL_00dc: call System.Int32 World.Helpers.Safe_Area_Helper::GetLootCount(System.Int32)
+IL_00e1: stloc.s V_4
+IL_00e3: ldloca.s V_4
+IL_00e5: call System.String System.Int32::ToString()
+IL_00ea: call System.String Commons.Localization_Utility::get_art_sprite(System.String)
+IL_00ef: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_00f4: ret
+METHOD System.Void World.Business.DeviceBusinessView::UpdateGoods()
+IL_0000: ldarg.0
+IL_0001: ldfld TMPro.TextMeshProUGUI World.Business.DeviceBusinessView::coin_text
+IL_0006: ldsfld Commons.Config Commons.Config::current
+IL_000b: ldfld System.UInt32 Commons.Config::coin_id
+IL_0010: call System.Int32 World.Helpers.Safe_Area_Helper::GetLootCount(System.Int32)
+IL_0015: stloc.0
+IL_0016: ldloca.s V_0
+IL_0018: call System.String System.Int32::ToString()
+IL_001d: call System.String Commons.Localization_Utility::get_art_sprite(System.String)
+IL_0022: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_0027: ldc.i4.0
+IL_0028: stloc.1
+IL_0029: br IL_0048
+IL_002e: ldarg.0
+IL_002f: ldfld System.Collections.Generic.List`1<World.Business.SingleGoodsView> World.Business.DeviceBusinessView::goods_list
+IL_0034: ldloc.1
+IL_0035: callvirt !0 System.Collections.Generic.List`1<World.Business.SingleGoodsView>::get_Item(System.Int32)
+IL_003a: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_003f: call System.Void UnityEngine.Object::Destroy(UnityEngine.Object)
+IL_0044: ldloc.1
+IL_0045: ldc.i4.1
+IL_0046: add
+IL_0047: stloc.1
+IL_0048: ldloc.1
+IL_0049: ldarg.0
+IL_004a: ldfld System.Collections.Generic.List`1<World.Business.SingleGoodsView> World.Business.DeviceBusinessView::goods_list
+IL_004f: callvirt System.Int32 System.Collections.Generic.List`1<World.Business.SingleGoodsView>::get_Count()
+IL_0054: blt IL_002e
+IL_0059: ldarg.0
+IL_005a: ldfld System.Collections.Generic.List`1<World.Business.SingleGoodsView> World.Business.DeviceBusinessView::goods_list
+IL_005f: callvirt System.Void System.Collections.Generic.List`1<World.Business.SingleGoodsView>::Clear()
+IL_0064: ldarg.0
+IL_0065: ldfld World.Business.DeviceBusinessPanel World.Business.DeviceBusinessView::main_panel
+IL_006a: ldfld World.Business.Business World.Business.DeviceBusinessPanel::owner
+IL_006f: ldfld System.Collections.Generic.List`1<World.Business.GoodsData> World.Business.Business::goods
+IL_0074: callvirt System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<World.Business.GoodsData>::GetEnumerator()
+IL_0079: stloc.2
+IL_007a: br IL_00bd
+IL_007f: ldloca.s V_2
+IL_0081: call !0 System.Collections.Generic.List`1/Enumerator<World.Business.GoodsData>::get_Current()
+IL_0086: stloc.3
+IL_0087: ldarg.0
+IL_0088: ldfld World.Business.SingleGoodsView World.Business.DeviceBusinessView::prefab
+IL_008d: ldarg.0
+IL_008e: ldfld UnityEngine.Transform World.Business.DeviceBusinessView::content
+IL_0093: ldc.i4.0
+IL_0094: call !!0 UnityEngine.Object::Instantiate<World.Business.SingleGoodsView>(!!0,UnityEngine.Transform,System.Boolean)
+IL_0099: stloc.s V_4
+IL_009b: ldloc.s V_4
+IL_009d: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_00a2: ldc.i4.1
+IL_00a3: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_00a8: ldloc.s V_4
+IL_00aa: ldloc.3
+IL_00ab: callvirt System.Void World.Business.SingleGoodsView::Init(World.Business.GoodsData)
+IL_00b0: ldarg.0
+IL_00b1: ldfld System.Collections.Generic.List`1<World.Business.SingleGoodsView> World.Business.DeviceBusinessView::goods_list
+IL_00b6: ldloc.s V_4
+IL_00b8: callvirt System.Void System.Collections.Generic.List`1<World.Business.SingleGoodsView>::Add(!0)
+IL_00bd: ldloca.s V_2
+IL_00bf: call System.Boolean System.Collections.Generic.List`1/Enumerator<World.Business.GoodsData>::MoveNext()
+IL_00c4: brtrue IL_007f
+IL_00c9: leave IL_00dc
+IL_00ce: ldloca.s V_2
+IL_00d0: constrained. System.Collections.Generic.List`1/Enumerator<World.Business.GoodsData>
+IL_00d6: callvirt System.Void System.IDisposable::Dispose()
+IL_00db: endfinally
+IL_00dc: ldarg.0
+IL_00dd: ldfld World.Business.DevicePurchaseView World.Business.DeviceBusinessView::dpv
+IL_00e2: callvirt System.Void World.Business.DevicePurchaseView::UpdateGoods()
+IL_00e7: ret
+METHOD System.Void World.Business.DeviceBusinessView::Refresh()
+IL_0000: ldarg.0
+IL_0001: ldfld World.Business.DeviceBusinessPanel World.Business.DeviceBusinessView::main_panel
+IL_0006: callvirt System.Void World.Business.DeviceBusinessPanel::Refresh()
+IL_000b: ret
+METHOD System.Void World.Business.DeviceBusinessView::SetRefreshText(System.Int32)
+IL_0000: ldarg.0
+IL_0001: ldfld TMPro.TextMeshProUGUI World.Business.DeviceBusinessView::refresh_text
+IL_0006: ldarga.s price
+IL_0008: call System.String System.Int32::ToString()
+IL_000d: call System.String Commons.Localization_Utility::get_art_sprite(System.String)
+IL_0012: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_0017: ret
+METHOD System.Void World.Business.DeviceBusinessView::.ctor()
+IL_0000: ldarg.0
+IL_0001: newobj System.Void System.Collections.Generic.List`1<World.Business.SingleGoodsView>::.ctor()
+IL_0006: stfld System.Collections.Generic.List`1<World.Business.SingleGoodsView> World.Business.DeviceBusinessView::goods_list
+IL_000b: ldarg.0
+IL_000c: call System.Void UnityEngine.MonoBehaviour::.ctor()
+IL_0011: ret

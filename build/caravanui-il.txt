@@ -1,0 +1,272 @@
+TYPE World.Caravans.CaravanUiView : UnityEngine.MonoBehaviour
+FIELD World.Caravans.Caravan World.Caravans.CaravanUiView::owner
+FIELD UnityEngine.UI.Slider World.Caravans.CaravanUiView::hp
+FIELD UnityEngine.UI.Slider World.Caravans.CaravanUiView::true_hp
+FIELD UnityEngine.UI.Image World.Caravans.CaravanUiView::true_hp_img
+FIELD TMPro.TextMeshProUGUI World.Caravans.CaravanUiView::remain_hp_text
+FIELD System.Single World.Caravans.CaravanUiView::hp_change_speed
+FIELD System.Single World.Caravans.CaravanUiView::current_view_hp
+FIELD World.Caravans.CaravanHoveringInfo World.Caravans.CaravanUiView::chi
+FIELD World.Caravans.CaravanLeverPin World.Caravans.CaravanUiView::pin
+FIELD World.Caravans.CaravanLever2 World.Caravans.CaravanUiView::lever
+FIELD World.CaravanBoards.BellowView World.Caravans.CaravanUiView::blower
+FIELD World.CaravanBoards.SpeedLEDView World.Caravans.CaravanUiView::led
+FIELD UnityEngine.UI.Image World.Caravans.CaravanUiView::caravan_hp_img
+FIELD UnityEngine.UI.Slider World.Caravans.CaravanUiView::caravan_hp_slider
+METHOD Spine.Skeleton World.Caravans.CaravanUiView::World.Caravans.ICaravanView.get_sk()
+IL_0000: newobj System.Void System.NotImplementedException::.ctor()
+IL_0005: throw
+METHOD UnityEngine.Vector2 World.Caravans.CaravanUiView::World.Ui.IUiView.get_pos()
+IL_0000: ldarg.0
+IL_0001: call UnityEngine.Transform UnityEngine.Component::get_transform()
+IL_0006: callvirt UnityEngine.Vector3 UnityEngine.Transform::get_position()
+IL_000b: call UnityEngine.Vector2 UnityEngine.Vector2::op_Implicit(UnityEngine.Vector3)
+IL_0010: ret
+METHOD System.Void World.Caravans.CaravanUiView::Brake()
+IL_0000: ldarg.0
+IL_0001: ldfld World.Caravans.Caravan World.Caravans.CaravanUiView::owner
+IL_0006: callvirt System.Void World.Caravans.Caravan::Brake()
+IL_000b: ret
+METHOD System.Void World.Caravans.CaravanUiView::Push()
+IL_0000: call !0 Foundations.Singleton`1<World.Widgets.Widget_PushCar_Context>::get_instance()
+IL_0005: callvirt System.Void World.Widgets.Widget_PushCar_Context::PushCaravan()
+IL_000a: ret
+METHOD System.Void World.Caravans.CaravanUiView::Foundations.MVVM.IModelView<World.Caravans.Caravan>.attach(World.Caravans.Caravan)
+IL_0000: ldarg.0
+IL_0001: ldarg.1
+IL_0002: stfld World.Caravans.Caravan World.Caravans.CaravanUiView::owner
+IL_0007: ldarg.0
+IL_0008: ldfld UnityEngine.UI.Slider World.Caravans.CaravanUiView::hp
+IL_000d: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_0012: ldfld System.Int32 World.WorldContext::caravan_hp_max
+IL_0017: conv.r4
+IL_0018: callvirt System.Void UnityEngine.UI.Slider::set_maxValue(System.Single)
+IL_001d: ldarg.0
+IL_001e: ldfld UnityEngine.UI.Slider World.Caravans.CaravanUiView::hp
+IL_0023: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_0028: ldfld System.Int32 World.WorldContext::caravan_hp
+IL_002d: conv.r4
+IL_002e: callvirt System.Void UnityEngine.UI.Slider::set_value(System.Single)
+IL_0033: ldarg.0
+IL_0034: ldfld UnityEngine.UI.Slider World.Caravans.CaravanUiView::true_hp
+IL_0039: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_003e: ldfld System.Int32 World.WorldContext::caravan_hp_max
+IL_0043: conv.r4
+IL_0044: callvirt System.Void UnityEngine.UI.Slider::set_maxValue(System.Single)
+IL_0049: ldarg.0
+IL_004a: ldfld UnityEngine.UI.Slider World.Caravans.CaravanUiView::true_hp
+IL_004f: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_0054: ldfld System.Int32 World.WorldContext::caravan_hp
+IL_0059: conv.r4
+IL_005a: callvirt System.Void UnityEngine.UI.Slider::set_value(System.Single)
+IL_005f: ldsfld System.Collections.Generic.List`1<World.Ui.IUiView> World.Helpers.Ui_Pos_Helper::ui_views
+IL_0064: ldarg.0
+IL_0065: callvirt System.Void System.Collections.Generic.List`1<World.Ui.IUiView>::Add(!0)
+IL_006a: ldarg.0
+IL_006b: ldfld World.Caravans.CaravanHoveringInfo World.Caravans.CaravanUiView::chi
+IL_0070: callvirt System.Void World.Caravans.CaravanHoveringInfo::Init()
+IL_0075: ldarg.0
+IL_0076: ldfld TMPro.TextMeshProUGUI World.Caravans.CaravanUiView::remain_hp_text
+IL_007b: ldnull
+IL_007c: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_0081: brfalse IL_00c6
+IL_0086: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_008b: ldfld System.Int32 World.WorldContext::caravan_hp
+IL_0090: conv.r4
+IL_0091: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_0096: ldfld System.Int32 World.WorldContext::caravan_hp_max
+IL_009b: conv.r4
+IL_009c: div
+IL_009d: ldc.r4 100
+IL_00a2: mul
+IL_00a3: conv.i4
+IL_00a4: stloc.0
+IL_00a5: ldarg.0
+IL_00a6: ldfld TMPro.TextMeshProUGUI World.Caravans.CaravanUiView::remain_hp_text
+IL_00ab: ldloca.s V_0
+IL_00ad: call System.String System.Int32::ToString()
+IL_00b2: call System.String Commons.Localization_Utility::get_art_sprite(System.String)
+IL_00b7: ldstr "%"
+IL_00bc: call System.String System.String::Concat(System.String,System.String)
+IL_00c1: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_00c6: ret
+METHOD System.Void World.Caravans.CaravanUiView::Foundations.MVVM.IModelView<World.Caravans.Caravan>.detach(World.Caravans.Caravan)
+IL_0000: ldarg.0
+IL_0001: ldfld World.Caravans.Caravan World.Caravans.CaravanUiView::owner
+IL_0006: brfalse IL_0012
+IL_000b: ldarg.0
+IL_000c: ldnull
+IL_000d: stfld World.Caravans.Caravan World.Caravans.CaravanUiView::owner
+IL_0012: ldarg.0
+IL_0013: call UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_0018: call System.Void UnityEngine.Object::Destroy(UnityEngine.Object)
+IL_001d: ret
+METHOD System.Void World.Caravans.CaravanUiView::World.Caravans.ICaravanView.notify_on_hurt()
+IL_0000: ret
+METHOD System.Void World.Caravans.CaravanUiView::World.Caravans.ICaravanView.notify_on_tick()
+IL_0000: ldarg.0
+IL_0001: call UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_0006: callvirt System.Boolean UnityEngine.GameObject::get_activeInHierarchy()
+IL_000b: brtrue IL_0011
+IL_0010: ret
+IL_0011: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_0016: pop
+IL_0017: ldarg.0
+IL_0018: ldfld UnityEngine.UI.Slider World.Caravans.CaravanUiView::true_hp
+IL_001d: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_0022: ldfld System.Int32 World.WorldContext::caravan_hp
+IL_0027: conv.r4
+IL_0028: callvirt System.Void UnityEngine.UI.Slider::set_value(System.Single)
+IL_002d: ldarg.0
+IL_002e: ldfld System.Single World.Caravans.CaravanUiView::current_view_hp
+IL_0033: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_0038: ldfld System.Int32 World.WorldContext::caravan_hp
+IL_003d: conv.r4
+IL_003e: bgt.un IL_006a
+IL_0043: ldarg.0
+IL_0044: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_0049: ldfld System.Int32 World.WorldContext::caravan_hp
+IL_004e: conv.r4
+IL_004f: stfld System.Single World.Caravans.CaravanUiView::current_view_hp
+IL_0054: ldarg.0
+IL_0055: ldfld UnityEngine.UI.Slider World.Caravans.CaravanUiView::hp
+IL_005a: ldarg.0
+IL_005b: ldfld System.Single World.Caravans.CaravanUiView::current_view_hp
+IL_0060: callvirt System.Void UnityEngine.UI.Slider::set_value(System.Single)
+IL_0065: br IL_00a9
+IL_006a: ldarg.0
+IL_006b: ldarg.0
+IL_006c: ldfld System.Single World.Caravans.CaravanUiView::current_view_hp
+IL_0071: ldc.r4 2
+IL_0076: sub
+IL_0077: stfld System.Single World.Caravans.CaravanUiView::current_view_hp
+IL_007c: ldarg.0
+IL_007d: ldarg.0
+IL_007e: ldfld System.Single World.Caravans.CaravanUiView::current_view_hp
+IL_0083: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_0088: ldfld System.Int32 World.WorldContext::caravan_hp
+IL_008d: conv.r4
+IL_008e: call System.Single UnityEngine.Mathf::Max(System.Single,System.Single)
+IL_0093: stfld System.Single World.Caravans.CaravanUiView::current_view_hp
+IL_0098: ldarg.0
+IL_0099: ldfld UnityEngine.UI.Slider World.Caravans.CaravanUiView::hp
+IL_009e: ldarg.0
+IL_009f: ldfld System.Single World.Caravans.CaravanUiView::current_view_hp
+IL_00a4: callvirt System.Void UnityEngine.UI.Slider::set_value(System.Single)
+IL_00a9: ldarg.0
+IL_00aa: ldfld TMPro.TextMeshProUGUI World.Caravans.CaravanUiView::remain_hp_text
+IL_00af: ldnull
+IL_00b0: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_00b5: brfalse IL_00fa
+IL_00ba: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_00bf: ldfld System.Int32 World.WorldContext::caravan_hp
+IL_00c4: conv.r4
+IL_00c5: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_00ca: ldfld System.Int32 World.WorldContext::caravan_hp_max
+IL_00cf: conv.r4
+IL_00d0: div
+IL_00d1: ldc.r4 100
+IL_00d6: mul
+IL_00d7: conv.i4
+IL_00d8: stloc.0
+IL_00d9: ldarg.0
+IL_00da: ldfld TMPro.TextMeshProUGUI World.Caravans.CaravanUiView::remain_hp_text
+IL_00df: ldloca.s V_0
+IL_00e1: call System.String System.Int32::ToString()
+IL_00e6: call System.String Commons.Localization_Utility::get_art_sprite(System.String)
+IL_00eb: ldstr "%"
+IL_00f0: call System.String System.String::Concat(System.String,System.String)
+IL_00f5: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_00fa: ldarg.0
+IL_00fb: call System.Void World.Caravans.CaravanUiView::set_hp()
+IL_0100: ldarg.0
+IL_0101: call System.Void World.Caravans.CaravanUiView::update_module()
+IL_0106: ldarg.0
+IL_0107: ldfld World.Caravans.CaravanLeverPin World.Caravans.CaravanUiView::pin
+IL_010c: callvirt System.Void World.Caravans.CaravanLeverPin::tick()
+IL_0111: ldarg.0
+IL_0112: ldfld World.Caravans.CaravanLever2 World.Caravans.CaravanUiView::lever
+IL_0117: callvirt System.Void World.Caravans.CaravanLever2::tick()
+IL_011c: ldarg.0
+IL_011d: ldfld World.CaravanBoards.BellowView World.Caravans.CaravanUiView::blower
+IL_0122: callvirt System.Void World.CaravanBoards.BellowView::tick()
+IL_0127: ldarg.0
+IL_0128: ldfld World.CaravanBoards.SpeedLEDView World.Caravans.CaravanUiView::led
+IL_012d: callvirt System.Void World.CaravanBoards.SpeedLEDView::tick()
+IL_0132: ret
+METHOD System.Void World.Caravans.CaravanUiView::set_hp()
+IL_0000: ldarg.0
+IL_0001: ldfld UnityEngine.UI.Slider World.Caravans.CaravanUiView::caravan_hp_slider
+IL_0006: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_000b: ldfld System.Int32 World.WorldContext::caravan_hp
+IL_0010: conv.r4
+IL_0011: callvirt System.Void UnityEngine.UI.Slider::set_value(System.Single)
+IL_0016: ldarg.0
+IL_0017: ldfld UnityEngine.UI.Slider World.Caravans.CaravanUiView::caravan_hp_slider
+IL_001c: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_0021: ldfld System.Int32 World.WorldContext::caravan_hp_max
+IL_0026: conv.r4
+IL_0027: callvirt System.Void UnityEngine.UI.Slider::set_maxValue(System.Single)
+IL_002c: ldarg.0
+IL_002d: ldfld UnityEngine.UI.Slider World.Caravans.CaravanUiView::hp
+IL_0032: ldarg.0
+IL_0033: ldfld UnityEngine.UI.Slider World.Caravans.CaravanUiView::caravan_hp_slider
+IL_0038: callvirt System.Single UnityEngine.UI.Slider::get_maxValue()
+IL_003d: callvirt System.Void UnityEngine.UI.Slider::set_maxValue(System.Single)
+IL_0042: ret
+METHOD System.Void World.Caravans.CaravanUiView::update_module()
+IL_0000: ret
+METHOD System.Void World.Caravans.CaravanUiView::World.Caravans.ICaravanView.notify_on_tick1()
+IL_0000: ret
+METHOD System.Void World.Caravans.CaravanUiView::World.Caravans.ICaravanView.notify_on_in_safearea()
+IL_0000: ldarg.0
+IL_0001: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_0006: ldfld System.Int32 World.WorldContext::caravan_hp
+IL_000b: conv.r4
+IL_000c: stfld System.Single World.Caravans.CaravanUiView::current_view_hp
+IL_0011: ldarg.0
+IL_0012: ldfld UnityEngine.UI.Slider World.Caravans.CaravanUiView::hp
+IL_0017: ldarg.0
+IL_0018: ldfld System.Single World.Caravans.CaravanUiView::current_view_hp
+IL_001d: callvirt System.Void UnityEngine.UI.Slider::set_value(System.Single)
+IL_0022: ldarg.0
+IL_0023: ldfld UnityEngine.UI.Slider World.Caravans.CaravanUiView::caravan_hp_slider
+IL_0028: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_002d: ldfld System.Int32 World.WorldContext::caravan_hp
+IL_0032: conv.r4
+IL_0033: callvirt System.Void UnityEngine.UI.Slider::set_value(System.Single)
+IL_0038: ldarg.0
+IL_0039: ldfld UnityEngine.UI.Slider World.Caravans.CaravanUiView::caravan_hp_slider
+IL_003e: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_0043: ldfld System.Int32 World.WorldContext::caravan_hp_max
+IL_0048: conv.r4
+IL_0049: callvirt System.Void UnityEngine.UI.Slider::set_maxValue(System.Single)
+IL_004e: ldarg.0
+IL_004f: ldfld TMPro.TextMeshProUGUI World.Caravans.CaravanUiView::remain_hp_text
+IL_0054: ldnull
+IL_0055: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_005a: brfalse IL_009f
+IL_005f: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_0064: ldfld System.Int32 World.WorldContext::caravan_hp
+IL_0069: conv.r4
+IL_006a: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_006f: ldfld System.Int32 World.WorldContext::caravan_hp_max
+IL_0074: conv.r4
+IL_0075: div
+IL_0076: ldc.r4 100
+IL_007b: mul
+IL_007c: conv.i4
+IL_007d: stloc.0
+IL_007e: ldarg.0
+IL_007f: ldfld TMPro.TextMeshProUGUI World.Caravans.CaravanUiView::remain_hp_text
+IL_0084: ldloca.s V_0
+IL_0086: call System.String System.Int32::ToString()
+IL_008b: call System.String Commons.Localization_Utility::get_art_sprite(System.String)
+IL_0090: ldstr "%"
+IL_0095: call System.String System.String::Concat(System.String,System.String)
+IL_009a: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_009f: ret
+METHOD System.Void World.Caravans.CaravanUiView::.ctor()
+IL_0000: ldarg.0
+IL_0001: call System.Void UnityEngine.MonoBehaviour::.ctor()
+IL_0006: ret

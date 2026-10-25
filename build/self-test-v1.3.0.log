@@ -1,0 +1,444 @@
+Mono path[0] = 'E:/Steam/steamapps/common/再再启程 One Way Tickets/SpeakerMod/build/runtime-v1.3.0/One Way Tickets_Data/Managed'
+Mono config path = 'E:/Steam/steamapps/common/再再启程 One Way Tickets/SpeakerMod/build/runtime-v1.3.0/MonoBleedingEdge/etc'
+[Physics::Module] Initialized MultithreadedJobDispatcher with 19 workers.
+Initialize engine version: 2022.3.17f1c1 (a01dafa986ec)
+[Subsystems] Discovering subsystems at path E:/Steam/steamapps/common/再再启程 One Way Tickets/SpeakerMod/build/runtime-v1.3.0/One Way Tickets_Data/UnitySubsystems
+GfxDevice: creating device client; threaded=0; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 4060 Laptop GPU (ID=0x28e0)
+    Vendor:   NVIDIA
+    VRAM:     7957 MB
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.131 seconds
+- Finished resetting the current domain, in  0.001 seconds
+UnloadTime: 2.219100 ms
+[Letterbox] bootstrap (BeforeSceneLoad)
+[Steam] 未检测到运行中的 Steam 客户端，成就系统本次不可用（不影响单机流程）。
+[Analytics] 埋点已关闭（Config.enable_analytics = false），不启动数据采集
+[Letterbox] camera Main Camera rect -> (x:0.06, y:0.00, width:0.89, height:1.00) (screen 1898x945)
+[Letterbox] scene=Main screen=1898x945 view=(x:0.06, y:0.00, width:0.89, height:1.00) active=True
+Did not save cached content catalog because Application.persistentDataPath is an empty path.
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 17.181400 ms
+Unloading 32 unused Assets to reduce memory usage. Loaded Objects now: 4122.
+Total: 2.842800 ms (FindLiveObjects: 0.152100 ms CreateObjectMapping: 0.084000 ms MarkObjects: 2.070400 ms  DeleteObjects: 0.536100 ms)
+
+[Letterbox] camera Main Camera rect -> (x:0.06, y:0.00, width:0.89, height:1.00) (screen 1898x945)
+[Letterbox] 接管 1 个根 Canvas 的缩放（reference=2560）
+[Letterbox] canvas Canvas scale -> 0.656 (cam 1680x945)
+[Letterbox] scene=LoadingScene screen=1898x945 view=(x:0.06, y:0.00, width:0.89, height:1.00) active=True
+场景加载成功！
+Unloading 6 Unused Serialized files (Serialized files now loaded: 1)
+UnloadTime: 6.509300 ms
+Unloading 16 unused Assets to reduce memory usage. Loaded Objects now: 4935.
+Total: 2.708400 ms (FindLiveObjects: 0.157600 ms CreateObjectMapping: 0.097200 ms MarkObjects: 2.391200 ms  DeleteObjects: 0.062200 ms)
+
+[OneWayDps] Loaded v1.1.2 | B站：-_小西瓜_- | uid:153345791. F1 views; F2 range; F3 visibility; F4 reset; F5 compact; F6 auxiliary sources; F7 history.
+E:\Steam\steamapps\common\再再启程 One Way Tickets\SpeakerMod\build\runtime-v1.3.0\SaveData\save_00.dat
+[Letterbox] camera UI Camera rect -> (x:0.06, y:0.00, width:0.89, height:1.00) (screen 1898x945)
+[Letterbox] camera Main Camera rect -> (x:0.06, y:0.00, width:0.89, height:1.00) (screen 1898x945)
+[Letterbox] 接管 1 个根 Canvas 的缩放（reference=2560）
+[Letterbox] canvas Canvas scale -> 0.656 (cam 1680x945)
+[Letterbox] scene=InitScene screen=1898x945 view=(x:0.06, y:0.00, width:0.89, height:1.00) active=True
+PlayerPrefsException: Could not store preference value
+  at UnityEngine.PlayerPrefs.SetInt (System.String key, System.Int32 value) [0x00019] in <0a59c12fa0fd438e884d97ceb2065cf4>:0 
+  at Commons.PlayerPrefs_Init.Start () [0x0000d] in <0e5ca5e931f94c16b2843588c810015d>:0 
+
+[OneWaySpeaker TEST] PASS icon 13114022 dt[device_thumbnail_71]
+[OneWaySpeaker TEST] PASS renamed 13114022
+[OneWaySpeaker TEST] PASS description 13114022
+[OneWaySpeaker TEST] PASS icon 13114023 dt[device_thumbnail_71]
+[OneWaySpeaker TEST] PASS renamed 13114023
+[OneWaySpeaker TEST] PASS description 13114023
+[OneWaySpeaker TEST] PASS icon 13114024 dt[device_thumbnail_71]
+[OneWaySpeaker TEST] PASS renamed 13114024
+[OneWaySpeaker TEST] PASS description 13114024
+[OneWaySpeaker TEST] PASS unrelated names unchanged
+[OneWaySpeaker TEST] PASS description appended on new line
+[OneWaySpeaker TEST] PASS bell database variants 3
+[OneWaySpeaker TEST] PASS pixel texture
+[OneWaySpeaker TEST] PASS inventory icon preserves tall proportions with centered transparent padding
+[OneWaySpeaker TEST] PASS original bell prefab
+[OneWaySpeaker TEST] PASS bell control panel prefab
+[OneWaySpeaker PANEL] DPanel_Melee_Bell sprite=null rect=(x:-110.00, y:-182.00, width:220.00, height:364.00) type=Simple
+[OneWaySpeaker PANEL] Contents_on_Board/Bg sprite=ui_battle_ctrl_meleethrow_bg rect=(x:-106.00, y:-124.00, width:212.00, height:248.00) type=Simple
+[OneWaySpeaker PANEL] Contents_on_Board/Bg/Icon_On sprite=ui_battle_ctrl_bell_on rect=(x:-68.00, y:-102.00, width:136.00, height:204.00) type=Simple
+[OneWaySpeaker PANEL] Contents_on_Board/Bg/Icon_Off sprite=ui_battle_ctrl_bell_on-2 rect=(x:-68.00, y:-102.00, width:136.00, height:204.00) type=Simple
+[OneWaySpeaker PANEL] Contents_on_Board/AtkBtn sprite=ui_battle_ctrl_melee_btn_n rect=(x:-90.00, y:-56.00, width:180.00, height:112.00) type=Simple
+[OneWaySpeaker PANEL] General_Script_Content/Mask-Broken sprite=null rect=(x:-110.00, y:-182.00, width:220.00, height:364.00) type=Sliced
+[OneWaySpeaker PANEL] General_Script_Content/Mask-Broken/IMG-reminder sprite=statu_repair_reminder rect=(x:-8.00, y:-18.00, width:16.00, height:36.00) type=Simple
+[OneWaySpeaker PANEL] General_Script_Content/NPCWorkStations/WorkStation_Attack sprite=ui_device_working_npc rect=(x:-90.00, y:-42.00, width:180.00, height:84.00) type=Simple
+[OneWaySpeaker PANEL] General_Script_Content/NPCWorkStations/WorkStation_Attack/highlight sprite=ui_npc_workspace_highlight rect=(x:-38.00, y:-38.00, width:76.00, height:76.00) type=Simple
+[OneWaySpeaker PANEL] General_Script_Content/NPCWorkStations/WorkStation_Attack/SlotImage sprite=ui_npc_profile_bg rect=(x:-38.00, y:-38.00, width:76.00, height:76.00) type=Simple
+[OneWaySpeaker PANEL] General_Script_Content/NPCWorkStations/WorkStation_Attack/SlotImage/view/rotate_center/Character_Image/working_bg sprite=ui_device_working_npc_bg rect=(x:-38.00, y:-38.00, width:76.00, height:76.00) type=Simple
+[OneWaySpeaker PANEL] General_Script_Content/NPCWorkStations/WorkStation_Attack/SlotImage/view/rotate_center/Character_Image/selected sprite=namecard_bg_selected rect=(x:-42.00, y:-42.00, width:84.00, height:84.00) type=Simple
+[OneWaySpeaker PANEL] General_Script_Content/NPCWorkStations/WorkStation_Attack/SlotImage/view/rotate_center/Character_Image/character_image sprite=namecard_hero_12 rect=(x:-38.00, y:-38.00, width:76.00, height:76.00) type=Simple
+[OneWaySpeaker PANEL] General_Script_Content/NPCWorkStations/WorkStation_Attack/SlotImage/view/Working_Cover sprite=ui_battle_npc_working_cover rect=(x:-38.00, y:-38.00, width:76.00, height:76.00) type=Simple
+[OneWaySpeaker PANEL] General_Script_Content/NPCWorkStations/WorkStation_Attack/SlotImage/view/buffview sprite=null rect=(x:-50.00, y:-50.00, width:100.00, height:100.00) type=Simple
+[OneWaySpeaker PANEL] General_Script_Content/NPCWorkStations/WorkStation_Attack/SlotImage/view/buffview/buff sprite=ui_battle_vfx_stun rect=(x:-32.00, y:-32.00, width:64.00, height:64.00) type=Simple
+[OneWaySpeaker PANEL] General_Script_Content/NPCWorkStations/WorkStation_Attack/cubicle_icon sprite=ui_battle_work_icon_2 rect=(x:-22.00, y:-22.00, width:44.00, height:44.00) type=Simple
+[OneWaySpeaker PANEL] General_Script_Content/IMG-Danger_Icon sprite=ui_icon_dangerous_sign rect=(x:-46.00, y:-88.00, width:92.00, height:88.00) type=Simple
+[OneWaySpeaker PANEL] IMG-MaskWhenBroken sprite=ui_battle_vfx_fix_black_bg rect=(x:-330.00, y:-182.00, width:660.00, height:364.00) type=Sliced
+[OneWaySpeaker PANEL] IMG-MaskWhenBroken/IMG-iconRepair sprite=ui_battle_vfx_fix_icon rect=(x:-18.00, y:-18.00, width:36.00, height:36.00) type=Simple
+[OneWaySpeaker PANEL] IMG-MaskWhenBroken/IMG-iconRepair/Slider-FixProcess/Background sprite=ui_battle_vfx_fix_bar_bg rect=(x:-60.00, y:-10.00, width:120.00, height:20.00) type=Simple
+[OneWaySpeaker PANEL] IMG-MaskWhenBroken/IMG-iconRepair/Slider-FixProcess/Fill Area/Fill sprite=ui_battle_vfx_fix_bar rect=(x:0.00, y:-6.00, width:0.00, height:12.00) type=Simple
+[OneWaySpeaker PANEL] IMG-MaskWhenBroken/IMG-Border sprite=ui_battle_vfx_general_cover rect=(x:-330.00, y:-182.00, width:660.00, height:364.00) type=Sliced
+[OneWaySpeaker PANEL] IMG-MaskWhenBroken/Upper/[Obsolete]IMG-BorderUD sprite=[Obsolete]ui_battle_vfx_general_cover_UD rect=(x:-330.00, y:-182.00, width:660.00, height:364.00) type=Sliced
+[OneWaySpeaker PANEL] IMG-MaskWhenBroken/Upper/[Obsolete]IMG-BorderRL sprite=[Obsolete]ui_battle_vfx_general_cover_RL rect=(x:-330.00, y:-182.00, width:660.00, height:364.00) type=Sliced
+[OneWaySpeaker SLIDER] Slider-FixProcess fill=Fill handle=null
+[OneWaySpeaker] Replaced 2 bell control glyphs; native background and buttons retained
+[OneWaySpeaker TEST] PASS battle panel replaces both bell glyphs
+[OneWaySpeaker TEST] PASS battle glyph preserves aspect and separate light/dark states
+[OneWaySpeaker TEST] PASS battle background, attack button and native layout unchanged
+[OneWaySpeaker TEST] PASS battle icon uses coarse 48px grid and three amber colors
+[OneWaySpeaker] Replaced bell world visual, height=1.18
+[OneWaySpeaker TEST] PASS world renderer replacement
+[OneWaySpeaker TEST] PASS preview camera layer preserved
+[OneWaySpeaker TEST] PASS speaker and waves behind weapon slot device_slot_wheel
+[OneWaySpeaker TEST] PASS speaker and waves behind weapon slot slot_top
+[OneWaySpeaker TEST] PASS speaker and waves behind weapon slot slot_back
+[OneWaySpeaker TEST] PASS speaker and waves behind weapon slot slot_back_top
+[OneWaySpeaker TEST] PASS speaker and waves behind weapon slot slot_front
+[OneWaySpeaker TEST] PASS speaker and waves behind weapon slot slot_front_top
+[OneWaySpeaker TEST] PASS preview camera fits tall speaker without top clipping
+[OneWaySpeaker TEST] PASS perspective preview keeps car large while fitting speakers
+[OneWaySpeaker TEST] PASS speaker lowered 12 percent
+[OneWaySpeaker] Replaced bell world visual, height=1.18
+[OneWaySpeaker TEST] PASS preview clone has one speaker at original size
+[OneWaySpeaker] Playing 365里路; fade over final 20m
+[OneWaySpeaker TEST] PASS MP3 decode and loop playback
+[OneWaySpeaker TEST] PASS repeat attack keeps music position
+[OneWaySpeaker TEST] PASS fade distance matches HUD metres (world units x2)
+[OneWaySpeaker TEST] PASS song stays at configured volume before final 20m
+[OneWaySpeaker TEST] PASS song respects muted BGM settings
+[OneWaySpeaker TEST] PASS 20m begins fade at full volume
+[OneWaySpeaker TEST] PASS 10m song volume is half
+[OneWaySpeaker TEST] PASS 5m song continues smooth fade
+[OneWaySpeaker TEST] PASS song is silent at 0m
+[OneWaySpeaker TEST] PASS repeat attack or reversing cannot restart finished fade
+[OneWaySpeaker TEST] PASS music enables pixel sound waves
+[OneWaySpeaker TEST] PASS sound waves animate during playback
+[OneWaySpeaker TEST] PASS native BGM suppressed while preserving mute flags
+[OneWaySpeaker] Rest area reached; music stopped, native BGM fading in
+[OneWaySpeaker TEST] PASS rest arrival stops song and begins native BGM from silence
+[OneWaySpeaker TEST] PASS native BGM restores smoothly over 1.5 seconds
+[OneWaySpeaker TEST] PASS recovery respects native rest volume adjustment
+[OneWaySpeaker TEST] PASS native audio Update does not compound recovery gain
+[OneWaySpeaker TEST] PASS recovery preserves pre-existing mute state
+[OneWaySpeaker] Rest area reached; music stopped, native BGM fading in
+[OneWaySpeaker TEST] PASS recovery reaches current native level without restart or overshoot
+[OneWaySpeaker TEST] PASS rest screen cannot restart music
+[OneWaySpeaker TEST] PASS sound waves stop at rest screen
+[OneWaySpeaker] Playing 365里路; fade over final 20m
+[OneWaySpeaker TEST] PASS next departure first attack starts new song
+[OneWaySpeaker TEST] PASS run end stops music
+[OneWaySpeaker TEST] PASS rest without a speaker song leaves native BGM untouched
+[OneWaySpeaker TEST] ALL PASSED
+Setting up 20 worker threads for Enlighten.
+Memory Statistics:
+[ALLOC_TEMP_TLS] TLS Allocator
+  StackAllocators : 
+    [ALLOC_TEMP_MAIN]
+      Peak usage frame count: [0-1.0 KB]: 37124 frames, [2.0 KB-4.0 KB]: 29845 frames, [4.0 KB-8.0 KB]: 10 frames, [8.0 KB-16.0 KB]: 1 frames, [16.0 KB-32.0 KB]: 2 frames, [64.0 KB-128.0 KB]: 2 frames, [0.5 MB-1.0 MB]: 2 frames, [2.0 MB-4.0 MB]: 1 frames, [4.0 MB-8.0 MB]: 1 frames
+      Initial Block Size 4.0 MB
+      Current Block Size 5.4 MB
+      Peak Allocated Bytes 4.0 MB
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.worker 4]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Loading.PreloadManager]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 145.4 KB
+      Overflow Count 13
+    [ALLOC_TEMP_Background Job.worker 3]
+      Initial Block Size 32.0 KB
+      Current Block Size 36.0 KB
+      Peak Allocated Bytes 32.0 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.worker 11]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 16]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 20.5 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.worker 7]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.worker 6]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 11]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 20.5 KB
+      Overflow Count 0
+    [ALLOC_TEMP_CloudJob.worker 0] x 2
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 9.1 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 15]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 20.5 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.worker 12]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.worker 2]
+      Initial Block Size 32.0 KB
+      Current Block Size 44.0 KB
+      Peak Allocated Bytes 41.2 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.worker 9]
+      Initial Block Size 32.0 KB
+      Current Block Size 36.0 KB
+      Peak Allocated Bytes 32.0 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 0]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 16 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 4]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 20.5 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.worker 15]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 14]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 20.5 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.worker 10]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 13]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 20.5 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.worker 1]
+      Initial Block Size 32.0 KB
+      Current Block Size 44.0 KB
+      Peak Allocated Bytes 41.3 KB
+      Overflow Count 2
+    [ALLOC_TEMP_EnlightenWorker] x 20
+      Initial Block Size 64.0 KB
+      Current Block Size 64.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 1]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 26.1 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 3]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 26.1 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.worker 5]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.worker 8]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 12]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 26.1 KB
+      Overflow Count 0
+    [ALLOC_TEMP_AssetGarbageCollectorHelper] x 19
+      Initial Block Size 64.0 KB
+      Current Block Size 64.0 KB
+      Peak Allocated Bytes 138 B
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.worker 13]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 5]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 20.5 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 2]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 26.1 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 10]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 26.1 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 7]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 20.5 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 17]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 9]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 20.5 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 18]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.worker 0]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 6]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 20.5 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Job.worker 8]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 20.5 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.worker 14]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Loading.AsyncRead]
+      Initial Block Size 64.0 KB
+      Current Block Size 64.0 KB
+      Peak Allocated Bytes 41.3 KB
+      Overflow Count 0
+    [ALLOC_TEMP_BatchDeleteObjects]
+      Initial Block Size 64.0 KB
+      Current Block Size 64.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+[ALLOC_DEFAULT] Dual Thread Allocator
+  Peak main deferred allocation count 178
+    [ALLOC_BUCKET]
+      Large Block size 4.0 MB
+      Used Block count 1
+      Peak Allocated bytes 3.0 MB
+    [ALLOC_DEFAULT_MAIN]
+      Peak usage frame count: [64.0 MB-128.0 MB]: 37130 frames, [128.0 MB-256.0 MB]: 29858 frames
+      Requested Block Size 16.0 MB
+      Peak Block count 5
+      Peak Allocated memory 184.5 MB
+      Peak Large allocation bytes 110.2 MB
+    [ALLOC_DEFAULT_THREAD]
+      Peak usage frame count: [4.0 MB-8.0 MB]: 37130 frames, [8.0 MB-16.0 MB]: 29858 frames
+      Requested Block Size 16.0 MB
+      Peak Block count 1
+      Peak Allocated memory 12.9 MB
+      Peak Large allocation bytes 0 B
+[ALLOC_TEMP_JOB_1_FRAME]
+  Initial Block Size 2.0 MB
+  Used Block Count 0
+  Overflow Count (too large) 0
+  Overflow Count (full) 0
+[ALLOC_TEMP_JOB_2_FRAMES]
+  Initial Block Size 2.0 MB
+  Used Block Count 0
+  Overflow Count (too large) 0
+  Overflow Count (full) 0
+[ALLOC_TEMP_JOB_4_FRAMES (JobTemp)]
+  Initial Block Size 2.0 MB
+  Used Block Count 1
+  Overflow Count (too large) 0
+  Overflow Count (full) 0
+[ALLOC_TEMP_JOB_ASYNC (Background)]
+  Initial Block Size 1.0 MB
+  Used Block Count 1
+  Overflow Count (too large) 0
+  Overflow Count (full) 0
+[ALLOC_GFX] Dual Thread Allocator
+  Peak main deferred allocation count 0
+    [ALLOC_BUCKET]
+      Large Block size 4.0 MB
+      Used Block count 1
+      Peak Allocated bytes 3.0 MB
+    [ALLOC_GFX_MAIN]
+      Peak usage frame count: [32.0 KB-64.0 KB]: 37127 frames, [64.0 KB-128.0 KB]: 29861 frames
+      Requested Block Size 16.0 MB
+      Peak Block count 1
+      Peak Allocated memory 120.5 KB
+      Peak Large allocation bytes 0 B
+    [ALLOC_GFX_THREAD]
+      Peak usage frame count: [32.0 KB-64.0 KB]: 36865 frames, [1.0 MB-2.0 MB]: 20 frames, [2.0 MB-4.0 MB]: 28 frames, [4.0 MB-8.0 MB]: 18 frames, [8.0 MB-16.0 MB]: 75 frames, [16.0 MB-32.0 MB]: 29982 frames
+      Requested Block Size 16.0 MB
+      Peak Block count 2
+      Peak Allocated memory 24.5 MB
+      Peak Large allocation bytes 0 B
+[ALLOC_CACHEOBJECTS] Dual Thread Allocator
+  Peak main deferred allocation count 47
+    [ALLOC_BUCKET]
+      Large Block size 4.0 MB
+      Used Block count 1
+      Peak Allocated bytes 3.0 MB
+    [ALLOC_CACHEOBJECTS_MAIN]
+      Peak usage frame count: [8.0 MB-16.0 MB]: 66988 frames
+      Requested Block Size 4.0 MB
+      Peak Block count 3
+      Peak Allocated memory 14.2 MB
+      Peak Large allocation bytes 4.9 MB
+    [ALLOC_CACHEOBJECTS_THREAD]
+      Peak usage frame count: [128.0 KB-256.0 KB]: 37009 frames, [8.0 MB-16.0 MB]: 121 frames, [16.0 MB-32.0 MB]: 29858 frames
+      Requested Block Size 4.0 MB
+      Peak Block count 3
+      Peak Allocated memory 21.7 MB
+      Peak Large allocation bytes 12.1 MB
+[ALLOC_TYPETREE] Dual Thread Allocator
+  Peak main deferred allocation count 2
+    [ALLOC_BUCKET]
+      Large Block size 4.0 MB
+      Used Block count 1
+      Peak Allocated bytes 3.0 MB
+    [ALLOC_TYPETREE_MAIN]
+      Peak usage frame count: [8.0 KB-16.0 KB]: 37128 frames, [16.0 KB-32.0 KB]: 29860 frames
+      Requested Block Size 2.0 MB
+      Peak Block count 1
+      Peak Allocated memory 23.5 KB
+      Peak Large allocation bytes 0 B
+    [ALLOC_TYPETREE_THREAD]
+      Peak usage frame count: [0-1.0 KB]: 37018 frames, [1.0 KB-2.0 KB]: 19 frames, [2.0 KB-4.0 KB]: 3 frames, [4.0 KB-8.0 KB]: 10 frames, [8.0 KB-16.0 KB]: 63 frames, [16.0 KB-32.0 KB]: 15 frames, [32.0 KB-64.0 KB]: 2 frames, [0.5 MB-1.0 MB]: 29216 frames, [1.0 MB-2.0 MB]: 642 frames
+      Requested Block Size 2.0 MB
+      Peak Block count 1
+      Peak Allocated memory 1.7 MB
+      Peak Large allocation bytes 0 B

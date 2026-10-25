@@ -1,0 +1,361 @@
+TYPE World.Progresss.ProgressUiView : UnityEngine.MonoBehaviour
+FIELD System.Single World.Progresss.ProgressUiView::NOTICE_POS_Y_END
+FIELD System.Single World.Progresss.ProgressUiView::NOTICE_POS_Y_DELTA
+FIELD System.Single World.Progresss.ProgressUiView::NOTICE_SIZE_END
+FIELD System.Single World.Progresss.ProgressUiView::NOTICE_SIZE_DELTA
+FIELD World.Progresss.Progress World.Progresss.ProgressUiView::owner
+FIELD UnityEngine.UI.Slider World.Progresss.ProgressUiView::progress_slider
+FIELD TMPro.TextMeshProUGUI World.Progresss.ProgressUiView::progress_text
+FIELD UnityEngine.UI.Image World.Progresss.ProgressUiView::notice
+FIELD TMPro.TextMeshProUGUI World.Progresss.ProgressUiView::notice_text
+FIELD UnityEngine.UI.Image World.Progresss.ProgressUiView::alarm_danger
+FIELD UnityEngine.GameObject World.Progresss.ProgressUiView::plot_prefab_vital
+FIELD UnityEngine.GameObject World.Progresss.ProgressUiView::plot_prefab_trivial
+FIELD TMPro.TextMeshProUGUI World.Progresss.ProgressUiView::lv_info1
+FIELD TMPro.TextMeshProUGUI World.Progresss.ProgressUiView::lv_info2
+FIELD UnityEngine.UI.Image World.Progresss.ProgressUiView::lv_info_bg
+FIELD System.Boolean World.Progresss.ProgressUiView::audio_triggered
+METHOD System.Void World.Progresss.ProgressUiView::Foundations.MVVM.IModelView<World.Progresss.Progress>.attach(World.Progresss.Progress)
+IL_0000: ldarg.0
+IL_0001: ldarg.1
+IL_0002: stfld World.Progresss.Progress World.Progresss.ProgressUiView::owner
+IL_0007: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_000c: dup
+IL_000d: ldfld AutoCodes.game_world World.WorldContext::r_game_world
+IL_0012: stloc.0
+IL_0013: call !0 Foundations.Singleton`1<Foundations.Share_DS>::get_instance()
+IL_0018: ldstr "scene_index"
+IL_001d: ldloca.s V_1
+IL_001f: callvirt System.Boolean Foundations.Share_DS::try_get_value<System.Int32>(System.String,!!0&)
+IL_0024: pop
+IL_0025: ldloc.1
+IL_0026: ldc.i4.1
+IL_0027: add
+IL_0028: stloc.1
+IL_0029: ldloc.1
+IL_002a: ldc.i4.s 10
+IL_002c: bge IL_0056
+IL_0031: ldarg.0
+IL_0032: ldfld TMPro.TextMeshProUGUI World.Progresss.ProgressUiView::lv_info1
+IL_0037: ldstr "0{0}"
+IL_003c: ldloc.1
+IL_003d: box System.Int32
+IL_0042: call System.String System.String::Format(System.String,System.Object)
+IL_0047: call System.String Commons.Localization_Utility::get_art_sprite(System.String)
+IL_004c: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_0051: br IL_0076
+IL_0056: ldarg.0
+IL_0057: ldfld TMPro.TextMeshProUGUI World.Progresss.ProgressUiView::lv_info1
+IL_005c: ldstr "{0}"
+IL_0061: ldloc.1
+IL_0062: box System.Int32
+IL_0067: call System.String System.String::Format(System.String,System.Object)
+IL_006c: call System.String Commons.Localization_Utility::get_art_sprite(System.String)
+IL_0071: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_0076: ldfld AutoCodes.level World.WorldContext::r_level
+IL_007b: ldfld System.Int32 AutoCodes.level::scene_count
+IL_0080: stloc.2
+IL_0081: ldloc.2
+IL_0082: ldc.i4.s 10
+IL_0084: bge IL_00ae
+IL_0089: ldarg.0
+IL_008a: ldfld TMPro.TextMeshProUGUI World.Progresss.ProgressUiView::lv_info2
+IL_008f: ldstr "0{0}"
+IL_0094: ldloc.2
+IL_0095: box System.Int32
+IL_009a: call System.String System.String::Format(System.String,System.Object)
+IL_009f: call System.String Commons.Localization_Utility::get_art_sprite(System.String)
+IL_00a4: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_00a9: br IL_00ce
+IL_00ae: ldarg.0
+IL_00af: ldfld TMPro.TextMeshProUGUI World.Progresss.ProgressUiView::lv_info2
+IL_00b4: ldstr "{0}"
+IL_00b9: ldloc.2
+IL_00ba: box System.Int32
+IL_00bf: call System.String System.String::Format(System.String,System.Object)
+IL_00c4: call System.String Commons.Localization_Utility::get_art_sprite(System.String)
+IL_00c9: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_00ce: ldloc.0
+IL_00cf: ldfld System.String AutoCodes.game_world::UI_level_index_bg
+IL_00d4: ldloca.s V_3
+IL_00d6: call System.Boolean OneWaySpeaker.Hooks::LoadSprite(System.String,UnityEngine.Sprite&)
+IL_00db: pop
+IL_00dc: ldarg.0
+IL_00dd: ldfld UnityEngine.UI.Image World.Progresss.ProgressUiView::lv_info_bg
+IL_00e2: ldloc.3
+IL_00e3: callvirt System.Void UnityEngine.UI.Image::set_sprite(UnityEngine.Sprite)
+IL_00e8: ret
+METHOD System.Void World.Progresss.ProgressUiView::Foundations.MVVM.IModelView<World.Progresss.Progress>.detach(World.Progresss.Progress)
+IL_0000: ldarg.0
+IL_0001: ldnull
+IL_0002: stfld World.Progresss.Progress World.Progresss.ProgressUiView::owner
+IL_0007: ret
+METHOD System.Void World.Progresss.ProgressUiView::World.Progresss.IProgressView.notify_on_tick()
+IL_0000: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_0005: ldfld System.Boolean World.WorldContext::in_safe_area
+IL_000a: brfalse IL_0035
+IL_000f: ldarg.0
+IL_0010: ldfld UnityEngine.UI.Slider World.Progresss.ProgressUiView::progress_slider
+IL_0015: ldc.r4 1
+IL_001a: callvirt System.Void UnityEngine.UI.Slider::set_value(System.Single)
+IL_001f: ldarg.0
+IL_0020: ldfld TMPro.TextMeshProUGUI World.Progresss.ProgressUiView::progress_text
+IL_0025: ldstr "0"
+IL_002a: call System.String Commons.Localization_Utility::get_art_sprite(System.String)
+IL_002f: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_0034: ret
+IL_0035: ldarg.0
+IL_0036: ldfld UnityEngine.UI.Slider World.Progresss.ProgressUiView::progress_slider
+IL_003b: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_0040: ldfld System.Single World.WorldContext::scene_progress_rate
+IL_0045: callvirt System.Void UnityEngine.UI.Slider::set_value(System.Single)
+IL_004a: ldarg.0
+IL_004b: ldfld World.Progresss.Progress World.Progresss.ProgressUiView::owner
+IL_0050: callvirt System.Single World.Progresss.Progress::get_total_progress()
+IL_0055: ldarg.0
+IL_0056: ldfld World.Progresss.Progress World.Progresss.ProgressUiView::owner
+IL_005b: callvirt System.Single World.Progresss.Progress::get_current_progress()
+IL_0060: sub
+IL_0061: ldc.r4 2
+IL_0066: mul
+IL_0067: stloc.0
+IL_0068: ldloc.0
+IL_0069: ldc.r4 0
+IL_006e: call System.Single UnityEngine.Mathf::Max(System.Single,System.Single)
+IL_0073: stloc.0
+IL_0074: ldarg.0
+IL_0075: ldfld TMPro.TextMeshProUGUI World.Progresss.ProgressUiView::progress_text
+IL_007a: ldstr "{0:F0}"
+IL_007f: ldloc.0
+IL_0080: box System.Single
+IL_0085: call System.String System.String::Format(System.String,System.Object)
+IL_008a: call System.String Commons.Localization_Utility::get_art_sprite(System.String)
+IL_008f: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_0094: ret
+METHOD System.Void World.Progresss.ProgressUiView::World.Progresss.IProgressView.notify_notice_encounter(System.Single,System.Boolean)
+IL_0000: ldarg.2
+IL_0001: brtrue IL_0028
+IL_0006: ldarg.0
+IL_0007: ldfld UnityEngine.UI.Image World.Progresss.ProgressUiView::notice
+IL_000c: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_0011: ldc.i4.0
+IL_0012: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0017: ldarg.0
+IL_0018: ldfld TMPro.TextMeshProUGUI World.Progresss.ProgressUiView::progress_text
+IL_001d: call UnityEngine.Color UnityEngine.Color::get_white()
+IL_0022: callvirt System.Void UnityEngine.UI.Graphic::set_color(UnityEngine.Color)
+IL_0027: ret
+IL_0028: ldarg.1
+IL_0029: ldarg.0
+IL_002a: ldfld World.Progresss.Progress World.Progresss.ProgressUiView::owner
+IL_002f: callvirt System.Single World.Progresss.Progress::get_current_progress()
+IL_0034: sub
+IL_0035: ldsfld Commons.Config Commons.Config::current
+IL_003a: ldfld System.Single Commons.Config::notice_length_1
+IL_003f: bge.un IL_015c
+IL_0044: ldarg.1
+IL_0045: ldarg.0
+IL_0046: ldfld World.Progresss.Progress World.Progresss.ProgressUiView::owner
+IL_004b: callvirt System.Single World.Progresss.Progress::get_current_progress()
+IL_0050: sub
+IL_0051: ldsfld Commons.Config Commons.Config::current
+IL_0056: ldfld System.Single Commons.Config::notice_length_2
+IL_005b: ble.un IL_015c
+IL_0060: ldarg.0
+IL_0061: ldfld UnityEngine.UI.Image World.Progresss.ProgressUiView::notice
+IL_0066: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_006b: ldc.i4.1
+IL_006c: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0071: ldarg.1
+IL_0072: ldarg.0
+IL_0073: ldfld World.Progresss.Progress World.Progresss.ProgressUiView::owner
+IL_0078: callvirt System.Single World.Progresss.Progress::get_current_progress()
+IL_007d: sub
+IL_007e: stloc.0
+IL_007f: ldarg.0
+IL_0080: ldfld TMPro.TextMeshProUGUI World.Progresss.ProgressUiView::notice_text
+IL_0085: ldstr "{0:F1} m"
+IL_008a: ldloc.0
+IL_008b: ldc.r4 2
+IL_0090: mul
+IL_0091: box System.Single
+IL_0096: call System.String System.String::Format(System.String,System.Object)
+IL_009b: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_00a0: ldc.r4 1
+IL_00a5: ldloc.0
+IL_00a6: ldsfld Commons.Config Commons.Config::current
+IL_00ab: ldfld System.Single Commons.Config::notice_length_2
+IL_00b0: sub
+IL_00b1: neg
+IL_00b2: ldc.r4 0.01
+IL_00b7: mul
+IL_00b8: call System.Single UnityEngine.Mathf::Exp(System.Single)
+IL_00bd: sub
+IL_00be: stloc.1
+IL_00bf: ldc.r4 -600
+IL_00c4: ldloc.1
+IL_00c5: ldc.r4 200
+IL_00ca: mul
+IL_00cb: add
+IL_00cc: stloc.2
+IL_00cd: ldarg.0
+IL_00ce: ldfld UnityEngine.UI.Image World.Progresss.ProgressUiView::notice
+IL_00d3: callvirt UnityEngine.RectTransform UnityEngine.UI.Graphic::get_rectTransform()
+IL_00d8: ldc.r4 0
+IL_00dd: ldloc.2
+IL_00de: newobj System.Void UnityEngine.Vector2::.ctor(System.Single,System.Single)
+IL_00e3: callvirt System.Void UnityEngine.RectTransform::set_anchoredPosition(UnityEngine.Vector2)
+IL_00e8: ldc.r4 200
+IL_00ed: ldloc.1
+IL_00ee: ldc.r4 -50
+IL_00f3: mul
+IL_00f4: add
+IL_00f5: stloc.3
+IL_00f6: ldarg.0
+IL_00f7: ldfld UnityEngine.UI.Image World.Progresss.ProgressUiView::notice
+IL_00fc: callvirt UnityEngine.RectTransform UnityEngine.UI.Graphic::get_rectTransform()
+IL_0101: ldloc.3
+IL_0102: ldarg.0
+IL_0103: ldfld UnityEngine.UI.Image World.Progresss.ProgressUiView::notice
+IL_0108: callvirt UnityEngine.RectTransform UnityEngine.UI.Graphic::get_rectTransform()
+IL_010d: callvirt UnityEngine.Vector2 UnityEngine.RectTransform::get_sizeDelta()
+IL_0112: ldfld System.Single UnityEngine.Vector2::y
+IL_0117: newobj System.Void UnityEngine.Vector2::.ctor(System.Single,System.Single)
+IL_011c: callvirt System.Void UnityEngine.RectTransform::set_sizeDelta(UnityEngine.Vector2)
+IL_0121: ldarg.0
+IL_0122: ldfld TMPro.TextMeshProUGUI World.Progresss.ProgressUiView::progress_text
+IL_0127: ldsfld Commons.Config Commons.Config::current
+IL_012c: ldfld UnityEngine.Color Commons.Config::ui_red_color
+IL_0131: callvirt System.Void UnityEngine.UI.Graphic::set_color(UnityEngine.Color)
+IL_0136: ldarg.0
+IL_0137: ldfld UnityEngine.UI.Image World.Progresss.ProgressUiView::alarm_danger
+IL_013c: ldc.r4 1
+IL_0141: ldc.r4 1
+IL_0146: ldc.r4 1
+IL_014b: ldc.r4 1
+IL_0150: ldloc.1
+IL_0151: sub
+IL_0152: newobj System.Void UnityEngine.Color::.ctor(System.Single,System.Single,System.Single,System.Single)
+IL_0157: callvirt System.Void UnityEngine.UI.Graphic::set_color(UnityEngine.Color)
+IL_015c: ret
+METHOD System.Void World.Progresss.ProgressUiView::World.Progresss.IProgressView.notify_add_progress_event(World.Progresss.ProgressEvent)
+IL_0000: ret
+METHOD System.Void World.Progresss.ProgressUiView::World.Progresss.IProgressView.notify_remove_progress_event(World.Progresss.ProgressEvent)
+IL_0000: ret
+METHOD System.Void World.Progresss.ProgressUiView::World.Progresss.IProgressView.notify_init()
+IL_0000: ldc.i4.s 100
+IL_0002: ldc.i4.4
+IL_0003: ldarg.0
+IL_0004: ldfld World.Progresss.Progress World.Progresss.ProgressUiView::owner
+IL_0009: callvirt System.Single World.Progresss.Progress::get_total_progress()
+IL_000e: ldc.r4 0.075
+IL_0013: mul
+IL_0014: conv.i4
+IL_0015: mul
+IL_0016: add
+IL_0017: ldc.i4 2000
+IL_001c: call System.Int32 UnityEngine.Mathf::Min(System.Int32,System.Int32)
+IL_0021: stloc.0
+IL_0022: ldarg.0
+IL_0023: ldfld UnityEngine.UI.Slider World.Progresss.ProgressUiView::progress_slider
+IL_0028: callvirt !!0 UnityEngine.Component::GetComponent<UnityEngine.RectTransform>()
+IL_002d: callvirt UnityEngine.Vector2 UnityEngine.RectTransform::get_sizeDelta()
+IL_0032: ldfld System.Single UnityEngine.Vector2::y
+IL_0037: stloc.1
+IL_0038: ldarg.0
+IL_0039: ldfld UnityEngine.UI.Slider World.Progresss.ProgressUiView::progress_slider
+IL_003e: callvirt !!0 UnityEngine.Component::GetComponent<UnityEngine.RectTransform>()
+IL_0043: ldloc.0
+IL_0044: conv.r4
+IL_0045: ldloc.1
+IL_0046: newobj System.Void UnityEngine.Vector2::.ctor(System.Single,System.Single)
+IL_004b: callvirt System.Void UnityEngine.RectTransform::set_sizeDelta(UnityEngine.Vector2)
+IL_0050: ldarg.0
+IL_0051: ldfld UnityEngine.UI.Slider World.Progresss.ProgressUiView::progress_slider
+IL_0056: ldarg.0
+IL_0057: ldfld World.Progresss.Progress World.Progresss.ProgressUiView::owner
+IL_005c: callvirt System.Single World.Progresss.Progress::get_total_progress()
+IL_0061: callvirt System.Void UnityEngine.UI.Slider::set_maxValue(System.Single)
+IL_0066: ldarg.0
+IL_0067: ldfld World.Progresss.Progress World.Progresss.ProgressUiView::owner
+IL_006c: ldfld System.Collections.Generic.List`1<World.Progresss.single_plot> World.Progresss.Progress::single_plots
+IL_0071: callvirt System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<World.Progresss.single_plot>::GetEnumerator()
+IL_0076: stloc.2
+IL_0077: br IL_0114
+IL_007c: ldloca.s V_2
+IL_007e: call !0 System.Collections.Generic.List`1/Enumerator<World.Progresss.single_plot>::get_Current()
+IL_0083: dup
+IL_0084: ldfld System.Single World.Progresss.single_plot::trigger_progress
+IL_0089: ldarg.0
+IL_008a: ldfld World.Progresss.Progress World.Progresss.ProgressUiView::owner
+IL_008f: callvirt System.Single World.Progresss.Progress::get_total_progress()
+IL_0094: div
+IL_0095: stloc.3
+IL_0096: ldfld System.Boolean World.Progresss.single_plot::ui_visible
+IL_009b: brtrue IL_00ab
+IL_00a0: ldarg.0
+IL_00a1: ldfld UnityEngine.GameObject World.Progresss.ProgressUiView::plot_prefab_trivial
+IL_00a6: br IL_00b1
+IL_00ab: ldarg.0
+IL_00ac: ldfld UnityEngine.GameObject World.Progresss.ProgressUiView::plot_prefab_vital
+IL_00b1: ldarg.0
+IL_00b2: ldfld UnityEngine.UI.Slider World.Progresss.ProgressUiView::progress_slider
+IL_00b7: callvirt UnityEngine.Transform UnityEngine.Component::get_transform()
+IL_00bc: call !!0 UnityEngine.Object::Instantiate<UnityEngine.GameObject>(!!0,UnityEngine.Transform)
+IL_00c1: dup
+IL_00c2: callvirt !!0 UnityEngine.GameObject::GetComponent<UnityEngine.RectTransform>()
+IL_00c7: ldloc.3
+IL_00c8: ldarg.0
+IL_00c9: ldfld UnityEngine.UI.Slider World.Progresss.ProgressUiView::progress_slider
+IL_00ce: callvirt !!0 UnityEngine.Component::GetComponent<UnityEngine.RectTransform>()
+IL_00d3: callvirt UnityEngine.Vector2 UnityEngine.RectTransform::get_sizeDelta()
+IL_00d8: ldfld System.Single UnityEngine.Vector2::x
+IL_00dd: mul
+IL_00de: ldarg.0
+IL_00df: ldfld UnityEngine.UI.Slider World.Progresss.ProgressUiView::progress_slider
+IL_00e4: callvirt !!0 UnityEngine.Component::GetComponent<UnityEngine.RectTransform>()
+IL_00e9: callvirt UnityEngine.Vector2 UnityEngine.RectTransform::get_sizeDelta()
+IL_00ee: ldfld System.Single UnityEngine.Vector2::x
+IL_00f3: ldc.r4 2
+IL_00f8: div
+IL_00f9: sub
+IL_00fa: ldc.r4 0
+IL_00ff: newobj System.Void UnityEngine.Vector2::.ctor(System.Single,System.Single)
+IL_0104: callvirt System.Void UnityEngine.RectTransform::set_anchoredPosition(UnityEngine.Vector2)
+IL_0109: callvirt UnityEngine.GameObject UnityEngine.GameObject::get_gameObject()
+IL_010e: ldc.i4.1
+IL_010f: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0114: ldloca.s V_2
+IL_0116: call System.Boolean System.Collections.Generic.List`1/Enumerator<World.Progresss.single_plot>::MoveNext()
+IL_011b: brtrue IL_007c
+IL_0120: leave IL_0133
+IL_0125: ldloca.s V_2
+IL_0127: constrained. System.Collections.Generic.List`1/Enumerator<World.Progresss.single_plot>
+IL_012d: callvirt System.Void System.IDisposable::Dispose()
+IL_0132: endfinally
+IL_0133: ret
+METHOD System.Void World.Progresss.ProgressUiView::World.Progresss.IProgressView.notify_enter_progress_event(World.Progresss.ProgressEvent)
+IL_0000: ldarg.0
+IL_0001: ldfld UnityEngine.UI.Image World.Progresss.ProgressUiView::alarm_danger
+IL_0006: ldc.r4 1
+IL_000b: ldc.r4 1
+IL_0010: ldc.r4 1
+IL_0015: ldc.r4 1
+IL_001a: newobj System.Void UnityEngine.Color::.ctor(System.Single,System.Single,System.Single,System.Single)
+IL_001f: callvirt System.Void UnityEngine.UI.Graphic::set_color(UnityEngine.Color)
+IL_0024: ret
+METHOD System.Void World.Progresss.ProgressUiView::World.Progresss.IProgressView.notify_exit_progress_event(World.Progresss.ProgressEvent)
+IL_0000: ldarg.0
+IL_0001: ldfld UnityEngine.UI.Image World.Progresss.ProgressUiView::alarm_danger
+IL_0006: call UnityEngine.Color UnityEngine.Color::get_clear()
+IL_000b: callvirt System.Void UnityEngine.UI.Graphic::set_color(UnityEngine.Color)
+IL_0010: ldarg.0
+IL_0011: ldc.i4.0
+IL_0012: stfld System.Boolean World.Progresss.ProgressUiView::audio_triggered
+IL_0017: ret
+METHOD System.Void World.Progresss.ProgressUiView::World.Progresss.IProgressView.notify_arrived_progress_event(World.Progresss.ProgressEvent)
+IL_0000: ret
+METHOD System.Void World.Progresss.ProgressUiView::.ctor()
+IL_0000: ldarg.0
+IL_0001: call System.Void UnityEngine.MonoBehaviour::.ctor()
+IL_0006: ret

@@ -1,0 +1,420 @@
+TYPE World.Devices.DeviceOverview : UnityEngine.MonoBehaviour
+FIELD System.Int32 World.Devices.DeviceOverview::HP_BAR_SCALE_GRIDS_COUNT
+FIELD System.Int32 World.Devices.DeviceOverview::HP_BAR_HP_PER_SCALE_GRID
+FIELD System.Single World.Devices.DeviceOverview::HP_BAR_CONVERT_COEF
+FIELD UnityEngine.UI.Image World.Devices.DeviceOverview::index_image
+FIELD UnityEngine.UI.Image World.Devices.DeviceOverview::device_icon
+FIELD UnityEngine.UI.Image World.Devices.DeviceOverview::slot_image
+FIELD UnityEngine.UI.Slider World.Devices.DeviceOverview::hp_slider
+FIELD UnityEngine.UI.Slider World.Devices.DeviceOverview::true_hp_slider
+FIELD UnityEngine.UI.Image World.Devices.DeviceOverview::true_hp_img
+FIELD UnityEngine.GameObject World.Devices.DeviceOverview::select
+FIELD World.Devices.DeviceUiViews.DeviceHoveringInfo World.Devices.DeviceOverview::hoveringinfo
+FIELD UnityEngine.GameObject World.Devices.DeviceOverview::operate_content
+FIELD World.Devices.DeviceMgr World.Devices.DeviceOverview::owner
+FIELD World.Devices.Device World.Devices.DeviceOverview::data
+FIELD World.Devices.DeviceUiViews.DeviceUiView World.Devices.DeviceOverview::control_panel
+FIELD World.Devices.DeviceUiViews.DeviceHealthState World.Devices.DeviceOverview::dhs
+FIELD UnityEngine.Transform World.Devices.DeviceOverview::cub_content
+FIELD System.Collections.Generic.List`1<World.Devices.DeviceUiViews.CubiclesUiView.CubicleUiView> World.Devices.DeviceOverview::cubicles
+METHOD System.Void World.Devices.DeviceOverview::SetOverview(System.String,World.Devices.Device)
+IL_0000: ldarg.0
+IL_0001: ldarg.2
+IL_0002: stfld World.Devices.Device World.Devices.DeviceOverview::data
+IL_0007: ldarg.0
+IL_0008: ldfld System.Collections.Generic.List`1<World.Devices.DeviceUiViews.CubiclesUiView.CubicleUiView> World.Devices.DeviceOverview::cubicles
+IL_000d: callvirt System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<World.Devices.DeviceUiViews.CubiclesUiView.CubicleUiView>::GetEnumerator()
+IL_0012: stloc.0
+IL_0013: br IL_0029
+IL_0018: ldloca.s V_0
+IL_001a: call !0 System.Collections.Generic.List`1/Enumerator<World.Devices.DeviceUiViews.CubiclesUiView.CubicleUiView>::get_Current()
+IL_001f: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_0024: call System.Void UnityEngine.Object::Destroy(UnityEngine.Object)
+IL_0029: ldloca.s V_0
+IL_002b: call System.Boolean System.Collections.Generic.List`1/Enumerator<World.Devices.DeviceUiViews.CubiclesUiView.CubicleUiView>::MoveNext()
+IL_0030: brtrue IL_0018
+IL_0035: leave IL_0048
+IL_003a: ldloca.s V_0
+IL_003c: constrained. System.Collections.Generic.List`1/Enumerator<World.Devices.DeviceUiViews.CubiclesUiView.CubicleUiView>
+IL_0042: callvirt System.Void System.IDisposable::Dispose()
+IL_0047: endfinally
+IL_0048: ldarg.0
+IL_0049: ldfld System.Collections.Generic.List`1<World.Devices.DeviceUiViews.CubiclesUiView.CubicleUiView> World.Devices.DeviceOverview::cubicles
+IL_004e: callvirt System.Void System.Collections.Generic.List`1<World.Devices.DeviceUiViews.CubiclesUiView.CubicleUiView>::Clear()
+IL_0053: ldarg.2
+IL_0054: brtrue IL_009c
+IL_0059: ldarg.0
+IL_005a: ldfld UnityEngine.UI.Image World.Devices.DeviceOverview::device_icon
+IL_005f: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_0064: ldc.i4.0
+IL_0065: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_006a: ldarg.0
+IL_006b: ldfld UnityEngine.UI.Image World.Devices.DeviceOverview::slot_image
+IL_0070: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_0075: ldc.i4.0
+IL_0076: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_007b: ldarg.0
+IL_007c: ldfld UnityEngine.UI.Slider World.Devices.DeviceOverview::hp_slider
+IL_0081: ldc.r4 0
+IL_0086: callvirt System.Void UnityEngine.UI.Slider::set_value(System.Single)
+IL_008b: ldarg.0
+IL_008c: ldfld UnityEngine.UI.Slider World.Devices.DeviceOverview::true_hp_slider
+IL_0091: ldc.r4 0
+IL_0096: callvirt System.Void UnityEngine.UI.Slider::set_value(System.Single)
+IL_009b: ret
+IL_009c: ldarg.0
+IL_009d: call System.Void World.Devices.DeviceOverview::init_cubicles()
+IL_00a2: ldarg.0
+IL_00a3: ldfld UnityEngine.UI.Image World.Devices.DeviceOverview::device_icon
+IL_00a8: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_00ad: ldc.i4.1
+IL_00ae: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_00b3: ldarg.0
+IL_00b4: ldfld UnityEngine.UI.Image World.Devices.DeviceOverview::slot_image
+IL_00b9: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_00be: ldc.i4.1
+IL_00bf: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_00c4: ldarg.0
+IL_00c5: ldarg.1
+IL_00c6: call System.Void World.Devices.DeviceOverview::set_slot_icon(System.String)
+IL_00cb: ldarg.0
+IL_00cc: ldfld UnityEngine.UI.Slider World.Devices.DeviceOverview::hp_slider
+IL_00d1: ldarg.2
+IL_00d2: ldfld System.Int32 World.Devices.Device::current_hp
+IL_00d7: conv.r4
+IL_00d8: callvirt System.Void UnityEngine.UI.Slider::set_value(System.Single)
+IL_00dd: ldarg.0
+IL_00de: ldfld UnityEngine.UI.Slider World.Devices.DeviceOverview::hp_slider
+IL_00e3: ldarg.2
+IL_00e4: ldfld AutoCodes.battle_data World.Devices.Device::battle_data
+IL_00e9: ldfld System.Int32 AutoCodes.battle_data::hp
+IL_00ee: conv.r4
+IL_00ef: callvirt System.Void UnityEngine.UI.Slider::set_maxValue(System.Single)
+IL_00f4: ldarg.0
+IL_00f5: ldfld UnityEngine.UI.Slider World.Devices.DeviceOverview::true_hp_slider
+IL_00fa: ldarg.2
+IL_00fb: ldfld System.Int32 World.Devices.Device::current_hp
+IL_0100: conv.r4
+IL_0101: callvirt System.Void UnityEngine.UI.Slider::set_value(System.Single)
+IL_0106: ldarg.0
+IL_0107: ldfld UnityEngine.UI.Slider World.Devices.DeviceOverview::true_hp_slider
+IL_010c: ldarg.2
+IL_010d: ldfld AutoCodes.battle_data World.Devices.Device::battle_data
+IL_0112: ldfld System.Int32 AutoCodes.battle_data::hp
+IL_0117: conv.r4
+IL_0118: callvirt System.Void UnityEngine.UI.Slider::set_maxValue(System.Single)
+IL_011d: ldarg.0
+IL_011e: ldfld World.Devices.DeviceUiViews.DeviceHoveringInfo World.Devices.DeviceOverview::hoveringinfo
+IL_0123: ldnull
+IL_0124: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_0129: brfalse IL_013a
+IL_012e: ldarg.0
+IL_012f: ldfld World.Devices.DeviceUiViews.DeviceHoveringInfo World.Devices.DeviceOverview::hoveringinfo
+IL_0134: ldarg.2
+IL_0135: stfld World.Devices.Device World.Devices.DeviceUiViews.DeviceHoveringInfo::data
+IL_013a: ret
+METHOD System.Void World.Devices.DeviceOverview::init_cubicles()
+IL_0000: ldarg.0
+IL_0001: ldfld World.Devices.Device World.Devices.DeviceOverview::data
+IL_0006: ldfld System.Collections.Generic.List`1<World.Cubicles.BasicCubicle> World.Devices.Device::cubicle_list
+IL_000b: callvirt System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<World.Cubicles.BasicCubicle>::GetEnumerator()
+IL_0010: stloc.0
+IL_0011: br IL_001e
+IL_0016: ldloca.s V_0
+IL_0018: call !0 System.Collections.Generic.List`1/Enumerator<World.Cubicles.BasicCubicle>::get_Current()
+IL_001d: pop
+IL_001e: ldloca.s V_0
+IL_0020: call System.Boolean System.Collections.Generic.List`1/Enumerator<World.Cubicles.BasicCubicle>::MoveNext()
+IL_0025: brtrue IL_0016
+IL_002a: leave IL_003d
+IL_002f: ldloca.s V_0
+IL_0031: constrained. System.Collections.Generic.List`1/Enumerator<World.Cubicles.BasicCubicle>
+IL_0037: callvirt System.Void System.IDisposable::Dispose()
+IL_003c: endfinally
+IL_003d: ret
+METHOD System.Void World.Devices.DeviceOverview::Init(System.String,World.Devices.Device,World.Devices.DeviceMgr)
+IL_0000: ldarg.0
+IL_0001: ldarg.3
+IL_0002: stfld World.Devices.DeviceMgr World.Devices.DeviceOverview::owner
+IL_0007: ldarg.0
+IL_0008: ldarg.2
+IL_0009: stfld World.Devices.Device World.Devices.DeviceOverview::data
+IL_000e: ldarg.2
+IL_000f: brtrue IL_0057
+IL_0014: ldarg.0
+IL_0015: ldfld UnityEngine.UI.Image World.Devices.DeviceOverview::device_icon
+IL_001a: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_001f: ldc.i4.0
+IL_0020: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0025: ldarg.0
+IL_0026: ldfld UnityEngine.UI.Image World.Devices.DeviceOverview::slot_image
+IL_002b: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_0030: ldc.i4.0
+IL_0031: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0036: ldarg.0
+IL_0037: ldfld UnityEngine.UI.Slider World.Devices.DeviceOverview::hp_slider
+IL_003c: ldc.r4 0
+IL_0041: callvirt System.Void UnityEngine.UI.Slider::set_value(System.Single)
+IL_0046: ldarg.0
+IL_0047: ldfld UnityEngine.UI.Slider World.Devices.DeviceOverview::true_hp_slider
+IL_004c: ldc.r4 0
+IL_0051: callvirt System.Void UnityEngine.UI.Slider::set_value(System.Single)
+IL_0056: ret
+IL_0057: ldarg.0
+IL_0058: call System.Void World.Devices.DeviceOverview::init_cubicles()
+IL_005d: ldarg.0
+IL_005e: ldfld UnityEngine.UI.Image World.Devices.DeviceOverview::device_icon
+IL_0063: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_0068: ldc.i4.1
+IL_0069: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_006e: ldarg.0
+IL_006f: ldfld UnityEngine.UI.Image World.Devices.DeviceOverview::slot_image
+IL_0074: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_0079: ldc.i4.1
+IL_007a: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_007f: ldarg.0
+IL_0080: ldarg.1
+IL_0081: call System.Void World.Devices.DeviceOverview::set_slot_icon(System.String)
+IL_0086: ldarg.0
+IL_0087: ldfld UnityEngine.UI.Slider World.Devices.DeviceOverview::hp_slider
+IL_008c: ldarg.2
+IL_008d: ldfld System.Int32 World.Devices.Device::current_hp
+IL_0092: conv.r4
+IL_0093: callvirt System.Void UnityEngine.UI.Slider::set_value(System.Single)
+IL_0098: ldarg.0
+IL_0099: ldfld UnityEngine.UI.Slider World.Devices.DeviceOverview::hp_slider
+IL_009e: ldarg.2
+IL_009f: ldfld AutoCodes.battle_data World.Devices.Device::battle_data
+IL_00a4: ldfld System.Int32 AutoCodes.battle_data::hp
+IL_00a9: conv.r4
+IL_00aa: callvirt System.Void UnityEngine.UI.Slider::set_maxValue(System.Single)
+IL_00af: ldarg.0
+IL_00b0: ldfld UnityEngine.UI.Slider World.Devices.DeviceOverview::true_hp_slider
+IL_00b5: ldarg.2
+IL_00b6: ldfld System.Int32 World.Devices.Device::current_hp
+IL_00bb: conv.r4
+IL_00bc: callvirt System.Void UnityEngine.UI.Slider::set_value(System.Single)
+IL_00c1: ldarg.0
+IL_00c2: ldfld UnityEngine.UI.Slider World.Devices.DeviceOverview::true_hp_slider
+IL_00c7: ldarg.2
+IL_00c8: ldfld AutoCodes.battle_data World.Devices.Device::battle_data
+IL_00cd: ldfld System.Int32 AutoCodes.battle_data::hp
+IL_00d2: conv.r4
+IL_00d3: callvirt System.Void UnityEngine.UI.Slider::set_maxValue(System.Single)
+IL_00d8: ldarg.0
+IL_00d9: ldfld UnityEngine.UI.Image World.Devices.DeviceOverview::true_hp_img
+IL_00de: ldarg.2
+IL_00df: ldfld AutoCodes.battle_data World.Devices.Device::battle_data
+IL_00e4: ldfld System.Int32 AutoCodes.battle_data::hp
+IL_00e9: conv.r4
+IL_00ea: ldc.r4 0.006666667
+IL_00ef: mul
+IL_00f0: callvirt System.Void UnityEngine.UI.Image::set_pixelsPerUnitMultiplier(System.Single)
+IL_00f5: ldarg.0
+IL_00f6: ldfld World.Devices.DeviceUiViews.DeviceHoveringInfo World.Devices.DeviceOverview::hoveringinfo
+IL_00fb: ldnull
+IL_00fc: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_0101: brfalse IL_0112
+IL_0106: ldarg.0
+IL_0107: ldfld World.Devices.DeviceUiViews.DeviceHoveringInfo World.Devices.DeviceOverview::hoveringinfo
+IL_010c: ldarg.2
+IL_010d: stfld World.Devices.Device World.Devices.DeviceUiViews.DeviceHoveringInfo::data
+IL_0112: ret
+METHOD System.Void World.Devices.DeviceOverview::SetIndexImage(System.Int32)
+IL_0000: ldstr "number_icons[ui_battle_workingboard_number_{0}]"
+IL_0005: ldarg.1
+IL_0006: box System.Int32
+IL_000b: call System.String System.String::Format(System.String,System.Object)
+IL_0010: ldloca.s V_0
+IL_0012: call System.Boolean OneWaySpeaker.Hooks::LoadSprite(System.String,UnityEngine.Sprite&)
+IL_0017: pop
+IL_0018: ldarg.0
+IL_0019: ldfld UnityEngine.UI.Image World.Devices.DeviceOverview::index_image
+IL_001e: ldloc.0
+IL_001f: callvirt System.Void UnityEngine.UI.Image::set_sprite(UnityEngine.Sprite)
+IL_0024: ret
+METHOD System.Void World.Devices.DeviceOverview::UnityEngine.EventSystems.IPointerClickHandler.OnPointerClick(UnityEngine.EventSystems.PointerEventData)
+IL_0000: ldarg.0
+IL_0001: ldfld World.Devices.DeviceMgr World.Devices.DeviceOverview::owner
+IL_0006: ldarg.0
+IL_0007: ldfld World.Devices.Device World.Devices.DeviceOverview::data
+IL_000c: callvirt System.Void World.Devices.DeviceMgr::SelectDevice(World.Devices.Device)
+IL_0011: ret
+METHOD System.Void World.Devices.DeviceOverview::set_slot_icon(System.String)
+IL_0000: ldnull
+IL_0001: stloc.0
+IL_0002: ldarg.1
+IL_0003: ldstr "slot_top"
+IL_0008: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_000d: brtrue IL_0057
+IL_0012: ldarg.1
+IL_0013: ldstr "slot_back_top"
+IL_0018: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_001d: brtrue IL_0069
+IL_0022: ldarg.1
+IL_0023: ldstr "slot_back"
+IL_0028: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_002d: brtrue IL_007b
+IL_0032: ldarg.1
+IL_0033: ldstr "slot_front_top"
+IL_0038: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_003d: brtrue IL_008d
+IL_0042: ldarg.1
+IL_0043: ldstr "slot_front"
+IL_0048: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_004d: brtrue IL_009f
+IL_0052: br IL_00ac
+IL_0057: ldstr "slot_top_icon"
+IL_005c: ldloca.s V_0
+IL_005e: call System.Boolean OneWaySpeaker.Hooks::LoadSprite(System.String,UnityEngine.Sprite&)
+IL_0063: pop
+IL_0064: br IL_00ac
+IL_0069: ldstr "slot_back_top_icon"
+IL_006e: ldloca.s V_0
+IL_0070: call System.Boolean OneWaySpeaker.Hooks::LoadSprite(System.String,UnityEngine.Sprite&)
+IL_0075: pop
+IL_0076: br IL_00ac
+IL_007b: ldstr "slot_back_icon"
+IL_0080: ldloca.s V_0
+IL_0082: call System.Boolean OneWaySpeaker.Hooks::LoadSprite(System.String,UnityEngine.Sprite&)
+IL_0087: pop
+IL_0088: br IL_00ac
+IL_008d: ldstr "slot_front_top_icon"
+IL_0092: ldloca.s V_0
+IL_0094: call System.Boolean OneWaySpeaker.Hooks::LoadSprite(System.String,UnityEngine.Sprite&)
+IL_0099: pop
+IL_009a: br IL_00ac
+IL_009f: ldstr "slot_front_icon"
+IL_00a4: ldloca.s V_0
+IL_00a6: call System.Boolean OneWaySpeaker.Hooks::LoadSprite(System.String,UnityEngine.Sprite&)
+IL_00ab: pop
+IL_00ac: ldloc.0
+IL_00ad: ldnull
+IL_00ae: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_00b3: brfalse IL_00c4
+IL_00b8: ldarg.0
+IL_00b9: ldfld UnityEngine.UI.Image World.Devices.DeviceOverview::slot_image
+IL_00be: ldloc.0
+IL_00bf: callvirt System.Void UnityEngine.UI.Image::set_sprite(UnityEngine.Sprite)
+IL_00c4: ret
+METHOD System.Void World.Devices.DeviceOverview::tick()
+IL_0000: ldarg.0
+IL_0001: ldfld World.Devices.Device World.Devices.DeviceOverview::data
+IL_0006: brtrue IL_000c
+IL_000b: ret
+IL_000c: ldarg.0
+IL_000d: ldfld UnityEngine.UI.Slider World.Devices.DeviceOverview::hp_slider
+IL_0012: ldarg.0
+IL_0013: ldfld World.Devices.Device World.Devices.DeviceOverview::data
+IL_0018: ldfld System.Int32 World.Devices.Device::current_hp
+IL_001d: conv.r4
+IL_001e: callvirt System.Void UnityEngine.UI.Slider::set_value(System.Single)
+IL_0023: ldarg.0
+IL_0024: ldfld UnityEngine.UI.Slider World.Devices.DeviceOverview::true_hp_slider
+IL_0029: ldarg.0
+IL_002a: ldfld World.Devices.Device World.Devices.DeviceOverview::data
+IL_002f: ldfld System.Int32 World.Devices.Device::current_hp
+IL_0034: conv.r4
+IL_0035: callvirt System.Void UnityEngine.UI.Slider::set_value(System.Single)
+IL_003a: ldarg.0
+IL_003b: ldfld World.Devices.Device World.Devices.DeviceOverview::data
+IL_0040: ldfld System.Int32 World.Devices.Device::current_hp
+IL_0045: ldarg.0
+IL_0046: ldfld World.Devices.Device World.Devices.DeviceOverview::data
+IL_004b: ldfld AutoCodes.battle_data World.Devices.Device::battle_data
+IL_0050: ldfld System.Int32 AutoCodes.battle_data::hp
+IL_0055: bge IL_007e
+IL_005a: ldarg.0
+IL_005b: ldfld World.Devices.DeviceUiViews.DeviceHealthState World.Devices.DeviceOverview::dhs
+IL_0060: ldc.i4.1
+IL_0061: beq IL_007e
+IL_0066: ldarg.0
+IL_0067: ldfld World.Devices.Device World.Devices.DeviceOverview::data
+IL_006c: ldfld System.Boolean World.Devices.Device::is_validate
+IL_0071: brfalse IL_007e
+IL_0076: ldarg.0
+IL_0077: ldc.i4.1
+IL_0078: stfld World.Devices.DeviceUiViews.DeviceHealthState World.Devices.DeviceOverview::dhs
+IL_007d: ret
+IL_007e: ldarg.0
+IL_007f: ldfld World.Devices.Device World.Devices.DeviceOverview::data
+IL_0084: ldfld System.Int32 World.Devices.Device::current_hp
+IL_0089: ldarg.0
+IL_008a: ldfld World.Devices.Device World.Devices.DeviceOverview::data
+IL_008f: ldfld AutoCodes.battle_data World.Devices.Device::battle_data
+IL_0094: ldfld System.Int32 AutoCodes.battle_data::hp
+IL_0099: bne.un IL_00b1
+IL_009e: ldarg.0
+IL_009f: ldfld World.Devices.DeviceUiViews.DeviceHealthState World.Devices.DeviceOverview::dhs
+IL_00a4: brfalse IL_00b1
+IL_00a9: ldarg.0
+IL_00aa: ldc.i4.0
+IL_00ab: stfld World.Devices.DeviceUiViews.DeviceHealthState World.Devices.DeviceOverview::dhs
+IL_00b0: ret
+IL_00b1: ldarg.0
+IL_00b2: ldfld World.Devices.Device World.Devices.DeviceOverview::data
+IL_00b7: ldfld System.Boolean World.Devices.Device::is_validate
+IL_00bc: brtrue IL_00d4
+IL_00c1: ldarg.0
+IL_00c2: ldfld World.Devices.DeviceUiViews.DeviceHealthState World.Devices.DeviceOverview::dhs
+IL_00c7: ldc.i4.2
+IL_00c8: beq IL_00d4
+IL_00cd: ldarg.0
+IL_00ce: ldc.i4.2
+IL_00cf: stfld World.Devices.DeviceUiViews.DeviceHealthState World.Devices.DeviceOverview::dhs
+IL_00d4: ret
+METHOD System.Void World.Devices.DeviceOverview::Select()
+IL_0000: ldarg.0
+IL_0001: ldfld UnityEngine.GameObject World.Devices.DeviceOverview::select
+IL_0006: callvirt UnityEngine.GameObject UnityEngine.GameObject::get_gameObject()
+IL_000b: ldc.i4.1
+IL_000c: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0011: ldarg.0
+IL_0012: ldfld World.Devices.Device World.Devices.DeviceOverview::data
+IL_0017: brtrue IL_001d
+IL_001c: ret
+IL_001d: ldarg.0
+IL_001e: ldfld World.Devices.Device World.Devices.DeviceOverview::data
+IL_0023: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_0028: ldfld System.String AutoCodes.device_all::ui_prefab
+IL_002d: ldloca.s V_0
+IL_002f: call System.Boolean Addrs.Addressable_Utility::try_load_asset<World.Devices.DeviceUiViews.DeviceUiView>(System.String,!!0&)
+IL_0034: pop
+IL_0035: ldarg.0
+IL_0036: ldloc.0
+IL_0037: ldarg.0
+IL_0038: ldfld UnityEngine.GameObject World.Devices.DeviceOverview::operate_content
+IL_003d: callvirt UnityEngine.Transform UnityEngine.GameObject::get_transform()
+IL_0042: ldc.i4.0
+IL_0043: call !!0 UnityEngine.Object::Instantiate<World.Devices.DeviceUiViews.DeviceUiView>(!!0,UnityEngine.Transform,System.Boolean)
+IL_0048: stfld World.Devices.DeviceUiViews.DeviceUiView World.Devices.DeviceOverview::control_panel
+IL_004d: ldarg.0
+IL_004e: ldfld World.Devices.Device World.Devices.DeviceOverview::data
+IL_0053: ldarg.0
+IL_0054: ldfld World.Devices.DeviceUiViews.DeviceUiView World.Devices.DeviceOverview::control_panel
+IL_0059: callvirt System.Void Foundations.MVVM.Model`2<World.Devices.Device,World.Devices.IDeviceView>::add_view(!1)
+IL_005e: ret
+METHOD System.Void World.Devices.DeviceOverview::UnSelect()
+IL_0000: ldarg.0
+IL_0001: ldfld UnityEngine.GameObject World.Devices.DeviceOverview::select
+IL_0006: callvirt UnityEngine.GameObject UnityEngine.GameObject::get_gameObject()
+IL_000b: ldc.i4.0
+IL_000c: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0011: ldarg.0
+IL_0012: ldfld World.Devices.DeviceUiViews.DeviceUiView World.Devices.DeviceOverview::control_panel
+IL_0017: ldnull
+IL_0018: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_001d: brfalse IL_0033
+IL_0022: ldarg.0
+IL_0023: ldfld World.Devices.Device World.Devices.DeviceOverview::data
+IL_0028: ldarg.0
+IL_0029: ldfld World.Devices.DeviceUiViews.DeviceUiView World.Devices.DeviceOverview::control_panel
+IL_002e: callvirt System.Void Foundations.MVVM.Model`2<World.Devices.Device,World.Devices.IDeviceView>::remove_view(!1)
+IL_0033: ret
+METHOD System.Void World.Devices.DeviceOverview::.ctor()
+IL_0000: ldarg.0
+IL_0001: newobj System.Void System.Collections.Generic.List`1<World.Devices.DeviceUiViews.CubiclesUiView.CubicleUiView>::.ctor()
+IL_0006: stfld System.Collections.Generic.List`1<World.Devices.DeviceUiViews.CubiclesUiView.CubicleUiView> World.Devices.DeviceOverview::cubicles
+IL_000b: ldarg.0
+IL_000c: call System.Void UnityEngine.MonoBehaviour::.ctor()
+IL_0011: ret

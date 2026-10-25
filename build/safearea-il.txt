@@ -1,0 +1,1257 @@
+TYPE World.SafeArea.SafeAreaView : UnityEngine.MonoBehaviour
+FIELD UnityEngine.UI.Button World.SafeArea.SafeAreaView::character_button
+FIELD UnityEngine.UI.Button World.SafeArea.SafeAreaView::device_button
+FIELD UnityEngine.UI.Button World.SafeArea.SafeAreaView::relic_button
+FIELD UnityEngine.UI.Button World.SafeArea.SafeAreaView::fix_button
+FIELD UnityEngine.UI.Button World.SafeArea.SafeAreaView::elite_relic_button
+FIELD UnityEngine.UI.Button World.SafeArea.SafeAreaView::next_button
+FIELD UnityEngine.UI.Button World.SafeArea.SafeAreaView::settlement_button
+FIELD UnityEngine.UI.Button World.SafeArea.SafeAreaView::end_button
+FIELD UnityEngine.UI.Button World.SafeArea.SafeAreaView::encounter_button
+FIELD World.SafeArea.RouteView World.SafeArea.SafeAreaView::route_view
+FIELD UnityEngine.Transform World.SafeArea.SafeAreaView::event_pos
+FIELD TMPro.TextMeshProUGUI World.SafeArea.SafeAreaView::coin_text
+FIELD UnityEngine.UI.Image World.SafeArea.SafeAreaView::world_bg
+FIELD UnityEngine.GameObject World.SafeArea.SafeAreaView::encounter_mark
+FIELD UnityEngine.GameObject World.SafeArea.SafeAreaView::overweight_notice_start
+FIELD UnityEngine.GameObject World.SafeArea.SafeAreaView::overweight_notice_end
+FIELD World.Relic.RelicMgrWindowView World.SafeArea.SafeAreaView::relic_window
+FIELD World.Business.EliteRelicView World.SafeArea.SafeAreaView::erv_ins
+FIELD System.Collections.Generic.List`1<System.String> World.SafeArea.SafeAreaView::m_analytics_shops
+FIELD System.Int32 World.SafeArea.SafeAreaView::analytics_car_hp_heal
+METHOD System.Void World.SafeArea.SafeAreaView::Init()
+IL_0000: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_0005: ldc.i4.1
+IL_0006: stfld System.Boolean World.WorldContext::in_safe_area
+IL_000b: call !0 Foundations.Singleton`1<Foundations.Share_DS>::get_instance()
+IL_0010: stloc.0
+IL_0011: ldloc.0
+IL_0012: ldstr "scene_index"
+IL_0017: ldloca.s V_1
+IL_0019: callvirt System.Boolean Foundations.Share_DS::try_get_value<System.Int32>(System.String,!!0&)
+IL_001e: pop
+IL_001f: ldloc.0
+IL_0020: ldstr "world_id"
+IL_0025: ldloca.s V_2
+IL_0027: callvirt System.Boolean Foundations.Share_DS::try_get_value<System.String>(System.String,!!0&)
+IL_002c: pop
+IL_002d: ldloc.2
+IL_002e: ldloca.s V_3
+IL_0030: call System.Boolean AutoCodes.game_worlds::TryGetValue(System.String,AutoCodes.game_world&)
+IL_0035: pop
+IL_0036: ldloc.3
+IL_0037: ldfld System.String AutoCodes.game_world::UI_safearea_scene
+IL_003c: ldloca.s V_4
+IL_003e: call System.Boolean OneWaySpeaker.Hooks::LoadSprite(System.String,UnityEngine.Sprite&)
+IL_0043: pop
+IL_0044: ldarg.0
+IL_0045: ldfld UnityEngine.UI.Image World.SafeArea.SafeAreaView::world_bg
+IL_004a: ldloc.s V_4
+IL_004c: callvirt System.Void UnityEngine.UI.Image::set_sprite(UnityEngine.Sprite)
+IL_0051: ldarg.0
+IL_0052: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::character_button
+IL_0057: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_005c: ldc.i4.0
+IL_005d: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0062: ldarg.0
+IL_0063: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::device_button
+IL_0068: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_006d: ldc.i4.0
+IL_006e: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0073: ldarg.0
+IL_0074: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::relic_button
+IL_0079: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_007e: ldc.i4.0
+IL_007f: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0084: ldarg.0
+IL_0085: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::fix_button
+IL_008a: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_008f: ldc.i4.0
+IL_0090: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0095: ldarg.0
+IL_0096: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::elite_relic_button
+IL_009b: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_00a0: ldc.i4.0
+IL_00a1: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_00a6: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_00ab: ldfld Commons.Levels.RouteData World.WorldContext::routeData
+IL_00b0: stloc.s V_5
+IL_00b2: ldloc.s V_5
+IL_00b4: ldflda System.UInt32 Commons.Levels.RouteData::shop_group_id
+IL_00b9: call System.String System.UInt32::ToString()
+IL_00be: ldloca.s V_6
+IL_00c0: call System.Boolean AutoCodes.scene_shop_groups::TryGetValue(System.String,AutoCodes.scene_shop_group&)
+IL_00c5: pop
+IL_00c6: ldloc.s V_6
+IL_00c8: brfalse IL_0141
+IL_00cd: call !0 Foundations.Singleton`1<Commons.CommonContext>::get_instance()
+IL_00d2: newobj System.Void System.Collections.Generic.Dictionary`2<System.Int32,System.Collections.Generic.List`1<System.Object>>::.ctor()
+IL_00d7: stfld System.Collections.Generic.Dictionary`2<System.Int32,System.Collections.Generic.List`1<System.Object>> Commons.CommonContext::shop_goods
+IL_00dc: ldstr "商店数据已清空"
+IL_00e1: call System.Void UnityEngine.Debug::Log(System.Object)
+IL_00e6: ldarg.0
+IL_00e7: ldfld System.Collections.Generic.List`1<System.String> World.SafeArea.SafeAreaView::m_analytics_shops
+IL_00ec: callvirt System.Void System.Collections.Generic.List`1<System.String>::Clear()
+IL_00f1: ldloc.s V_6
+IL_00f3: ldfld System.Collections.Generic.List`1<System.String> AutoCodes.scene_shop_group::shop_list
+IL_00f8: callvirt System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<System.String>::GetEnumerator()
+IL_00fd: stloc.s V_7
+IL_00ff: br IL_0122
+IL_0104: ldloca.s V_7
+IL_0106: call !0 System.Collections.Generic.List`1/Enumerator<System.String>::get_Current()
+IL_010b: stloc.s V_8
+IL_010d: ldarg.0
+IL_010e: ldfld System.Collections.Generic.List`1<System.String> World.SafeArea.SafeAreaView::m_analytics_shops
+IL_0113: ldloc.s V_8
+IL_0115: callvirt System.Void System.Collections.Generic.List`1<System.String>::Add(!0)
+IL_011a: ldarg.0
+IL_011b: ldloc.s V_8
+IL_011d: call System.Void World.SafeArea.SafeAreaView::init_shop(System.String)
+IL_0122: ldloca.s V_7
+IL_0124: call System.Boolean System.Collections.Generic.List`1/Enumerator<System.String>::MoveNext()
+IL_0129: brtrue IL_0104
+IL_012e: leave IL_0141
+IL_0133: ldloca.s V_7
+IL_0135: constrained. System.Collections.Generic.List`1/Enumerator<System.String>
+IL_013b: callvirt System.Void System.IDisposable::Dispose()
+IL_0140: endfinally
+IL_0141: ldarg.0
+IL_0142: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::encounter_button
+IL_0147: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_014c: ldc.i4.0
+IL_014d: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0152: ldloc.s V_5
+IL_0154: ldfld System.Collections.Generic.List`1<System.UInt32> Commons.Levels.RouteData::safe_zone_event_list
+IL_0159: brfalse IL_02a0
+IL_015e: ldloc.s V_5
+IL_0160: ldfld System.Collections.Generic.List`1<System.UInt32> Commons.Levels.RouteData::safe_zone_event_list
+IL_0165: call System.Boolean System.Linq.Enumerable::Any<System.UInt32>(System.Collections.Generic.IEnumerable`1<!!0>)
+IL_016a: brfalse IL_02a0
+IL_016f: newobj System.Void World.SafeArea.SafeAreaView/<>c__DisplayClass17_0::.ctor()
+IL_0174: stloc.s V_9
+IL_0176: ldloc.s V_9
+IL_0178: ldarg.0
+IL_0179: stfld World.SafeArea.SafeAreaView World.SafeArea.SafeAreaView/<>c__DisplayClass17_0::<>4__this
+IL_017e: newobj System.Void System.Collections.Generic.List`1<System.UInt32>::.ctor()
+IL_0183: stloc.s V_10
+IL_0185: ldloc.s V_5
+IL_0187: ldfld System.Collections.Generic.List`1<System.UInt32> Commons.Levels.RouteData::safe_zone_event_list
+IL_018c: callvirt System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<System.UInt32>::GetEnumerator()
+IL_0191: stloc.s V_13
+IL_0193: br IL_01e8
+IL_0198: ldloca.s V_13
+IL_019a: call !0 System.Collections.Generic.List`1/Enumerator<System.UInt32>::get_Current()
+IL_019f: stloc.s V_14
+IL_01a1: ldarg.0
+IL_01a2: ldloc.s V_14
+IL_01a4: call System.Boolean World.SafeArea.SafeAreaView::valid_encounter_enable(System.UInt32)
+IL_01a9: brfalse IL_01d2
+IL_01ae: ldloc.s V_10
+IL_01b0: ldloc.s V_14
+IL_01b2: callvirt System.Void System.Collections.Generic.List`1<System.UInt32>::Add(!0)
+IL_01b7: ldstr "可加载奇遇：{0}"
+IL_01bc: ldloc.s V_14
+IL_01be: box System.UInt32
+IL_01c3: call System.String System.String::Format(System.String,System.Object)
+IL_01c8: call System.Void UnityEngine.Debug::Log(System.Object)
+IL_01cd: br IL_01e8
+IL_01d2: ldstr "不可加载奇遇：{0}"
+IL_01d7: ldloc.s V_14
+IL_01d9: box System.UInt32
+IL_01de: call System.String System.String::Format(System.String,System.Object)
+IL_01e3: call System.Void UnityEngine.Debug::Log(System.Object)
+IL_01e8: ldloca.s V_13
+IL_01ea: call System.Boolean System.Collections.Generic.List`1/Enumerator<System.UInt32>::MoveNext()
+IL_01ef: brtrue IL_0198
+IL_01f4: leave IL_0207
+IL_01f9: ldloca.s V_13
+IL_01fb: constrained. System.Collections.Generic.List`1/Enumerator<System.UInt32>
+IL_0201: callvirt System.Void System.IDisposable::Dispose()
+IL_0206: endfinally
+IL_0207: ldloc.s V_10
+IL_0209: call System.Boolean System.Linq.Enumerable::Any<System.UInt32>(System.Collections.Generic.IEnumerable`1<!!0>)
+IL_020e: brtrue IL_021d
+IL_0213: ldstr "检查奇遇配置，没有可加载奇遇"
+IL_0218: call System.Void UnityEngine.Debug::LogError(System.Object)
+IL_021d: ldloc.s V_10
+IL_021f: ldc.i4.0
+IL_0220: callvirt !0 System.Collections.Generic.List`1<System.UInt32>::get_Item(System.Int32)
+IL_0225: stloc.s V_11
+IL_0227: call !0 Foundations.Singleton`1<Commons.CommonContext>::get_instance()
+IL_022c: ldloc.s V_11
+IL_022e: stfld System.UInt32 Commons.CommonContext::event_id
+IL_0233: ldloca.s V_11
+IL_0235: call System.String System.UInt32::ToString()
+IL_023a: ldloc.s V_9
+IL_023c: ldflda AutoCodes.safe_zone_event World.SafeArea.SafeAreaView/<>c__DisplayClass17_0::r_event
+IL_0241: call System.Boolean AutoCodes.safe_zone_events::TryGetValue(System.String,AutoCodes.safe_zone_event&)
+IL_0246: pop
+IL_0247: ldloc.s V_9
+IL_0249: ldfld AutoCodes.safe_zone_event World.SafeArea.SafeAreaView/<>c__DisplayClass17_0::r_event
+IL_024e: ldfld System.String AutoCodes.safe_zone_event::view
+IL_0253: ldloca.s V_12
+IL_0255: call System.Boolean OneWaySpeaker.Hooks::LoadSprite(System.String,UnityEngine.Sprite&)
+IL_025a: pop
+IL_025b: ldarg.0
+IL_025c: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::encounter_button
+IL_0261: callvirt UnityEngine.Transform UnityEngine.Component::get_transform()
+IL_0266: callvirt !!0 UnityEngine.Component::GetComponent<UnityEngine.UI.Image>()
+IL_026b: ldloc.s V_12
+IL_026d: callvirt System.Void UnityEngine.UI.Image::set_sprite(UnityEngine.Sprite)
+IL_0272: ldarg.0
+IL_0273: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::encounter_button
+IL_0278: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_027d: ldc.i4.1
+IL_027e: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0283: ldarg.0
+IL_0284: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::encounter_button
+IL_0289: callvirt UnityEngine.UI.Button/ButtonClickedEvent UnityEngine.UI.Button::get_onClick()
+IL_028e: ldloc.s V_9
+IL_0290: ldftn System.Void World.SafeArea.SafeAreaView/<>c__DisplayClass17_0::<Init>b__0()
+IL_0296: newobj System.Void UnityEngine.Events.UnityAction::.ctor(System.Object,System.IntPtr)
+IL_029b: callvirt System.Void UnityEngine.Events.UnityEvent::AddListener(UnityEngine.Events.UnityAction)
+IL_02a0: ldarg.0
+IL_02a1: call System.Void World.SafeArea.SafeAreaView::ChooseRoutes()
+IL_02a6: ldloc.0
+IL_02a7: ldstr "scene_info"
+IL_02ac: call !0 Foundations.Singleton`1<Commons.CommonContext>::get_instance()
+IL_02b1: ldflda System.ValueTuple`3<System.UInt32,Commons.Levels.Game_Frame_Mgr/EN_scene_type,Commons.Levels.RouteData> Commons.CommonContext::choose_scene_info
+IL_02b6: callvirt System.Boolean Foundations.Share_DS::try_get_value<System.ValueTuple`3<System.UInt32,Commons.Levels.Game_Frame_Mgr/EN_scene_type,Commons.Levels.RouteData>>(System.String,!!0&)
+IL_02bb: pop
+IL_02bc: ldloc.0
+IL_02bd: ldstr "routes"
+IL_02c2: call !0 Foundations.Singleton`1<Commons.CommonContext>::get_instance()
+IL_02c7: ldflda System.Collections.Generic.List`1<Commons.Levels.RouteData> Commons.CommonContext::choose_routes
+IL_02cc: callvirt System.Boolean Foundations.Share_DS::try_get_value<System.Collections.Generic.List`1<Commons.Levels.RouteData>>(System.String,!!0&)
+IL_02d1: pop
+IL_02d2: ldarg.0
+IL_02d3: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::end_button
+IL_02d8: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_02dd: call !0 Foundations.Singleton`1<World.BattleContext>::get_instance()
+IL_02e2: ldfld System.Boolean World.BattleContext::active_retreat
+IL_02e7: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_02ec: call System.Void World.Helpers.Audio_Helper::stop_engine_pitch()
+IL_02f1: call System.Void World.Helpers.Audio_Helper::stop_car_run_se()
+IL_02f6: ret
+METHOD System.Void World.SafeArea.SafeAreaView::Init_From_Save()
+IL_0000: newobj System.Void World.SafeArea.SafeAreaView/<>c__DisplayClass18_0::.ctor()
+IL_0005: stloc.0
+IL_0006: ldloc.0
+IL_0007: ldarg.0
+IL_0008: stfld World.SafeArea.SafeAreaView World.SafeArea.SafeAreaView/<>c__DisplayClass18_0::<>4__this
+IL_000d: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_0012: ldc.i4.1
+IL_0013: stfld System.Boolean World.WorldContext::in_safe_area
+IL_0018: call !0 Foundations.MonoBehaviourSingleton`1<Commons.AudioSystem>::get_instance()
+IL_001d: ldc.r4 0
+IL_0022: callvirt System.Void Commons.AudioSystem::UpdateWeatherTransition(System.Single)
+IL_0027: call !0 Foundations.Singleton`1<Foundations.Share_DS>::get_instance()
+IL_002c: stloc.1
+IL_002d: ldloc.1
+IL_002e: ldstr "scene_index"
+IL_0033: ldloca.s V_2
+IL_0035: callvirt System.Boolean Foundations.Share_DS::try_get_value<System.Int32>(System.String,!!0&)
+IL_003a: pop
+IL_003b: ldloc.1
+IL_003c: ldstr "world_id"
+IL_0041: ldloca.s V_3
+IL_0043: callvirt System.Boolean Foundations.Share_DS::try_get_value<System.String>(System.String,!!0&)
+IL_0048: pop
+IL_0049: ldloc.3
+IL_004a: ldloca.s V_4
+IL_004c: call System.Boolean AutoCodes.game_worlds::TryGetValue(System.String,AutoCodes.game_world&)
+IL_0051: pop
+IL_0052: ldloc.s V_4
+IL_0054: ldfld System.String AutoCodes.game_world::UI_safearea_scene
+IL_0059: ldloca.s V_5
+IL_005b: call System.Boolean OneWaySpeaker.Hooks::LoadSprite(System.String,UnityEngine.Sprite&)
+IL_0060: pop
+IL_0061: ldarg.0
+IL_0062: ldfld UnityEngine.UI.Image World.SafeArea.SafeAreaView::world_bg
+IL_0067: ldloc.s V_5
+IL_0069: callvirt System.Void UnityEngine.UI.Image::set_sprite(UnityEngine.Sprite)
+IL_006e: ldarg.0
+IL_006f: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::character_button
+IL_0074: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_0079: ldc.i4.0
+IL_007a: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_007f: ldarg.0
+IL_0080: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::device_button
+IL_0085: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_008a: ldc.i4.0
+IL_008b: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0090: ldarg.0
+IL_0091: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::relic_button
+IL_0096: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_009b: ldc.i4.0
+IL_009c: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_00a1: ldarg.0
+IL_00a2: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::fix_button
+IL_00a7: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_00ac: ldc.i4.0
+IL_00ad: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_00b2: ldarg.0
+IL_00b3: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::elite_relic_button
+IL_00b8: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_00bd: ldc.i4.0
+IL_00be: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_00c3: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_00c8: ldfld Commons.Levels.RouteData World.WorldContext::routeData
+IL_00cd: ldflda System.UInt32 Commons.Levels.RouteData::shop_group_id
+IL_00d2: call System.String System.UInt32::ToString()
+IL_00d7: ldloca.s V_6
+IL_00d9: call System.Boolean AutoCodes.scene_shop_groups::TryGetValue(System.String,AutoCodes.scene_shop_group&)
+IL_00de: pop
+IL_00df: ldloc.s V_6
+IL_00e1: brfalse IL_0141
+IL_00e6: ldarg.0
+IL_00e7: ldfld System.Collections.Generic.List`1<System.String> World.SafeArea.SafeAreaView::m_analytics_shops
+IL_00ec: callvirt System.Void System.Collections.Generic.List`1<System.String>::Clear()
+IL_00f1: ldloc.s V_6
+IL_00f3: ldfld System.Collections.Generic.List`1<System.String> AutoCodes.scene_shop_group::shop_list
+IL_00f8: callvirt System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<System.String>::GetEnumerator()
+IL_00fd: stloc.s V_9
+IL_00ff: br IL_0122
+IL_0104: ldloca.s V_9
+IL_0106: call !0 System.Collections.Generic.List`1/Enumerator<System.String>::get_Current()
+IL_010b: stloc.s V_10
+IL_010d: ldarg.0
+IL_010e: ldfld System.Collections.Generic.List`1<System.String> World.SafeArea.SafeAreaView::m_analytics_shops
+IL_0113: ldloc.s V_10
+IL_0115: callvirt System.Void System.Collections.Generic.List`1<System.String>::Add(!0)
+IL_011a: ldarg.0
+IL_011b: ldloc.s V_10
+IL_011d: call System.Void World.SafeArea.SafeAreaView::init_shop(System.String)
+IL_0122: ldloca.s V_9
+IL_0124: call System.Boolean System.Collections.Generic.List`1/Enumerator<System.String>::MoveNext()
+IL_0129: brtrue IL_0104
+IL_012e: leave IL_0141
+IL_0133: ldloca.s V_9
+IL_0135: constrained. System.Collections.Generic.List`1/Enumerator<System.String>
+IL_013b: callvirt System.Void System.IDisposable::Dispose()
+IL_0140: endfinally
+IL_0141: ldarg.0
+IL_0142: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::encounter_button
+IL_0147: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_014c: ldc.i4.0
+IL_014d: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0152: call !0 Foundations.Singleton`1<Commons.CommonContext>::get_instance()
+IL_0157: ldfld System.UInt32 Commons.CommonContext::event_id
+IL_015c: stloc.s V_7
+IL_015e: ldloca.s V_7
+IL_0160: call System.String System.UInt32::ToString()
+IL_0165: ldloc.0
+IL_0166: ldflda AutoCodes.safe_zone_event World.SafeArea.SafeAreaView/<>c__DisplayClass18_0::r_event
+IL_016b: call System.Boolean AutoCodes.safe_zone_events::TryGetValue(System.String,AutoCodes.safe_zone_event&)
+IL_0170: pop
+IL_0171: ldloc.0
+IL_0172: ldfld AutoCodes.safe_zone_event World.SafeArea.SafeAreaView/<>c__DisplayClass18_0::r_event
+IL_0177: ldfld System.String AutoCodes.safe_zone_event::view
+IL_017c: ldloca.s V_8
+IL_017e: call System.Boolean OneWaySpeaker.Hooks::LoadSprite(System.String,UnityEngine.Sprite&)
+IL_0183: pop
+IL_0184: ldarg.0
+IL_0185: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::encounter_button
+IL_018a: callvirt UnityEngine.Transform UnityEngine.Component::get_transform()
+IL_018f: callvirt !!0 UnityEngine.Component::GetComponent<UnityEngine.UI.Image>()
+IL_0194: ldloc.s V_8
+IL_0196: callvirt System.Void UnityEngine.UI.Image::set_sprite(UnityEngine.Sprite)
+IL_019b: ldarg.0
+IL_019c: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::encounter_button
+IL_01a1: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_01a6: ldc.i4.1
+IL_01a7: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_01ac: ldarg.0
+IL_01ad: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::encounter_button
+IL_01b2: callvirt UnityEngine.UI.Button/ButtonClickedEvent UnityEngine.UI.Button::get_onClick()
+IL_01b7: ldloc.0
+IL_01b8: ldftn System.Void World.SafeArea.SafeAreaView/<>c__DisplayClass18_0::<Init_From_Save>b__0()
+IL_01be: newobj System.Void UnityEngine.Events.UnityAction::.ctor(System.Object,System.IntPtr)
+IL_01c3: callvirt System.Void UnityEngine.Events.UnityEvent::AddListener(UnityEngine.Events.UnityAction)
+IL_01c8: call !0 Foundations.MonoBehaviourSingleton`1<World.WorldSceneRoot>::get_instance()
+IL_01cd: callvirt System.Boolean World.WorldSceneRoot::is_last_safeArea()
+IL_01d2: brtrue IL_0324
+IL_01d7: call !0 Foundations.Singleton`1<Commons.CommonContext>::get_instance()
+IL_01dc: ldfld System.ValueTuple`3<System.UInt32,Commons.Levels.Game_Frame_Mgr/EN_scene_type,Commons.Levels.RouteData> Commons.CommonContext::choose_scene_info
+IL_01e1: stloc.s V_11
+IL_01e3: call !0 Foundations.Singleton`1<Commons.CommonContext>::get_instance()
+IL_01e8: ldfld System.Collections.Generic.List`1<Commons.Levels.RouteData> Commons.CommonContext::choose_routes
+IL_01ed: stloc.s V_12
+IL_01ef: ldloc.s V_11
+IL_01f1: dup
+IL_01f2: ldfld !0 System.ValueTuple`3<System.UInt32,Commons.Levels.Game_Frame_Mgr/EN_scene_type,Commons.Levels.RouteData>::Item1
+IL_01f7: stloc.s V_13
+IL_01f9: dup
+IL_01fa: ldfld !1 System.ValueTuple`3<System.UInt32,Commons.Levels.Game_Frame_Mgr/EN_scene_type,Commons.Levels.RouteData>::Item2
+IL_01ff: stloc.s V_14
+IL_0201: ldfld !2 System.ValueTuple`3<System.UInt32,Commons.Levels.Game_Frame_Mgr/EN_scene_type,Commons.Levels.RouteData>::Item3
+IL_0206: stloc.s V_15
+IL_0208: ldloc.s V_13
+IL_020a: brtrue IL_021d
+IL_020f: ldloc.s V_14
+IL_0211: brtrue IL_021d
+IL_0216: ldloc.s V_15
+IL_0218: brfalse IL_0224
+IL_021d: ldloc.s V_12
+IL_021f: brtrue IL_0265
+IL_0224: ldstr "未找到存档的选路数据"
+IL_0229: call System.Void UnityEngine.Debug::LogWarning(System.Object)
+IL_022e: ldarg.0
+IL_022f: call System.Void World.SafeArea.SafeAreaView::ChooseRoutes()
+IL_0234: ldloc.1
+IL_0235: ldstr "scene_info"
+IL_023a: call !0 Foundations.Singleton`1<Commons.CommonContext>::get_instance()
+IL_023f: ldflda System.ValueTuple`3<System.UInt32,Commons.Levels.Game_Frame_Mgr/EN_scene_type,Commons.Levels.RouteData> Commons.CommonContext::choose_scene_info
+IL_0244: callvirt System.Boolean Foundations.Share_DS::try_get_value<System.ValueTuple`3<System.UInt32,Commons.Levels.Game_Frame_Mgr/EN_scene_type,Commons.Levels.RouteData>>(System.String,!!0&)
+IL_0249: pop
+IL_024a: ldloc.1
+IL_024b: ldstr "routes"
+IL_0250: call !0 Foundations.Singleton`1<Commons.CommonContext>::get_instance()
+IL_0255: ldflda System.Collections.Generic.List`1<Commons.Levels.RouteData> Commons.CommonContext::choose_routes
+IL_025a: callvirt System.Boolean Foundations.Share_DS::try_get_value<System.Collections.Generic.List`1<Commons.Levels.RouteData>>(System.String,!!0&)
+IL_025f: pop
+IL_0260: br IL_0324
+IL_0265: ldloc.1
+IL_0266: ldstr "scene_info"
+IL_026b: ldloc.s V_11
+IL_026d: callvirt System.Void Foundations.Share_DS::add<System.ValueTuple`3<System.UInt32,Commons.Levels.Game_Frame_Mgr/EN_scene_type,Commons.Levels.RouteData>>(System.String,!!0)
+IL_0272: ldloc.1
+IL_0273: ldstr "routes"
+IL_0278: ldloc.s V_12
+IL_027a: callvirt System.Void Foundations.Share_DS::add<System.Collections.Generic.List`1<Commons.Levels.RouteData>>(System.String,!!0)
+IL_027f: ldarg.0
+IL_0280: ldfld World.SafeArea.RouteView World.SafeArea.SafeAreaView::route_view
+IL_0285: ldloc.s V_12
+IL_0287: callvirt System.Void World.SafeArea.RouteView::Init(System.Collections.Generic.List`1<Commons.Levels.RouteData>)
+IL_028c: ldloc.1
+IL_028d: ldstr "elite_scene_enter_count"
+IL_0292: ldloca.s V_16
+IL_0294: callvirt System.Boolean Foundations.Share_DS::try_get_value<System.Int32>(System.String,!!0&)
+IL_0299: pop
+IL_029a: ldloc.1
+IL_029b: ldstr "normal_scene_enter_count"
+IL_02a0: ldloca.s V_17
+IL_02a2: callvirt System.Boolean Foundations.Share_DS::try_get_value<System.Int32>(System.String,!!0&)
+IL_02a7: pop
+IL_02a8: ldloc.s V_11
+IL_02aa: ldfld !1 System.ValueTuple`3<System.UInt32,Commons.Levels.Game_Frame_Mgr/EN_scene_type,Commons.Levels.RouteData>::Item2
+IL_02af: ldc.i4.3
+IL_02b0: bne.un IL_02f5
+IL_02b5: ldloc.1
+IL_02b6: ldstr "normal_scene_enter_count"
+IL_02bb: ldc.i4.0
+IL_02bc: callvirt System.Void Foundations.Share_DS::add<System.Int32>(System.String,!!0)
+IL_02c1: ldloc.1
+IL_02c2: ldstr "elite_scene_enter_count"
+IL_02c7: ldloc.s V_16
+IL_02c9: ldc.i4.1
+IL_02ca: add
+IL_02cb: callvirt System.Void Foundations.Share_DS::add<System.Int32>(System.String,!!0)
+IL_02d0: ldstr "连续普通战斗次数，已清空"
+IL_02d5: call System.Void UnityEngine.Debug::Log(System.Object)
+IL_02da: ldstr "总计精英战斗{0}次"
+IL_02df: ldloc.s V_16
+IL_02e1: box System.Int32
+IL_02e6: call System.String System.String::Format(System.String,System.Object)
+IL_02eb: call System.Void UnityEngine.Debug::Log(System.Object)
+IL_02f0: br IL_031a
+IL_02f5: ldloc.1
+IL_02f6: ldstr "normal_scene_enter_count"
+IL_02fb: ldloc.s V_17
+IL_02fd: ldc.i4.1
+IL_02fe: add
+IL_02ff: callvirt System.Void Foundations.Share_DS::add<System.Int32>(System.String,!!0)
+IL_0304: ldstr "已连续普通战斗{0}次"
+IL_0309: ldloc.s V_17
+IL_030b: box System.Int32
+IL_0310: call System.String System.String::Format(System.String,System.Object)
+IL_0315: call System.Void UnityEngine.Debug::Log(System.Object)
+IL_031a: ldstr "已加载存档的选路数据"
+IL_031f: call System.Void UnityEngine.Debug::Log(System.Object)
+IL_0324: ldarg.0
+IL_0325: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::end_button
+IL_032a: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_032f: call !0 Foundations.Singleton`1<World.BattleContext>::get_instance()
+IL_0334: ldfld System.Boolean World.BattleContext::active_retreat
+IL_0339: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_033e: call System.Void World.Helpers.Audio_Helper::stop_engine_pitch()
+IL_0343: call System.Void World.Helpers.Audio_Helper::stop_car_run_se()
+IL_0348: ldarg.0
+IL_0349: ldfld World.Relic.RelicMgrWindowView World.SafeArea.SafeAreaView::relic_window
+IL_034e: callvirt System.Void World.Relic.RelicMgrWindowView::UpdateWindowPosByRelicCount()
+IL_0353: ret
+METHOD System.Void World.SafeArea.SafeAreaView::init_shop(System.String)
+IL_0000: call !0 Foundations.Singleton`1<Commons.CommonContext>::get_instance()
+IL_0005: ldfld System.Collections.Generic.List`1<System.String> Commons.CommonContext::unlock_shop_list
+IL_000a: ldarg.1
+IL_000b: callvirt System.Boolean System.Collections.Generic.List`1<System.String>::Contains(!0)
+IL_0010: brtrue IL_0016
+IL_0015: ret
+IL_0016: call !0 Foundations.Singleton`1<Foundations.Share_DS>::get_instance()
+IL_001b: dup
+IL_001c: ldstr "scene_index"
+IL_0021: ldloca.s V_0
+IL_0023: callvirt System.Boolean Foundations.Share_DS::try_get_value<System.Int32>(System.String,!!0&)
+IL_0028: pop
+IL_0029: ldstr "world_id"
+IL_002e: ldloca.s V_1
+IL_0030: callvirt System.Boolean Foundations.Share_DS::try_get_value<System.String>(System.String,!!0&)
+IL_0035: pop
+IL_0036: ldloc.1
+IL_0037: ldloca.s V_2
+IL_0039: call System.Boolean AutoCodes.game_worlds::TryGetValue(System.String,AutoCodes.game_world&)
+IL_003e: pop
+IL_003f: ldloc.2
+IL_0040: ldfld System.Collections.Generic.List`1<System.UInt32> AutoCodes.game_world::shop_list_role
+IL_0045: callvirt System.Int32 System.Collections.Generic.List`1<System.UInt32>::get_Count()
+IL_004a: ldloc.0
+IL_004b: bgt IL_005e
+IL_0050: ldloc.2
+IL_0051: ldfld System.Collections.Generic.List`1<System.UInt32> AutoCodes.game_world::shop_list_role
+IL_0056: callvirt System.Int32 System.Collections.Generic.List`1<System.UInt32>::get_Count()
+IL_005b: ldc.i4.1
+IL_005c: sub
+IL_005d: stloc.0
+IL_005e: ldloc.1
+IL_005f: ldloca.s V_3
+IL_0061: call System.Boolean AutoCodes.game_worlds::TryGetValue(System.String,AutoCodes.game_world&)
+IL_0066: pop
+IL_0067: ldarg.1
+IL_0068: ldstr "role"
+IL_006d: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_0072: brtrue IL_00b8
+IL_0077: ldarg.1
+IL_0078: ldstr "device"
+IL_007d: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_0082: brtrue IL_00d6
+IL_0087: ldarg.1
+IL_0088: ldstr "relic"
+IL_008d: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_0092: brtrue IL_00f4
+IL_0097: ldarg.1
+IL_0098: ldstr "repair"
+IL_009d: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_00a2: brtrue IL_0112
+IL_00a7: ldarg.1
+IL_00a8: ldstr "elite_relic"
+IL_00ad: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_00b2: brtrue IL_0123
+IL_00b7: ret
+IL_00b8: ldstr "生成角色商店"
+IL_00bd: call System.Void UnityEngine.Debug::Log(System.Object)
+IL_00c2: ldarg.0
+IL_00c3: ldloc.3
+IL_00c4: ldfld System.Collections.Generic.List`1<System.UInt32> AutoCodes.game_world::shop_list_role
+IL_00c9: ldloc.0
+IL_00ca: callvirt !0 System.Collections.Generic.List`1<System.UInt32>::get_Item(System.Int32)
+IL_00cf: ldloc.0
+IL_00d0: call System.Void World.SafeArea.SafeAreaView::init_role(System.UInt32,System.Int32)
+IL_00d5: ret
+IL_00d6: ldstr "生成设备商店"
+IL_00db: call System.Void UnityEngine.Debug::Log(System.Object)
+IL_00e0: ldarg.0
+IL_00e1: ldloc.3
+IL_00e2: ldfld System.Collections.Generic.List`1<System.UInt32> AutoCodes.game_world::shop_list_device
+IL_00e7: ldloc.0
+IL_00e8: callvirt !0 System.Collections.Generic.List`1<System.UInt32>::get_Item(System.Int32)
+IL_00ed: ldloc.0
+IL_00ee: call System.Void World.SafeArea.SafeAreaView::init_device(System.UInt32,System.Int32)
+IL_00f3: ret
+IL_00f4: ldstr "生成遗物商店"
+IL_00f9: call System.Void UnityEngine.Debug::Log(System.Object)
+IL_00fe: ldarg.0
+IL_00ff: ldloc.3
+IL_0100: ldfld System.Collections.Generic.List`1<System.UInt32> AutoCodes.game_world::shop_list_relic
+IL_0105: ldloc.0
+IL_0106: callvirt !0 System.Collections.Generic.List`1<System.UInt32>::get_Item(System.Int32)
+IL_010b: ldloc.0
+IL_010c: call System.Void World.SafeArea.SafeAreaView::init_relic(System.UInt32,System.Int32)
+IL_0111: ret
+IL_0112: ldstr "生成维修商店"
+IL_0117: call System.Void UnityEngine.Debug::Log(System.Object)
+IL_011c: ldarg.0
+IL_011d: call System.Void World.SafeArea.SafeAreaView::init_fix()
+IL_0122: ret
+IL_0123: ldstr "生成精英遗物商店"
+IL_0128: call System.Void UnityEngine.Debug::Log(System.Object)
+IL_012d: ldarg.0
+IL_012e: ldloc.3
+IL_012f: ldfld System.Collections.Generic.List`1<System.UInt32> AutoCodes.game_world::shop_list_elite_relic
+IL_0134: ldloc.0
+IL_0135: callvirt !0 System.Collections.Generic.List`1<System.UInt32>::get_Item(System.Int32)
+IL_013a: ldloc.0
+IL_013b: call System.Void World.SafeArea.SafeAreaView::init_elite_relic(System.UInt32,System.Int32)
+IL_0140: ret
+METHOD System.Void World.SafeArea.SafeAreaView::init_role(System.UInt32,System.Int32)
+IL_0000: newobj System.Void World.SafeArea.SafeAreaView/<>c__DisplayClass20_0::.ctor()
+IL_0005: stloc.0
+IL_0006: ldarg.0
+IL_0007: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::character_button
+IL_000c: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_0011: ldc.i4.1
+IL_0012: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0017: ldstr "CharacterBusinessPanel"
+IL_001c: ldloca.s V_1
+IL_001e: call System.Boolean Addrs.Addressable_Utility::try_load_asset<World.Business.CharacterBusinessPanel>(System.String,!!0&)
+IL_0023: pop
+IL_0024: ldloc.0
+IL_0025: ldloc.1
+IL_0026: ldarg.0
+IL_0027: call UnityEngine.Transform UnityEngine.Component::get_transform()
+IL_002c: ldc.i4.0
+IL_002d: call !!0 UnityEngine.Object::Instantiate<World.Business.CharacterBusinessPanel>(!!0,UnityEngine.Transform,System.Boolean)
+IL_0032: stfld World.Business.CharacterBusinessPanel World.SafeArea.SafeAreaView/<>c__DisplayClass20_0::cbp_ins
+IL_0037: ldloc.0
+IL_0038: ldfld World.Business.CharacterBusinessPanel World.SafeArea.SafeAreaView/<>c__DisplayClass20_0::cbp_ins
+IL_003d: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_0042: ldc.i4.0
+IL_0043: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0048: ldloc.0
+IL_0049: ldfld World.Business.CharacterBusinessPanel World.SafeArea.SafeAreaView/<>c__DisplayClass20_0::cbp_ins
+IL_004e: ldarg.1
+IL_004f: ldarg.2
+IL_0050: callvirt System.Void World.Business.CharacterBusinessPanel::Init(System.UInt32,System.Int32)
+IL_0055: ldarg.0
+IL_0056: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::character_button
+IL_005b: callvirt UnityEngine.UI.Button/ButtonClickedEvent UnityEngine.UI.Button::get_onClick()
+IL_0060: ldloc.0
+IL_0061: ldftn System.Void World.SafeArea.SafeAreaView/<>c__DisplayClass20_0::<init_role>b__0()
+IL_0067: newobj System.Void UnityEngine.Events.UnityAction::.ctor(System.Object,System.IntPtr)
+IL_006c: callvirt System.Void UnityEngine.Events.UnityEvent::AddListener(UnityEngine.Events.UnityAction)
+IL_0071: ret
+METHOD System.Void World.SafeArea.SafeAreaView::init_device(System.UInt32,System.Int32)
+IL_0000: newobj System.Void World.SafeArea.SafeAreaView/<>c__DisplayClass21_0::.ctor()
+IL_0005: stloc.0
+IL_0006: ldarg.0
+IL_0007: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::device_button
+IL_000c: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_0011: ldc.i4.1
+IL_0012: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0017: ldstr "DeviceBusinessPanel"
+IL_001c: ldloca.s V_1
+IL_001e: call System.Boolean Addrs.Addressable_Utility::try_load_asset<World.Business.DeviceBusinessPanel>(System.String,!!0&)
+IL_0023: pop
+IL_0024: ldloc.0
+IL_0025: ldloc.1
+IL_0026: ldarg.0
+IL_0027: call UnityEngine.Transform UnityEngine.Component::get_transform()
+IL_002c: ldc.i4.0
+IL_002d: call !!0 UnityEngine.Object::Instantiate<World.Business.DeviceBusinessPanel>(!!0,UnityEngine.Transform,System.Boolean)
+IL_0032: stfld World.Business.DeviceBusinessPanel World.SafeArea.SafeAreaView/<>c__DisplayClass21_0::dbp_ins
+IL_0037: ldloc.0
+IL_0038: ldfld World.Business.DeviceBusinessPanel World.SafeArea.SafeAreaView/<>c__DisplayClass21_0::dbp_ins
+IL_003d: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_0042: ldc.i4.0
+IL_0043: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0048: ldloc.0
+IL_0049: ldfld World.Business.DeviceBusinessPanel World.SafeArea.SafeAreaView/<>c__DisplayClass21_0::dbp_ins
+IL_004e: ldarg.1
+IL_004f: ldarg.2
+IL_0050: callvirt System.Void World.Business.DeviceBusinessPanel::Init(System.UInt32,System.Int32)
+IL_0055: ldarg.0
+IL_0056: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::device_button
+IL_005b: callvirt UnityEngine.UI.Button/ButtonClickedEvent UnityEngine.UI.Button::get_onClick()
+IL_0060: ldloc.0
+IL_0061: ldftn System.Void World.SafeArea.SafeAreaView/<>c__DisplayClass21_0::<init_device>b__0()
+IL_0067: newobj System.Void UnityEngine.Events.UnityAction::.ctor(System.Object,System.IntPtr)
+IL_006c: callvirt System.Void UnityEngine.Events.UnityEvent::AddListener(UnityEngine.Events.UnityAction)
+IL_0071: ret
+METHOD System.Void World.SafeArea.SafeAreaView::init_relic(System.UInt32,System.Int32)
+IL_0000: newobj System.Void World.SafeArea.SafeAreaView/<>c__DisplayClass22_0::.ctor()
+IL_0005: stloc.0
+IL_0006: ldarg.0
+IL_0007: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::relic_button
+IL_000c: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_0011: ldc.i4.1
+IL_0012: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0017: ldstr "RelicBusinessView"
+IL_001c: ldloca.s V_1
+IL_001e: call System.Boolean Addrs.Addressable_Utility::try_load_asset<World.Business.RelicShopView_3>(System.String,!!0&)
+IL_0023: pop
+IL_0024: ldloc.0
+IL_0025: ldloc.1
+IL_0026: ldarg.0
+IL_0027: call UnityEngine.Transform UnityEngine.Component::get_transform()
+IL_002c: ldc.i4.0
+IL_002d: call !!0 UnityEngine.Object::Instantiate<World.Business.RelicShopView_3>(!!0,UnityEngine.Transform,System.Boolean)
+IL_0032: stfld World.Business.RelicShopView_3 World.SafeArea.SafeAreaView/<>c__DisplayClass22_0::rbv_ins
+IL_0037: ldloc.0
+IL_0038: ldfld World.Business.RelicShopView_3 World.SafeArea.SafeAreaView/<>c__DisplayClass22_0::rbv_ins
+IL_003d: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_0042: ldc.i4.0
+IL_0043: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0048: call !0 Foundations.Singleton`1<Foundations.Mission>::get_instance()
+IL_004d: ldstr "BusinessMgr"
+IL_0052: ldloca.s V_2
+IL_0054: callvirt System.Boolean Foundations.Mission::try_get_mgr<World.Business.BusinessMgr>(System.String,!!0&)
+IL_0059: pop
+IL_005a: newobj System.Void World.Business.RelicBusiness::.ctor()
+IL_005f: dup
+IL_0060: ldloc.0
+IL_0061: ldfld World.Business.RelicShopView_3 World.SafeArea.SafeAreaView/<>c__DisplayClass22_0::rbv_ins
+IL_0066: callvirt System.Void Foundations.MVVM.Model`2<World.Business.Business,World.Business.IBusinessView>::add_view(!1)
+IL_006b: ldarg.1
+IL_006c: ldarg.2
+IL_006d: callvirt System.Void World.Business.Business::Init(System.UInt32,System.Int32)
+IL_0072: ldarg.0
+IL_0073: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::relic_button
+IL_0078: callvirt UnityEngine.UI.Button/ButtonClickedEvent UnityEngine.UI.Button::get_onClick()
+IL_007d: ldloc.0
+IL_007e: ldftn System.Void World.SafeArea.SafeAreaView/<>c__DisplayClass22_0::<init_relic>b__0()
+IL_0084: newobj System.Void UnityEngine.Events.UnityAction::.ctor(System.Object,System.IntPtr)
+IL_0089: callvirt System.Void UnityEngine.Events.UnityEvent::AddListener(UnityEngine.Events.UnityAction)
+IL_008e: ret
+METHOD System.Void World.SafeArea.SafeAreaView::init_fix()
+IL_0000: newobj System.Void World.SafeArea.SafeAreaView/<>c__DisplayClass23_0::.ctor()
+IL_0005: stloc.0
+IL_0006: ldarg.0
+IL_0007: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::fix_button
+IL_000c: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_0011: ldc.i4.1
+IL_0012: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0017: ldstr "FixBusiness"
+IL_001c: ldloca.s V_1
+IL_001e: call System.Boolean Addrs.Addressable_Utility::try_load_asset<World.SafeArea.Fix_Window>(System.String,!!0&)
+IL_0023: pop
+IL_0024: ldloc.0
+IL_0025: ldloc.1
+IL_0026: ldarg.0
+IL_0027: call UnityEngine.Transform UnityEngine.Component::get_transform()
+IL_002c: ldc.i4.0
+IL_002d: call !!0 UnityEngine.Object::Instantiate<World.SafeArea.Fix_Window>(!!0,UnityEngine.Transform,System.Boolean)
+IL_0032: stfld World.SafeArea.Fix_Window World.SafeArea.SafeAreaView/<>c__DisplayClass23_0::fb_ins
+IL_0037: ldloc.0
+IL_0038: ldfld World.SafeArea.Fix_Window World.SafeArea.SafeAreaView/<>c__DisplayClass23_0::fb_ins
+IL_003d: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_0042: ldc.i4.0
+IL_0043: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0048: ldloc.0
+IL_0049: ldfld World.SafeArea.Fix_Window World.SafeArea.SafeAreaView/<>c__DisplayClass23_0::fb_ins
+IL_004e: callvirt System.Void World.SafeArea.Fix_Window::Init()
+IL_0053: ldarg.0
+IL_0054: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::fix_button
+IL_0059: callvirt UnityEngine.UI.Button/ButtonClickedEvent UnityEngine.UI.Button::get_onClick()
+IL_005e: ldloc.0
+IL_005f: ldftn System.Void World.SafeArea.SafeAreaView/<>c__DisplayClass23_0::<init_fix>b__0()
+IL_0065: newobj System.Void UnityEngine.Events.UnityAction::.ctor(System.Object,System.IntPtr)
+IL_006a: callvirt System.Void UnityEngine.Events.UnityEvent::AddListener(UnityEngine.Events.UnityAction)
+IL_006f: ret
+METHOD System.Void World.SafeArea.SafeAreaView::init_elite_relic(System.UInt32,System.Int32)
+IL_0000: ldarg.0
+IL_0001: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::elite_relic_button
+IL_0006: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_000b: ldc.i4.1
+IL_000c: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0011: ldstr "EliteRelicView"
+IL_0016: ldloca.s V_0
+IL_0018: call System.Boolean Addrs.Addressable_Utility::try_load_asset<World.Business.EliteRelicView>(System.String,!!0&)
+IL_001d: pop
+IL_001e: ldarg.0
+IL_001f: ldloc.0
+IL_0020: ldarg.0
+IL_0021: call UnityEngine.Transform UnityEngine.Component::get_transform()
+IL_0026: ldc.i4.0
+IL_0027: call !!0 UnityEngine.Object::Instantiate<World.Business.EliteRelicView>(!!0,UnityEngine.Transform,System.Boolean)
+IL_002c: stfld World.Business.EliteRelicView World.SafeArea.SafeAreaView::erv_ins
+IL_0031: ldarg.0
+IL_0032: ldfld World.Business.EliteRelicView World.SafeArea.SafeAreaView::erv_ins
+IL_0037: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_003c: ldc.i4.0
+IL_003d: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0042: call !0 Foundations.Singleton`1<Foundations.Mission>::get_instance()
+IL_0047: ldstr "BusinessMgr"
+IL_004c: ldloca.s V_1
+IL_004e: callvirt System.Boolean Foundations.Mission::try_get_mgr<World.Business.BusinessMgr>(System.String,!!0&)
+IL_0053: pop
+IL_0054: newobj System.Void World.Business.RelicBusiness::.ctor()
+IL_0059: dup
+IL_005a: ldarg.0
+IL_005b: ldfld World.Business.EliteRelicView World.SafeArea.SafeAreaView::erv_ins
+IL_0060: callvirt System.Void Foundations.MVVM.Model`2<World.Business.Business,World.Business.IBusinessView>::add_view(!1)
+IL_0065: ldarg.1
+IL_0066: ldarg.2
+IL_0067: callvirt System.Void World.Business.Business::Init(System.UInt32,System.Int32)
+IL_006c: ldarg.0
+IL_006d: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::elite_relic_button
+IL_0072: callvirt UnityEngine.UI.Button/ButtonClickedEvent UnityEngine.UI.Button::get_onClick()
+IL_0077: ldarg.0
+IL_0078: ldftn System.Void World.SafeArea.SafeAreaView::<init_elite_relic>b__25_0()
+IL_007e: newobj System.Void UnityEngine.Events.UnityAction::.ctor(System.Object,System.IntPtr)
+IL_0083: callvirt System.Void UnityEngine.Events.UnityEvent::AddListener(UnityEngine.Events.UnityAction)
+IL_0088: ret
+METHOD System.Void World.SafeArea.SafeAreaView::Update()
+IL_0000: call !0 Foundations.Singleton`1<Foundations.Mission>::get_instance()
+IL_0005: ldstr "BackPack"
+IL_000a: ldloca.s V_0
+IL_000c: callvirt System.Boolean Foundations.Mission::try_get_mgr<World.BackPack.BackPackMgr>(System.String,!!0&)
+IL_0011: pop
+IL_0012: ldarg.0
+IL_0013: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::end_button
+IL_0018: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_001d: call !0 Foundations.Singleton`1<World.BattleContext>::get_instance()
+IL_0022: ldfld System.Boolean World.BattleContext::active_retreat
+IL_0027: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_002c: ldarg.0
+IL_002d: ldfld TMPro.TextMeshProUGUI World.SafeArea.SafeAreaView::coin_text
+IL_0032: ldstr "{0}"
+IL_0037: ldloc.0
+IL_0038: ldfld System.Int32 World.BackPack.BackPackMgr::coin_count
+IL_003d: box System.Int32
+IL_0042: call System.String System.String::Format(System.String,System.Object)
+IL_0047: call System.String Commons.Localization_Utility::get_art_sprite(System.String)
+IL_004c: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_0051: ldarg.0
+IL_0052: ldfld World.Business.EliteRelicView World.SafeArea.SafeAreaView::erv_ins
+IL_0057: ldnull
+IL_0058: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_005d: brfalse IL_0080
+IL_0062: ldarg.0
+IL_0063: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::elite_relic_button
+IL_0068: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_006d: ldarg.0
+IL_006e: ldfld World.Business.EliteRelicView World.SafeArea.SafeAreaView::erv_ins
+IL_0073: callvirt System.Boolean World.Business.EliteRelicView::get_selected()
+IL_0078: ldc.i4.0
+IL_0079: ceq
+IL_007b: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0080: call !0 Foundations.MonoBehaviourSingleton`1<World.WorldSceneRoot>::get_instance()
+IL_0085: callvirt System.Boolean World.WorldSceneRoot::is_last_safeArea()
+IL_008a: stloc.1
+IL_008b: ldarg.0
+IL_008c: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::next_button
+IL_0091: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_0096: ldloc.1
+IL_0097: ldc.i4.0
+IL_0098: ceq
+IL_009a: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_009f: ret
+METHOD System.Void World.SafeArea.SafeAreaView::ChooseRoutes()
+IL_0000: call !0 Foundations.MonoBehaviourSingleton`1<World.WorldSceneRoot>::get_instance()
+IL_0005: callvirt System.Boolean World.WorldSceneRoot::is_last_safeArea()
+IL_000a: brfalse IL_0010
+IL_000f: ret
+IL_0010: call System.Void World.Helpers.Safe_Area_Helper::create_routes()
+IL_0015: call !0 Foundations.Singleton`1<Foundations.Share_DS>::get_instance()
+IL_001a: ldstr "routes"
+IL_001f: ldloca.s V_0
+IL_0021: callvirt System.Boolean Foundations.Share_DS::try_get_value<System.Collections.Generic.List`1<Commons.Levels.RouteData>>(System.String,!!0&)
+IL_0026: pop
+IL_0027: ldarg.0
+IL_0028: ldfld World.SafeArea.RouteView World.SafeArea.SafeAreaView::route_view
+IL_002d: ldloc.0
+IL_002e: callvirt System.Void World.SafeArea.RouteView::Init(System.Collections.Generic.List`1<Commons.Levels.RouteData>)
+IL_0033: ret
+METHOD System.Boolean World.SafeArea.SafeAreaView::valid_encounter_enable(System.UInt32)
+IL_0000: call !0 Foundations.Singleton`1<Commons.CommonContext>::get_instance()
+IL_0005: ldfld System.Collections.Generic.List`1<System.UInt32> Commons.CommonContext::encounter_blacklist
+IL_000a: ldarg.1
+IL_000b: callvirt System.Boolean System.Collections.Generic.List`1<System.UInt32>::Contains(!0)
+IL_0010: brfalse IL_0017
+IL_0015: ldc.i4.0
+IL_0016: ret
+IL_0017: call !0 Foundations.Singleton`1<Commons.CommonContext>::get_instance()
+IL_001c: ldfld System.Collections.Generic.List`1<System.UInt32> Commons.CommonContext::encounter_blacklist1
+IL_0021: ldarg.1
+IL_0022: callvirt System.Boolean System.Collections.Generic.List`1<System.UInt32>::Contains(!0)
+IL_0027: brfalse IL_002e
+IL_002c: ldc.i4.0
+IL_002d: ret
+IL_002e: ldstr "{0}"
+IL_0033: ldarg.1
+IL_0034: box System.UInt32
+IL_0039: call System.String System.String::Format(System.String,System.Object)
+IL_003e: ldloca.s V_0
+IL_0040: call System.Boolean AutoCodes.safe_zone_events::TryGetValue(System.String,AutoCodes.safe_zone_event&)
+IL_0045: brtrue IL_004c
+IL_004a: ldc.i4.0
+IL_004b: ret
+IL_004c: ldloc.0
+IL_004d: ldfld System.Collections.Generic.List`1<System.String> AutoCodes.safe_zone_event::valid_actions
+IL_0052: stloc.1
+IL_0053: ldloc.1
+IL_0054: brfalse IL_0064
+IL_0059: ldloc.1
+IL_005a: call System.Boolean System.Linq.Enumerable::Any<System.String>(System.Collections.Generic.IEnumerable`1<!!0>)
+IL_005f: brtrue IL_0066
+IL_0064: ldc.i4.1
+IL_0065: ret
+IL_0066: ldc.i4.1
+IL_0067: stloc.2
+IL_0068: ldloc.1
+IL_0069: callvirt System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<System.String>::GetEnumerator()
+IL_006e: stloc.3
+IL_006f: br IL_00e5
+IL_0074: ldloca.s V_3
+IL_0076: call !0 System.Collections.Generic.List`1/Enumerator<System.String>::get_Current()
+IL_007b: ldc.i4.2
+IL_007c: newarr System.Char
+IL_0081: dup
+IL_0082: ldc.i4.0
+IL_0083: ldc.i4.s 40
+IL_0085: stelem.i2
+IL_0086: dup
+IL_0087: ldc.i4.1
+IL_0088: ldc.i4.s 41
+IL_008a: stelem.i2
+IL_008b: callvirt System.String[] System.String::Split(System.Char[])
+IL_0090: dup
+IL_0091: ldc.i4.0
+IL_0092: ldelem.ref
+IL_0093: stloc.s V_4
+IL_0095: ldc.i4.1
+IL_0096: ldelem.ref
+IL_0097: ldstr ","
+IL_009c: call System.String[] Foundations.EX_Utility::string_safe_split(System.String,System.String)
+IL_00a1: stloc.s V_5
+IL_00a3: ldstr "World"
+IL_00a8: call System.Reflection.Assembly System.Reflection.Assembly::Load(System.String)
+IL_00ad: ldstr "World.Encounters.Dialogs."
+IL_00b2: ldloc.s V_4
+IL_00b4: call System.String System.String::Concat(System.String,System.String)
+IL_00b9: callvirt System.Type System.Reflection.Assembly::GetType(System.String)
+IL_00be: ldstr "do"
+IL_00c3: callvirt System.Reflection.MethodInfo System.Type::GetMethod(System.String)
+IL_00c8: ldnull
+IL_00c9: ldc.i4.1
+IL_00ca: newarr System.Object
+IL_00cf: dup
+IL_00d0: ldc.i4.0
+IL_00d1: ldloc.s V_5
+IL_00d3: stelem.ref
+IL_00d4: callvirt System.Object System.Reflection.MethodBase::Invoke(System.Object,System.Object[])
+IL_00d9: unbox.any System.Boolean
+IL_00de: stloc.s V_6
+IL_00e0: ldloc.2
+IL_00e1: ldloc.s V_6
+IL_00e3: and
+IL_00e4: stloc.2
+IL_00e5: ldloca.s V_3
+IL_00e7: call System.Boolean System.Collections.Generic.List`1/Enumerator<System.String>::MoveNext()
+IL_00ec: brtrue IL_0074
+IL_00f1: leave IL_0104
+IL_00f6: ldloca.s V_3
+IL_00f8: constrained. System.Collections.Generic.List`1/Enumerator<System.String>
+IL_00fe: callvirt System.Void System.IDisposable::Dispose()
+IL_0103: endfinally
+IL_0104: ldloc.2
+IL_0105: ret
+METHOD System.Void World.SafeArea.SafeAreaView::OverweightNotice_Start()
+IL_0000: call !0 Foundations.Singleton`1<Foundations.Mission>::get_instance()
+IL_0005: ldstr "BackPack"
+IL_000a: ldloca.s V_0
+IL_000c: callvirt System.Boolean Foundations.Mission::try_get_mgr<World.BackPack.BackPackMgr>(System.String,!!0&)
+IL_0011: pop
+IL_0012: ldloc.0
+IL_0013: callvirt System.Collections.Generic.List`1<System.UInt32> World.BackPack.BackPackMgr::get_all_loots()
+IL_0018: callvirt System.Int32 System.Collections.Generic.List`1<System.UInt32>::get_Count()
+IL_001d: ldloc.0
+IL_001e: callvirt System.Int32 World.BackPack.BackPackMgr::GetUnlockCount()
+IL_0023: stloc.1
+IL_0024: ldloc.1
+IL_0025: ble IL_003c
+IL_002a: ldarg.0
+IL_002b: ldfld UnityEngine.GameObject World.SafeArea.SafeAreaView::overweight_notice_start
+IL_0030: callvirt UnityEngine.GameObject UnityEngine.GameObject::get_gameObject()
+IL_0035: ldc.i4.1
+IL_0036: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_003b: ret
+IL_003c: ldarg.0
+IL_003d: call System.Void World.SafeArea.SafeAreaView::Button_Start()
+IL_0042: ret
+METHOD System.Void World.SafeArea.SafeAreaView::OverweightNotice_End()
+IL_0000: call !0 Foundations.Singleton`1<Foundations.Mission>::get_instance()
+IL_0005: ldstr "BackPack"
+IL_000a: ldloca.s V_0
+IL_000c: callvirt System.Boolean Foundations.Mission::try_get_mgr<World.BackPack.BackPackMgr>(System.String,!!0&)
+IL_0011: pop
+IL_0012: ldloc.0
+IL_0013: callvirt System.Collections.Generic.List`1<System.UInt32> World.BackPack.BackPackMgr::get_all_loots()
+IL_0018: callvirt System.Int32 System.Collections.Generic.List`1<System.UInt32>::get_Count()
+IL_001d: ldloc.0
+IL_001e: callvirt System.Int32 World.BackPack.BackPackMgr::GetUnlockCount()
+IL_0023: stloc.1
+IL_0024: ldloc.1
+IL_0025: ble IL_003c
+IL_002a: ldarg.0
+IL_002b: ldfld UnityEngine.GameObject World.SafeArea.SafeAreaView::overweight_notice_end
+IL_0030: callvirt UnityEngine.GameObject UnityEngine.GameObject::get_gameObject()
+IL_0035: ldc.i4.1
+IL_0036: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_003b: ret
+IL_003c: ldarg.0
+IL_003d: call System.Void World.SafeArea.SafeAreaView::Button_End()
+IL_0042: ret
+METHOD System.Void World.SafeArea.SafeAreaView::Button_Start()
+IL_0000: ldarg.0
+IL_0001: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::next_button
+IL_0006: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_000b: ldc.i4.0
+IL_000c: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0011: ldarg.0
+IL_0012: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::end_button
+IL_0017: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_001c: ldc.i4.0
+IL_001d: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0022: ldarg.0
+IL_0023: ldfld World.SafeArea.RouteView World.SafeArea.SafeAreaView::route_view
+IL_0028: callvirt !!0 UnityEngine.Component::GetComponent<Commons.Ui.SecondaryMenu>()
+IL_002d: ldc.i4.1
+IL_002e: callvirt System.Void Commons.Ui.SecondaryMenu::SetAble(System.Boolean)
+IL_0033: ret
+METHOD System.Void World.SafeArea.SafeAreaView::Button_End()
+IL_0000: call !0 Foundations.Singleton`1<Commons.Analytics.AnalyticsMgr>::get_instance()
+IL_0005: ldc.i4.2
+IL_0006: callvirt System.Void Commons.Analytics.AnalyticsMgr::MarkRunEnd(Commons.Analytics.EN_run_end_status)
+IL_000b: call !0 Foundations.MonoBehaviourSingleton`1<World.WorldSceneRoot>::get_instance()
+IL_0010: ldc.i4.1
+IL_0011: callvirt System.Void World.WorldSceneRoot::SetSettlement(System.Boolean)
+IL_0016: ret
+METHOD System.Collections.Generic.IReadOnlyList`1<System.String> World.SafeArea.SafeAreaView::get_analytics_shops()
+IL_0000: ldarg.0
+IL_0001: ldfld System.Collections.Generic.List`1<System.String> World.SafeArea.SafeAreaView::m_analytics_shops
+IL_0006: ret
+METHOD System.Void World.SafeArea.SafeAreaView::.ctor()
+IL_0000: ldarg.0
+IL_0001: newobj System.Void System.Collections.Generic.List`1<System.String>::.ctor()
+IL_0006: stfld System.Collections.Generic.List`1<System.String> World.SafeArea.SafeAreaView::m_analytics_shops
+IL_000b: ldarg.0
+IL_000c: call System.Void UnityEngine.MonoBehaviour::.ctor()
+IL_0011: ret
+METHOD System.Void World.SafeArea.SafeAreaView::<Init>b__17_1()
+IL_0000: ldc.r4 0
+IL_0005: call System.Void UnityEngine.Time::set_timeScale(System.Single)
+IL_000a: ldarg.0
+IL_000b: ldfld UnityEngine.GameObject World.SafeArea.SafeAreaView::encounter_mark
+IL_0010: ldc.i4.0
+IL_0011: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0016: ret
+METHOD System.Void World.SafeArea.SafeAreaView::<Init>b__17_2(System.String)
+IL_0000: call System.Single Commons.Common_Utility::get_timeScale()
+IL_0005: call System.Void UnityEngine.Time::set_timeScale(System.Single)
+IL_000a: ldarg.1
+IL_000b: ldstr "End"
+IL_0010: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_0015: stloc.0
+IL_0016: ldarg.0
+IL_0017: ldfld UnityEngine.GameObject World.SafeArea.SafeAreaView::encounter_mark
+IL_001c: ldloc.0
+IL_001d: ldc.i4.0
+IL_001e: ceq
+IL_0020: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0025: ldarg.0
+IL_0026: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::encounter_button
+IL_002b: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_0030: ldloc.0
+IL_0031: ldc.i4.0
+IL_0032: ceq
+IL_0034: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0039: ret
+METHOD System.Void World.SafeArea.SafeAreaView::<init_elite_relic>b__25_0()
+IL_0000: ldarg.0
+IL_0001: ldfld World.Business.EliteRelicView World.SafeArea.SafeAreaView::erv_ins
+IL_0006: callvirt System.Void World.Business.EliteRelicView::Open()
+IL_000b: ret
+TYPE World.SafeArea.SafeAreaView/<>c__DisplayClass17_0 : System.Object
+FIELD AutoCodes.safe_zone_event World.SafeArea.SafeAreaView/<>c__DisplayClass17_0::r_event
+FIELD World.SafeArea.SafeAreaView World.SafeArea.SafeAreaView/<>c__DisplayClass17_0::<>4__this
+METHOD System.Void World.SafeArea.SafeAreaView/<>c__DisplayClass17_0::.ctor()
+IL_0000: ldarg.0
+IL_0001: call System.Void System.Object::.ctor()
+IL_0006: ret
+METHOD System.Void World.SafeArea.SafeAreaView/<>c__DisplayClass17_0::<Init>b__0()
+IL_0000: newobj System.Void World.Progresss.ProgressEvent::.ctor()
+IL_0005: stloc.0
+IL_0006: ldloc.0
+IL_0007: newobj System.Void AutoCodes.event_site::.ctor()
+IL_000c: stfld AutoCodes.event_site World.Progresss.ProgressEvent::_desc
+IL_0011: ldloc.0
+IL_0012: ldfld AutoCodes.event_site World.Progresss.ProgressEvent::_desc
+IL_0017: ldarg.0
+IL_0018: ldfld AutoCodes.safe_zone_event World.SafeArea.SafeAreaView/<>c__DisplayClass17_0::r_event
+IL_001d: ldfld System.String AutoCodes.safe_zone_event::dialogue_graph
+IL_0022: stfld System.String AutoCodes.event_site::dialogue_graph
+IL_0027: ldloc.0
+IL_0028: ldstr "{0}"
+IL_002d: ldarg.0
+IL_002e: ldfld AutoCodes.safe_zone_event World.SafeArea.SafeAreaView/<>c__DisplayClass17_0::r_event
+IL_0033: ldfld System.UInt32 AutoCodes.safe_zone_event::id
+IL_0038: box System.UInt32
+IL_003d: call System.String System.String::Format(System.String,System.Object)
+IL_0042: stfld System.String World.Progresss.ProgressEvent::encounter_id
+IL_0047: call !0 Foundations.Singleton`1<World.Encounters.Dialogs.Encounter_Dialog>::get_instance()
+IL_004c: dup
+IL_004d: ldarg.0
+IL_004e: ldfld World.SafeArea.SafeAreaView World.SafeArea.SafeAreaView/<>c__DisplayClass17_0::<>4__this
+IL_0053: ldftn System.Void World.SafeArea.SafeAreaView::<Init>b__17_1()
+IL_0059: newobj System.Void System.Action::.ctor(System.Object,System.IntPtr)
+IL_005e: stfld System.Action World.Encounters.Dialogs.Encounter_Dialog::do_when_start
+IL_0063: dup
+IL_0064: ldarg.0
+IL_0065: ldfld World.SafeArea.SafeAreaView World.SafeArea.SafeAreaView/<>c__DisplayClass17_0::<>4__this
+IL_006a: ldftn System.Void World.SafeArea.SafeAreaView::<Init>b__17_2(System.String)
+IL_0070: newobj System.Void System.Action`1<System.String>::.ctor(System.Object,System.IntPtr)
+IL_0075: stfld System.Action`1<System.String> World.Encounters.Dialogs.Encounter_Dialog::do_when_end
+IL_007a: ldloc.0
+IL_007b: ldstr "Dialog_Window"
+IL_0080: callvirt System.Void World.Encounters.Dialogs.Encounter_Dialog::init(World.Progresss.ProgressEvent,System.String)
+IL_0085: ret
+TYPE World.SafeArea.SafeAreaView/<>c__DisplayClass18_0 : System.Object
+FIELD AutoCodes.safe_zone_event World.SafeArea.SafeAreaView/<>c__DisplayClass18_0::r_event
+FIELD World.SafeArea.SafeAreaView World.SafeArea.SafeAreaView/<>c__DisplayClass18_0::<>4__this
+FIELD System.Action World.SafeArea.SafeAreaView/<>c__DisplayClass18_0::<>9__1
+FIELD System.Action`1<System.String> World.SafeArea.SafeAreaView/<>c__DisplayClass18_0::<>9__2
+METHOD System.Void World.SafeArea.SafeAreaView/<>c__DisplayClass18_0::.ctor()
+IL_0000: ldarg.0
+IL_0001: call System.Void System.Object::.ctor()
+IL_0006: ret
+METHOD System.Void World.SafeArea.SafeAreaView/<>c__DisplayClass18_0::<Init_From_Save>b__0()
+IL_0000: newobj System.Void World.Progresss.ProgressEvent::.ctor()
+IL_0005: stloc.0
+IL_0006: ldloc.0
+IL_0007: newobj System.Void AutoCodes.event_site::.ctor()
+IL_000c: stfld AutoCodes.event_site World.Progresss.ProgressEvent::_desc
+IL_0011: ldloc.0
+IL_0012: ldfld AutoCodes.event_site World.Progresss.ProgressEvent::_desc
+IL_0017: ldarg.0
+IL_0018: ldfld AutoCodes.safe_zone_event World.SafeArea.SafeAreaView/<>c__DisplayClass18_0::r_event
+IL_001d: ldfld System.String AutoCodes.safe_zone_event::dialogue_graph
+IL_0022: stfld System.String AutoCodes.event_site::dialogue_graph
+IL_0027: ldloc.0
+IL_0028: ldstr "{0}"
+IL_002d: ldarg.0
+IL_002e: ldfld AutoCodes.safe_zone_event World.SafeArea.SafeAreaView/<>c__DisplayClass18_0::r_event
+IL_0033: ldfld System.UInt32 AutoCodes.safe_zone_event::id
+IL_0038: box System.UInt32
+IL_003d: call System.String System.String::Format(System.String,System.Object)
+IL_0042: stfld System.String World.Progresss.ProgressEvent::encounter_id
+IL_0047: call !0 Foundations.Singleton`1<World.Encounters.Dialogs.Encounter_Dialog>::get_instance()
+IL_004c: dup
+IL_004d: ldarg.0
+IL_004e: ldfld System.Action World.SafeArea.SafeAreaView/<>c__DisplayClass18_0::<>9__1
+IL_0053: dup
+IL_0054: brtrue IL_006f
+IL_0059: pop
+IL_005a: ldarg.0
+IL_005b: ldarg.0
+IL_005c: ldftn System.Void World.SafeArea.SafeAreaView/<>c__DisplayClass18_0::<Init_From_Save>b__1()
+IL_0062: newobj System.Void System.Action::.ctor(System.Object,System.IntPtr)
+IL_0067: dup
+IL_0068: stloc.1
+IL_0069: stfld System.Action World.SafeArea.SafeAreaView/<>c__DisplayClass18_0::<>9__1
+IL_006e: ldloc.1
+IL_006f: stfld System.Action World.Encounters.Dialogs.Encounter_Dialog::do_when_start
+IL_0074: dup
+IL_0075: ldarg.0
+IL_0076: ldfld System.Action`1<System.String> World.SafeArea.SafeAreaView/<>c__DisplayClass18_0::<>9__2
+IL_007b: dup
+IL_007c: brtrue IL_0097
+IL_0081: pop
+IL_0082: ldarg.0
+IL_0083: ldarg.0
+IL_0084: ldftn System.Void World.SafeArea.SafeAreaView/<>c__DisplayClass18_0::<Init_From_Save>b__2(System.String)
+IL_008a: newobj System.Void System.Action`1<System.String>::.ctor(System.Object,System.IntPtr)
+IL_008f: dup
+IL_0090: stloc.2
+IL_0091: stfld System.Action`1<System.String> World.SafeArea.SafeAreaView/<>c__DisplayClass18_0::<>9__2
+IL_0096: ldloc.2
+IL_0097: stfld System.Action`1<System.String> World.Encounters.Dialogs.Encounter_Dialog::do_when_end
+IL_009c: ldloc.0
+IL_009d: ldstr "Dialog_Window"
+IL_00a2: callvirt System.Void World.Encounters.Dialogs.Encounter_Dialog::init(World.Progresss.ProgressEvent,System.String)
+IL_00a7: ret
+METHOD System.Void World.SafeArea.SafeAreaView/<>c__DisplayClass18_0::<Init_From_Save>b__1()
+IL_0000: ldc.r4 0
+IL_0005: call System.Void UnityEngine.Time::set_timeScale(System.Single)
+IL_000a: ldarg.0
+IL_000b: ldfld World.SafeArea.SafeAreaView World.SafeArea.SafeAreaView/<>c__DisplayClass18_0::<>4__this
+IL_0010: ldfld UnityEngine.GameObject World.SafeArea.SafeAreaView::encounter_mark
+IL_0015: ldc.i4.0
+IL_0016: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_001b: ret
+METHOD System.Void World.SafeArea.SafeAreaView/<>c__DisplayClass18_0::<Init_From_Save>b__2(System.String)
+IL_0000: call System.Single Commons.Common_Utility::get_timeScale()
+IL_0005: call System.Void UnityEngine.Time::set_timeScale(System.Single)
+IL_000a: ldarg.1
+IL_000b: ldstr "End"
+IL_0010: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_0015: stloc.0
+IL_0016: ldarg.0
+IL_0017: ldfld World.SafeArea.SafeAreaView World.SafeArea.SafeAreaView/<>c__DisplayClass18_0::<>4__this
+IL_001c: ldfld UnityEngine.GameObject World.SafeArea.SafeAreaView::encounter_mark
+IL_0021: ldloc.0
+IL_0022: ldc.i4.0
+IL_0023: ceq
+IL_0025: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_002a: ldarg.0
+IL_002b: ldfld World.SafeArea.SafeAreaView World.SafeArea.SafeAreaView/<>c__DisplayClass18_0::<>4__this
+IL_0030: ldfld UnityEngine.UI.Button World.SafeArea.SafeAreaView::encounter_button
+IL_0035: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_003a: ldloc.0
+IL_003b: ldc.i4.0
+IL_003c: ceq
+IL_003e: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0043: ret
+TYPE World.SafeArea.SafeAreaView/<>c__DisplayClass20_0 : System.Object
+FIELD World.Business.CharacterBusinessPanel World.SafeArea.SafeAreaView/<>c__DisplayClass20_0::cbp_ins
+METHOD System.Void World.SafeArea.SafeAreaView/<>c__DisplayClass20_0::.ctor()
+IL_0000: ldarg.0
+IL_0001: call System.Void System.Object::.ctor()
+IL_0006: ret
+METHOD System.Void World.SafeArea.SafeAreaView/<>c__DisplayClass20_0::<init_role>b__0()
+IL_0000: ldarg.0
+IL_0001: ldfld World.Business.CharacterBusinessPanel World.SafeArea.SafeAreaView/<>c__DisplayClass20_0::cbp_ins
+IL_0006: callvirt !!0 UnityEngine.Component::GetComponent<Commons.Ui.SecondaryMenu>()
+IL_000b: ldc.i4.1
+IL_000c: callvirt System.Void Commons.Ui.SecondaryMenu::SetAble(System.Boolean)
+IL_0011: ldarg.0
+IL_0012: ldfld World.Business.CharacterBusinessPanel World.SafeArea.SafeAreaView/<>c__DisplayClass20_0::cbp_ins
+IL_0017: callvirt System.Void World.Business.CharacterBusinessPanel::Open()
+IL_001c: ret
+TYPE World.SafeArea.SafeAreaView/<>c__DisplayClass21_0 : System.Object
+FIELD World.Business.DeviceBusinessPanel World.SafeArea.SafeAreaView/<>c__DisplayClass21_0::dbp_ins
+METHOD System.Void World.SafeArea.SafeAreaView/<>c__DisplayClass21_0::.ctor()
+IL_0000: ldarg.0
+IL_0001: call System.Void System.Object::.ctor()
+IL_0006: ret
+METHOD System.Void World.SafeArea.SafeAreaView/<>c__DisplayClass21_0::<init_device>b__0()
+IL_0000: ldarg.0
+IL_0001: ldfld World.Business.DeviceBusinessPanel World.SafeArea.SafeAreaView/<>c__DisplayClass21_0::dbp_ins
+IL_0006: callvirt !!0 UnityEngine.Component::GetComponent<Commons.Ui.SecondaryMenu>()
+IL_000b: ldc.i4.1
+IL_000c: callvirt System.Void Commons.Ui.SecondaryMenu::SetAble(System.Boolean)
+IL_0011: ldarg.0
+IL_0012: ldfld World.Business.DeviceBusinessPanel World.SafeArea.SafeAreaView/<>c__DisplayClass21_0::dbp_ins
+IL_0017: callvirt System.Void World.Business.DeviceBusinessPanel::Open()
+IL_001c: ret
+TYPE World.SafeArea.SafeAreaView/<>c__DisplayClass22_0 : System.Object
+FIELD World.Business.RelicShopView_3 World.SafeArea.SafeAreaView/<>c__DisplayClass22_0::rbv_ins
+METHOD System.Void World.SafeArea.SafeAreaView/<>c__DisplayClass22_0::.ctor()
+IL_0000: ldarg.0
+IL_0001: call System.Void System.Object::.ctor()
+IL_0006: ret
+METHOD System.Void World.SafeArea.SafeAreaView/<>c__DisplayClass22_0::<init_relic>b__0()
+IL_0000: ldarg.0
+IL_0001: ldfld World.Business.RelicShopView_3 World.SafeArea.SafeAreaView/<>c__DisplayClass22_0::rbv_ins
+IL_0006: callvirt !!0 UnityEngine.Component::GetComponent<Commons.Ui.SecondaryMenu>()
+IL_000b: ldc.i4.1
+IL_000c: callvirt System.Void Commons.Ui.SecondaryMenu::SetAble(System.Boolean)
+IL_0011: ldarg.0
+IL_0012: ldfld World.Business.RelicShopView_3 World.SafeArea.SafeAreaView/<>c__DisplayClass22_0::rbv_ins
+IL_0017: callvirt System.Void World.Business.RelicShopView_3::Open()
+IL_001c: ret
+TYPE World.SafeArea.SafeAreaView/<>c__DisplayClass23_0 : System.Object
+FIELD World.SafeArea.Fix_Window World.SafeArea.SafeAreaView/<>c__DisplayClass23_0::fb_ins
+METHOD System.Void World.SafeArea.SafeAreaView/<>c__DisplayClass23_0::.ctor()
+IL_0000: ldarg.0
+IL_0001: call System.Void System.Object::.ctor()
+IL_0006: ret
+METHOD System.Void World.SafeArea.SafeAreaView/<>c__DisplayClass23_0::<init_fix>b__0()
+IL_0000: ldarg.0
+IL_0001: ldfld World.SafeArea.Fix_Window World.SafeArea.SafeAreaView/<>c__DisplayClass23_0::fb_ins
+IL_0006: callvirt !!0 UnityEngine.Component::GetComponent<Commons.Ui.SecondaryMenu>()
+IL_000b: ldc.i4.1
+IL_000c: callvirt System.Void Commons.Ui.SecondaryMenu::SetAble(System.Boolean)
+IL_0011: ldarg.0
+IL_0012: ldfld World.SafeArea.Fix_Window World.SafeArea.SafeAreaView/<>c__DisplayClass23_0::fb_ins
+IL_0017: callvirt System.Void World.SafeArea.Fix_Window::Open()
+IL_001c: ret

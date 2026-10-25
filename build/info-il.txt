@@ -1,0 +1,1038 @@
+TYPE World.Business.DeviceInfoView : UnityEngine.MonoBehaviour
+FIELD TMPro.TextMeshProUGUI World.Business.DeviceInfoView::name_text
+FIELD UnityEngine.UI.Image World.Business.DeviceInfoView::name_bg
+FIELD UnityEngine.UI.Image World.Business.DeviceInfoView::device_photo
+FIELD TMPro.TextMeshProUGUI World.Business.DeviceInfoView::price_text
+FIELD System.Collections.Generic.List`1<World.Business.CubicleInfoView> World.Business.DeviceInfoView::cubicles_view
+FIELD World.Business.KeywordsView World.Business.DeviceInfoView::keywords_view
+FIELD World.Business.DeviceDataInfoView World.Business.DeviceInfoView::device_data_info_view
+FIELD TMPro.TextMeshProUGUI World.Business.DeviceInfoView::device_desc_info_view
+FIELD World.Devices.Equip.EquipDeviceJobView World.Business.DeviceInfoView::jobs_view
+FIELD UnityEngine.GameObject World.Business.DeviceInfoView::keyword_notice
+FIELD AutoCodes.device_all World.Business.DeviceInfoView::device_record
+METHOD System.Void World.Business.DeviceInfoView::Init(System.Int32)
+IL_0000: ldarga.s device_id
+IL_0002: call System.String System.Int32::ToString()
+IL_0007: ldloca.s V_0
+IL_0009: call System.Boolean AutoCodes.device_alls::TryGetValue(System.String,AutoCodes.device_all&)
+IL_000e: pop
+IL_000f: ldarg.0
+IL_0010: ldloc.0
+IL_0011: stfld AutoCodes.device_all World.Business.DeviceInfoView::device_record
+IL_0016: ldloc.0
+IL_0017: brfalse IL_0135
+IL_001c: ldarg.0
+IL_001d: ldfld TMPro.TextMeshProUGUI World.Business.DeviceInfoView::name_text
+IL_0022: ldloc.0
+IL_0023: ldfld System.String AutoCodes.device_all::name
+IL_0028: call System.String Commons.Localization_Utility::get_localization(System.String)
+IL_002d: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_0032: ldloc.0
+IL_0033: ldflda System.Int32 AutoCodes.device_all::rank
+IL_0038: call System.String System.Int32::ToString()
+IL_003d: ldloca.s V_1
+IL_003f: call System.Boolean AutoCodes.device_ranks::TryGetValue(System.String,AutoCodes.device_rank&)
+IL_0044: pop
+IL_0045: ldloc.1
+IL_0046: ldfld System.String AutoCodes.device_rank::img_name_bar
+IL_004b: ldloca.s V_2
+IL_004d: call System.Boolean OneWaySpeaker.Hooks::LoadSprite(System.String,UnityEngine.Sprite&)
+IL_0052: pop
+IL_0053: ldarg.0
+IL_0054: ldfld UnityEngine.UI.Image World.Business.DeviceInfoView::name_bg
+IL_0059: ldloc.2
+IL_005a: callvirt System.Void UnityEngine.UI.Image::set_sprite(UnityEngine.Sprite)
+IL_005f: ldloc.0
+IL_0060: ldfld System.String AutoCodes.device_all::icon_photo
+IL_0065: ldloca.s V_3
+IL_0067: call System.Boolean OneWaySpeaker.Hooks::LoadSprite(System.String,UnityEngine.Sprite&)
+IL_006c: pop
+IL_006d: ldarg.0
+IL_006e: ldfld UnityEngine.UI.Image World.Business.DeviceInfoView::device_photo
+IL_0073: ldloc.3
+IL_0074: callvirt System.Void UnityEngine.UI.Image::set_sprite(UnityEngine.Sprite)
+IL_0079: ldarg.0
+IL_007a: ldfld TMPro.TextMeshProUGUI World.Business.DeviceInfoView::price_text
+IL_007f: ldloc.0
+IL_0080: ldflda System.Int32 AutoCodes.device_all::base_value
+IL_0085: call System.String System.Int32::ToString()
+IL_008a: call System.String Commons.Localization_Utility::get_art_sprite(System.String)
+IL_008f: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_0094: ldloc.0
+IL_0095: ldfld System.Collections.Generic.List`1<System.UInt32> AutoCodes.device_all::cubicles
+IL_009a: stloc.s V_4
+IL_009c: ldarg.0
+IL_009d: ldfld System.Collections.Generic.List`1<World.Business.CubicleInfoView> World.Business.DeviceInfoView::cubicles_view
+IL_00a2: callvirt System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<World.Business.CubicleInfoView>::GetEnumerator()
+IL_00a7: stloc.s V_5
+IL_00a9: br IL_00c0
+IL_00ae: ldloca.s V_5
+IL_00b0: call !0 System.Collections.Generic.List`1/Enumerator<World.Business.CubicleInfoView>::get_Current()
+IL_00b5: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_00ba: ldc.i4.0
+IL_00bb: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_00c0: ldloca.s V_5
+IL_00c2: call System.Boolean System.Collections.Generic.List`1/Enumerator<World.Business.CubicleInfoView>::MoveNext()
+IL_00c7: brtrue IL_00ae
+IL_00cc: leave IL_00df
+IL_00d1: ldloca.s V_5
+IL_00d3: constrained. System.Collections.Generic.List`1/Enumerator<World.Business.CubicleInfoView>
+IL_00d9: callvirt System.Void System.IDisposable::Dispose()
+IL_00de: endfinally
+IL_00df: ldloc.s V_4
+IL_00e1: brfalse IL_0135
+IL_00e6: ldc.i4.0
+IL_00e7: stloc.s V_6
+IL_00e9: br IL_0127
+IL_00ee: ldarg.0
+IL_00ef: ldfld System.Collections.Generic.List`1<World.Business.CubicleInfoView> World.Business.DeviceInfoView::cubicles_view
+IL_00f4: ldloc.s V_6
+IL_00f6: callvirt !0 System.Collections.Generic.List`1<World.Business.CubicleInfoView>::get_Item(System.Int32)
+IL_00fb: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_0100: ldc.i4.1
+IL_0101: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0106: ldarg.0
+IL_0107: ldfld System.Collections.Generic.List`1<World.Business.CubicleInfoView> World.Business.DeviceInfoView::cubicles_view
+IL_010c: ldloc.s V_6
+IL_010e: callvirt !0 System.Collections.Generic.List`1<World.Business.CubicleInfoView>::get_Item(System.Int32)
+IL_0113: ldloc.s V_4
+IL_0115: ldloc.s V_6
+IL_0117: callvirt !0 System.Collections.Generic.List`1<System.UInt32>::get_Item(System.Int32)
+IL_011c: callvirt System.Void World.Business.CubicleInfoView::Init(System.UInt32)
+IL_0121: ldloc.s V_6
+IL_0123: ldc.i4.1
+IL_0124: add
+IL_0125: stloc.s V_6
+IL_0127: ldloc.s V_6
+IL_0129: ldloc.s V_4
+IL_012b: callvirt System.Int32 System.Collections.Generic.List`1<System.UInt32>::get_Count()
+IL_0130: blt IL_00ee
+IL_0135: ldarg.0
+IL_0136: ldfld World.Business.DeviceDataInfoView World.Business.DeviceInfoView::device_data_info_view
+IL_013b: ldnull
+IL_013c: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_0141: brfalse IL_0152
+IL_0146: ldarg.0
+IL_0147: ldfld World.Business.DeviceDataInfoView World.Business.DeviceInfoView::device_data_info_view
+IL_014c: ldarg.1
+IL_014d: callvirt System.Void World.Business.DeviceDataInfoView::Init(System.Int32)
+IL_0152: ldarg.0
+IL_0153: ldfld TMPro.TextMeshProUGUI World.Business.DeviceInfoView::device_desc_info_view
+IL_0158: ldnull
+IL_0159: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_015e: brfalse IL_0179
+IL_0163: ldarg.0
+IL_0164: ldfld TMPro.TextMeshProUGUI World.Business.DeviceInfoView::device_desc_info_view
+IL_0169: ldloc.0
+IL_016a: ldfld System.String AutoCodes.device_all::alt_info
+IL_016f: call System.String Commons.Localization_Utility::get_localization(System.String)
+IL_0174: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_0179: ldarg.0
+IL_017a: ldfld UnityEngine.GameObject World.Business.DeviceInfoView::keyword_notice
+IL_017f: ldnull
+IL_0180: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_0185: brfalse IL_01d7
+IL_018a: ldarg.0
+IL_018b: ldfld AutoCodes.device_all World.Business.DeviceInfoView::device_record
+IL_0190: ldfld System.Collections.Generic.List`1<System.UInt32> AutoCodes.device_all::keyword_id
+IL_0195: brfalse IL_01c6
+IL_019a: ldarg.0
+IL_019b: ldfld AutoCodes.device_all World.Business.DeviceInfoView::device_record
+IL_01a0: ldfld System.Collections.Generic.List`1<System.UInt32> AutoCodes.device_all::keyword_id
+IL_01a5: callvirt System.Int32 System.Collections.Generic.List`1<System.UInt32>::get_Count()
+IL_01aa: ldc.i4.0
+IL_01ab: ble IL_01c6
+IL_01b0: ldarg.0
+IL_01b1: ldfld UnityEngine.GameObject World.Business.DeviceInfoView::keyword_notice
+IL_01b6: callvirt UnityEngine.GameObject UnityEngine.GameObject::get_gameObject()
+IL_01bb: ldc.i4.1
+IL_01bc: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_01c1: br IL_01d7
+IL_01c6: ldarg.0
+IL_01c7: ldfld UnityEngine.GameObject World.Business.DeviceInfoView::keyword_notice
+IL_01cc: callvirt UnityEngine.GameObject UnityEngine.GameObject::get_gameObject()
+IL_01d1: ldc.i4.0
+IL_01d2: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_01d7: ldarg.0
+IL_01d8: ldfld World.Devices.Equip.EquipDeviceJobView World.Business.DeviceInfoView::jobs_view
+IL_01dd: ldnull
+IL_01de: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_01e3: brfalse IL_01fe
+IL_01e8: ldarg.0
+IL_01e9: ldfld World.Devices.Equip.EquipDeviceJobView World.Business.DeviceInfoView::jobs_view
+IL_01ee: ldarg.0
+IL_01ef: ldfld AutoCodes.device_all World.Business.DeviceInfoView::device_record
+IL_01f4: ldfld System.Int32 AutoCodes.device_all::size
+IL_01f9: callvirt System.Void World.Devices.Equip.EquipDeviceJobView::Init(System.Int32)
+IL_01fe: ret
+METHOD System.Void World.Business.DeviceInfoView::ShowKeyword(System.Boolean)
+IL_0000: ldarg.0
+IL_0001: ldfld World.Business.KeywordsView World.Business.DeviceInfoView::keywords_view
+IL_0006: ldnull
+IL_0007: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_000c: brfalse IL_0059
+IL_0011: ldarg.0
+IL_0012: ldfld AutoCodes.device_all World.Business.DeviceInfoView::device_record
+IL_0017: brfalse IL_0032
+IL_001c: ldarg.0
+IL_001d: ldfld World.Business.KeywordsView World.Business.DeviceInfoView::keywords_view
+IL_0022: ldarg.0
+IL_0023: ldfld AutoCodes.device_all World.Business.DeviceInfoView::device_record
+IL_0028: ldfld System.Collections.Generic.List`1<System.UInt32> AutoCodes.device_all::keyword_id
+IL_002d: callvirt System.Void World.Business.KeywordsView::Init(System.Collections.Generic.List`1<System.UInt32>)
+IL_0032: ldarg.0
+IL_0033: ldfld World.Business.KeywordsView World.Business.DeviceInfoView::keywords_view
+IL_0038: ldfld System.Collections.Generic.List`1<World.Business.SingleKeywordView> World.Business.KeywordsView::words
+IL_003d: callvirt System.Int32 System.Collections.Generic.List`1<World.Business.SingleKeywordView>::get_Count()
+IL_0042: brtrue IL_0048
+IL_0047: ret
+IL_0048: ldarg.0
+IL_0049: ldfld World.Business.KeywordsView World.Business.DeviceInfoView::keywords_view
+IL_004e: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_0053: ldarg.1
+IL_0054: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0059: ret
+METHOD System.Void World.Business.DeviceInfoView::World.Devices.DeviceUiViews.IAltUi.Begin()
+IL_0000: ldarg.0
+IL_0001: ldfld World.Business.KeywordsView World.Business.DeviceInfoView::keywords_view
+IL_0006: ldnull
+IL_0007: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_000c: brfalse IL_0059
+IL_0011: ldarg.0
+IL_0012: ldfld AutoCodes.device_all World.Business.DeviceInfoView::device_record
+IL_0017: brfalse IL_0032
+IL_001c: ldarg.0
+IL_001d: ldfld World.Business.KeywordsView World.Business.DeviceInfoView::keywords_view
+IL_0022: ldarg.0
+IL_0023: ldfld AutoCodes.device_all World.Business.DeviceInfoView::device_record
+IL_0028: ldfld System.Collections.Generic.List`1<System.UInt32> AutoCodes.device_all::keyword_id
+IL_002d: callvirt System.Void World.Business.KeywordsView::Init(System.Collections.Generic.List`1<System.UInt32>)
+IL_0032: ldarg.0
+IL_0033: ldfld World.Business.KeywordsView World.Business.DeviceInfoView::keywords_view
+IL_0038: ldfld System.Collections.Generic.List`1<World.Business.SingleKeywordView> World.Business.KeywordsView::words
+IL_003d: callvirt System.Int32 System.Collections.Generic.List`1<World.Business.SingleKeywordView>::get_Count()
+IL_0042: brtrue IL_0048
+IL_0047: ret
+IL_0048: ldarg.0
+IL_0049: ldfld World.Business.KeywordsView World.Business.DeviceInfoView::keywords_view
+IL_004e: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_0053: ldc.i4.1
+IL_0054: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0059: ret
+METHOD System.Void World.Business.DeviceInfoView::World.Devices.DeviceUiViews.IAltUi.End()
+IL_0000: ldarg.0
+IL_0001: ldfld World.Business.KeywordsView World.Business.DeviceInfoView::keywords_view
+IL_0006: ldnull
+IL_0007: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_000c: brfalse IL_0038
+IL_0011: ldarg.0
+IL_0012: ldfld World.Business.KeywordsView World.Business.DeviceInfoView::keywords_view
+IL_0017: ldfld System.Collections.Generic.List`1<World.Business.SingleKeywordView> World.Business.KeywordsView::words
+IL_001c: callvirt System.Int32 System.Collections.Generic.List`1<World.Business.SingleKeywordView>::get_Count()
+IL_0021: brtrue IL_0027
+IL_0026: ret
+IL_0027: ldarg.0
+IL_0028: ldfld World.Business.KeywordsView World.Business.DeviceInfoView::keywords_view
+IL_002d: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_0032: ldc.i4.0
+IL_0033: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0038: ret
+METHOD System.Void World.Business.DeviceInfoView::.ctor()
+IL_0000: ldarg.0
+IL_0001: newobj System.Void System.Collections.Generic.List`1<World.Business.CubicleInfoView>::.ctor()
+IL_0006: stfld System.Collections.Generic.List`1<World.Business.CubicleInfoView> World.Business.DeviceInfoView::cubicles_view
+IL_000b: ldarg.0
+IL_000c: call System.Void UnityEngine.MonoBehaviour::.ctor()
+IL_0011: ret
+TYPE World.Business.DeviceInfoView_Obsolete : UnityEngine.MonoBehaviour
+FIELD TMPro.TextMeshProUGUI World.Business.DeviceInfoView_Obsolete::device_name
+FIELD TMPro.TextMeshProUGUI World.Business.DeviceInfoView_Obsolete::device_tag_info
+FIELD TMPro.TextMeshProUGUI World.Business.DeviceInfoView_Obsolete::device_hp
+FIELD TMPro.TextMeshProUGUI World.Business.DeviceInfoView_Obsolete::device_def
+FIELD TMPro.TextMeshProUGUI World.Business.DeviceInfoView_Obsolete::device_weight
+FIELD TMPro.TextMeshProUGUI World.Business.DeviceInfoView_Obsolete::device_Crit_Chance
+FIELD TMPro.TextMeshProUGUI World.Business.DeviceInfoView_Obsolete::device_Crit_Rate
+FIELD TMPro.TextMeshProUGUI World.Business.DeviceInfoView_Obsolete::device_dmg
+FIELD TMPro.TextMeshProUGUI World.Business.DeviceInfoView_Obsolete::device_atk_data
+FIELD UnityEngine.UI.VerticalLayoutGroup World.Business.DeviceInfoView_Obsolete::layout
+FIELD World.Business.KeywordsView World.Business.DeviceInfoView_Obsolete::keywords_view
+METHOD System.Void World.Business.DeviceInfoView_Obsolete::Init(World.Devices.Device)
+IL_0000: ldarg.1
+IL_0001: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_0006: ldflda System.UInt32 AutoCodes.device_all::id
+IL_000b: call System.String System.UInt32::ToString()
+IL_0010: ldloca.s V_0
+IL_0012: call System.Boolean AutoCodes.battle_datas::TryGetValue(System.String,AutoCodes.battle_data&)
+IL_0017: pop
+IL_0018: ldarg.0
+IL_0019: ldfld TMPro.TextMeshProUGUI World.Business.DeviceInfoView_Obsolete::device_name
+IL_001e: ldarg.1
+IL_001f: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_0024: ldfld System.String AutoCodes.device_all::name
+IL_0029: call System.String Commons.Localization_Utility::get_localization(System.String)
+IL_002e: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_0033: ldarg.0
+IL_0034: ldfld TMPro.TextMeshProUGUI World.Business.DeviceInfoView_Obsolete::device_tag_info
+IL_0039: ldarg.0
+IL_003a: ldarg.1
+IL_003b: call System.String World.Business.DeviceInfoView_Obsolete::get_device_tag_name(World.Devices.Device)
+IL_0040: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_0045: ldarg.0
+IL_0046: ldfld TMPro.TextMeshProUGUI World.Business.DeviceInfoView_Obsolete::device_weight
+IL_004b: ldarg.1
+IL_004c: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_0051: ldflda System.Int32 AutoCodes.device_all::weight
+IL_0056: call System.String System.Int32::ToString()
+IL_005b: ldstr " KG"
+IL_0060: call System.String System.String::Concat(System.String,System.String)
+IL_0065: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_006a: ldarg.1
+IL_006b: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_0070: ldfld Foundations.Excels.Device_Type AutoCodes.device_all::device_type
+IL_0075: ldfld Foundations.Excels.Device_Type/EN_Device_Type Foundations.Excels.Device_Type::value
+IL_007a: ldc.i4.2
+IL_007b: bne.un IL_0178
+IL_0080: ldarg.1
+IL_0081: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_0086: ldflda System.UInt32 AutoCodes.device_all::id
+IL_008b: call System.String System.UInt32::ToString()
+IL_0090: ldloca.s V_2
+IL_0092: call System.Boolean AutoCodes.device_wheels::TryGetValue(System.String,AutoCodes.device_wheel&)
+IL_0097: pop
+IL_0098: ldarg.0
+IL_0099: ldfld TMPro.TextMeshProUGUI World.Business.DeviceInfoView_Obsolete::device_hp
+IL_009e: ldstr "动力: "
+IL_00a3: ldloc.2
+IL_00a4: ldfld System.Int32 AutoCodes.device_wheel::tractive_force_max
+IL_00a9: ldc.i4.s 100
+IL_00ab: div
+IL_00ac: stloc.s V_4
+IL_00ae: ldloca.s V_4
+IL_00b0: call System.String System.Int32::ToString()
+IL_00b5: call System.String System.String::Concat(System.String,System.String)
+IL_00ba: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_00bf: ldloc.2
+IL_00c0: ldfld System.Single AutoCodes.device_wheel::feedback_0
+IL_00c5: stloc.3
+IL_00c6: ldarg.0
+IL_00c7: ldfld TMPro.TextMeshProUGUI World.Business.DeviceInfoView_Obsolete::device_def
+IL_00cc: ldstr "承重能力: "
+IL_00d1: ldloc.3
+IL_00d2: ldc.r4 0
+IL_00d7: blt IL_00e6
+IL_00dc: ldc.r4 9999
+IL_00e1: br IL_00ee
+IL_00e6: ldloc.3
+IL_00e7: neg
+IL_00e8: call System.Single UnityEngine.Mathf::Log(System.Single)
+IL_00ed: neg
+IL_00ee: stloc.s V_5
+IL_00f0: ldloca.s V_5
+IL_00f2: ldstr "F1"
+IL_00f7: call System.String System.Single::ToString(System.String)
+IL_00fc: ldstr "×"
+IL_0101: call System.String System.String::Concat(System.String,System.String,System.String)
+IL_0106: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_010b: ldarg.0
+IL_010c: ldfld TMPro.TextMeshProUGUI World.Business.DeviceInfoView_Obsolete::device_Crit_Chance
+IL_0111: ldstr "升温速率: "
+IL_0116: ldloc.2
+IL_0117: ldfld System.Single AutoCodes.device_wheel::blower_charge
+IL_011c: ldc.r4 100000
+IL_0121: mul
+IL_0122: stloc.s V_5
+IL_0124: ldloca.s V_5
+IL_0126: ldstr "F1"
+IL_012b: call System.String System.Single::ToString(System.String)
+IL_0130: ldstr "×"
+IL_0135: call System.String System.String::Concat(System.String,System.String,System.String)
+IL_013a: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_013f: ldarg.0
+IL_0140: ldfld TMPro.TextMeshProUGUI World.Business.DeviceInfoView_Obsolete::device_Crit_Rate
+IL_0145: ldstr "冷却速率: "
+IL_014a: ldloc.2
+IL_014b: ldfld System.Single AutoCodes.device_wheel::blower_decline
+IL_0150: ldc.r4 10000
+IL_0155: mul
+IL_0156: stloc.s V_5
+IL_0158: ldloca.s V_5
+IL_015a: ldstr "F1"
+IL_015f: call System.String System.Single::ToString(System.String)
+IL_0164: ldstr "×"
+IL_0169: call System.String System.String::Concat(System.String,System.String,System.String)
+IL_016e: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_0173: br IL_02b0
+IL_0178: ldarg.0
+IL_0179: ldfld TMPro.TextMeshProUGUI World.Business.DeviceInfoView_Obsolete::device_hp
+IL_017e: ldstr "耐久: "
+IL_0183: ldloc.0
+IL_0184: ldfld System.Int32 AutoCodes.battle_data::hp
+IL_0189: ldc.i4.s 100
+IL_018b: div
+IL_018c: stloc.s V_4
+IL_018e: ldloca.s V_4
+IL_0190: call System.String System.Int32::ToString()
+IL_0195: call System.String System.String::Concat(System.String,System.String)
+IL_019a: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_019f: ldloc.0
+IL_01a0: ldfld System.Int32 AutoCodes.battle_data::def
+IL_01a5: stloc.s V_6
+IL_01a7: ldarg.0
+IL_01a8: ldfld TMPro.TextMeshProUGUI World.Business.DeviceInfoView_Obsolete::device_def
+IL_01ad: ldstr "护甲: "
+IL_01b2: ldloca.s V_6
+IL_01b4: call System.String System.Int32::ToString()
+IL_01b9: call System.String System.String::Concat(System.String,System.String)
+IL_01be: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_01c3: ldloc.0
+IL_01c4: ldfld System.Int32 AutoCodes.battle_data::def
+IL_01c9: ldc.i4.0
+IL_01ca: blt IL_020f
+IL_01cf: ldarg.0
+IL_01d0: ldfld TMPro.TextMeshProUGUI World.Business.DeviceInfoView_Obsolete::device_def
+IL_01d5: dup
+IL_01d6: callvirt System.String TMPro.TMP_Text::get_text()
+IL_01db: ldstr " ( 伤害减免: "
+IL_01e0: ldloc.s V_6
+IL_01e2: conv.r4
+IL_01e3: ldc.r4 100
+IL_01e8: ldloc.s V_6
+IL_01ea: conv.r4
+IL_01eb: add
+IL_01ec: div
+IL_01ed: stloc.s V_5
+IL_01ef: ldloca.s V_5
+IL_01f1: ldstr "P1"
+IL_01f6: call System.String System.Single::ToString(System.String)
+IL_01fb: ldstr " )"
+IL_0200: call System.String System.String::Concat(System.String,System.String,System.String,System.String)
+IL_0205: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_020a: br IL_0246
+IL_020f: ldarg.0
+IL_0210: ldfld TMPro.TextMeshProUGUI World.Business.DeviceInfoView_Obsolete::device_def
+IL_0215: dup
+IL_0216: callvirt System.String TMPro.TMP_Text::get_text()
+IL_021b: ldstr " ( 伤害增加: "
+IL_0220: ldc.r4 -0.01
+IL_0225: ldloc.s V_6
+IL_0227: conv.r4
+IL_0228: mul
+IL_0229: stloc.s V_5
+IL_022b: ldloca.s V_5
+IL_022d: ldstr "P1"
+IL_0232: call System.String System.Single::ToString(System.String)
+IL_0237: ldstr " )"
+IL_023c: call System.String System.String::Concat(System.String,System.String,System.String,System.String)
+IL_0241: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_0246: ldarg.0
+IL_0247: ldfld TMPro.TextMeshProUGUI World.Business.DeviceInfoView_Obsolete::device_Crit_Chance
+IL_024c: ldstr "暴击几率: "
+IL_0251: ldloc.0
+IL_0252: ldfld System.Int32 AutoCodes.battle_data::critical_chance
+IL_0257: conv.r4
+IL_0258: ldc.r4 0.1
+IL_025d: mul
+IL_025e: stloc.s V_5
+IL_0260: ldloca.s V_5
+IL_0262: ldstr "F1"
+IL_0267: call System.String System.Single::ToString(System.String)
+IL_026c: ldstr "%"
+IL_0271: call System.String System.String::Concat(System.String,System.String,System.String)
+IL_0276: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_027b: ldarg.0
+IL_027c: ldfld TMPro.TextMeshProUGUI World.Business.DeviceInfoView_Obsolete::device_Crit_Rate
+IL_0281: ldstr "暴击伤害: "
+IL_0286: ldloc.0
+IL_0287: ldfld System.Int32 AutoCodes.battle_data::critical_rate
+IL_028c: conv.r4
+IL_028d: ldc.r4 0.1
+IL_0292: mul
+IL_0293: stloc.s V_5
+IL_0295: ldloca.s V_5
+IL_0297: ldstr "F1"
+IL_029c: call System.String System.Single::ToString(System.String)
+IL_02a1: ldstr "%"
+IL_02a6: call System.String System.String::Concat(System.String,System.String,System.String)
+IL_02ab: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_02b0: ldarg.0
+IL_02b1: ldarg.1
+IL_02b2: call System.String World.Business.DeviceInfoView_Obsolete::get_device_dmg_text(World.Devices.Device)
+IL_02b7: stloc.1
+IL_02b8: ldarg.0
+IL_02b9: ldfld TMPro.TextMeshProUGUI World.Business.DeviceInfoView_Obsolete::device_dmg
+IL_02be: ldstr "伤害: "
+IL_02c3: ldloc.1
+IL_02c4: call System.String System.String::Concat(System.String,System.String)
+IL_02c9: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_02ce: ldarg.0
+IL_02cf: ldfld TMPro.TextMeshProUGUI World.Business.DeviceInfoView_Obsolete::device_atk_data
+IL_02d4: ldarg.0
+IL_02d5: ldarg.1
+IL_02d6: call System.String World.Business.DeviceInfoView_Obsolete::get_device_atk_data(World.Devices.Device)
+IL_02db: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_02e0: ldarg.0
+IL_02e1: ldfld World.Business.KeywordsView World.Business.DeviceInfoView_Obsolete::keywords_view
+IL_02e6: ldnull
+IL_02e7: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_02ec: brfalse IL_0307
+IL_02f1: ldarg.0
+IL_02f2: ldfld World.Business.KeywordsView World.Business.DeviceInfoView_Obsolete::keywords_view
+IL_02f7: ldarg.1
+IL_02f8: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_02fd: ldfld System.Collections.Generic.List`1<System.UInt32> AutoCodes.device_all::keyword_id
+IL_0302: callvirt System.Void World.Business.KeywordsView::Init(System.Collections.Generic.List`1<System.UInt32>)
+IL_0307: ldarg.0
+IL_0308: call System.Void World.Business.DeviceInfoView_Obsolete::resize()
+IL_030d: ret
+METHOD System.Void World.Business.DeviceInfoView_Obsolete::Init(System.Int32)
+IL_0000: ret
+METHOD System.String World.Business.DeviceInfoView_Obsolete::get_device_tag_name(World.Devices.Device)
+IL_0000: ldstr ""
+IL_0005: stloc.0
+IL_0006: ldarg.1
+IL_0007: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_000c: ldfld System.Collections.Generic.List`1<System.UInt32> AutoCodes.device_all::device_tag
+IL_0011: brfalse IL_007e
+IL_0016: ldarg.1
+IL_0017: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_001c: ldfld System.Collections.Generic.List`1<System.UInt32> AutoCodes.device_all::device_tag
+IL_0021: callvirt System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<System.UInt32>::GetEnumerator()
+IL_0026: stloc.1
+IL_0027: br IL_005f
+IL_002c: ldloca.s V_1
+IL_002e: call !0 System.Collections.Generic.List`1/Enumerator<System.UInt32>::get_Current()
+IL_0033: stloc.2
+IL_0034: ldloca.s V_2
+IL_0036: call System.String System.UInt32::ToString()
+IL_003b: ldloca.s V_3
+IL_003d: call System.Boolean AutoCodes.device_tags::TryGetValue(System.String,AutoCodes.device_tag&)
+IL_0042: pop
+IL_0043: ldloc.0
+IL_0044: ldstr " <"
+IL_0049: ldloc.3
+IL_004a: ldfld System.String AutoCodes.device_tag::tag_name
+IL_004f: call System.String Commons.Localization_Utility::get_localization(System.String)
+IL_0054: ldstr ">"
+IL_0059: call System.String System.String::Concat(System.String,System.String,System.String,System.String)
+IL_005e: stloc.0
+IL_005f: ldloca.s V_1
+IL_0061: call System.Boolean System.Collections.Generic.List`1/Enumerator<System.UInt32>::MoveNext()
+IL_0066: brtrue IL_002c
+IL_006b: leave IL_007e
+IL_0070: ldloca.s V_1
+IL_0072: constrained. System.Collections.Generic.List`1/Enumerator<System.UInt32>
+IL_0078: callvirt System.Void System.IDisposable::Dispose()
+IL_007d: endfinally
+IL_007e: ldloc.0
+IL_007f: ret
+METHOD System.String World.Business.DeviceInfoView_Obsolete::get_device_dmg_text(World.Devices.Device)
+IL_0000: ldarg.1
+IL_0001: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_0006: ldfld System.Int32 AutoCodes.device_all::melee_logic
+IL_000b: brfalse IL_0050
+IL_0010: ldarg.1
+IL_0011: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_0016: ldflda System.Int32 AutoCodes.device_all::melee_logic
+IL_001b: call System.String System.Int32::ToString()
+IL_0020: ldloca.s V_0
+IL_0022: call System.Boolean AutoCodes.melee_logics::TryGetValue(System.String,AutoCodes.melee_logic&)
+IL_0027: pop
+IL_0028: ldarg.0
+IL_0029: ldloc.0
+IL_002a: ldfld System.Collections.Generic.Dictionary`2<System.String,System.Single> AutoCodes.melee_logic::damage
+IL_002f: ldloca.s V_1
+IL_0031: call System.Boolean World.Business.DeviceInfoView_Obsolete::get_device_total_dmg(System.Collections.Generic.Dictionary`2<System.String,System.Single>,System.String&)
+IL_0036: brtrue IL_003d
+IL_003b: ldloc.1
+IL_003c: ret
+IL_003d: ldloc.1
+IL_003e: ldarg.0
+IL_003f: ldloc.0
+IL_0040: ldfld System.Collections.Generic.Dictionary`2<System.String,System.Single> AutoCodes.melee_logic::damage
+IL_0045: call System.String World.Business.DeviceInfoView_Obsolete::get_device_dmgs_string(System.Collections.Generic.Dictionary`2<System.String,System.Single>)
+IL_004a: call System.String System.String::Concat(System.String,System.String)
+IL_004f: ret
+IL_0050: ldarg.1
+IL_0051: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_0056: ldfld System.Int32 AutoCodes.device_all::fire_logic
+IL_005b: brfalse IL_012b
+IL_0060: ldarg.1
+IL_0061: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_0066: ldflda System.Int32 AutoCodes.device_all::fire_logic
+IL_006b: call System.String System.Int32::ToString()
+IL_0070: ldloca.s V_2
+IL_0072: call System.Boolean AutoCodes.fire_logics::TryGetValue(System.String,AutoCodes.fire_logic&)
+IL_0077: pop
+IL_0078: ldloc.2
+IL_0079: ldfld System.UInt32 AutoCodes.fire_logic::salvo
+IL_007e: ldc.i4.1
+IL_007f: bgt.un IL_008e
+IL_0084: ldstr ""
+IL_0089: br IL_00a3
+IL_008e: ldstr "× {0}"
+IL_0093: ldloc.2
+IL_0094: ldfld System.UInt32 AutoCodes.fire_logic::salvo
+IL_0099: box System.UInt32
+IL_009e: call System.String System.String::Format(System.String,System.Object)
+IL_00a3: stloc.3
+IL_00a4: ldarg.0
+IL_00a5: ldloc.2
+IL_00a6: ldfld System.Collections.Generic.Dictionary`2<System.String,System.Single> AutoCodes.fire_logic::damage
+IL_00ab: ldloca.s V_5
+IL_00ad: call System.Boolean World.Business.DeviceInfoView_Obsolete::get_device_total_dmg(System.Collections.Generic.Dictionary`2<System.String,System.Single>,System.String&)
+IL_00b2: brtrue IL_00be
+IL_00b7: ldloc.s V_5
+IL_00b9: br IL_00d1
+IL_00be: ldloc.s V_5
+IL_00c0: ldarg.0
+IL_00c1: ldloc.2
+IL_00c2: ldfld System.Collections.Generic.Dictionary`2<System.String,System.Single> AutoCodes.fire_logic::damage
+IL_00c7: call System.String World.Business.DeviceInfoView_Obsolete::get_device_dmgs_string(System.Collections.Generic.Dictionary`2<System.String,System.Single>)
+IL_00cc: call System.String System.String::Concat(System.String,System.String)
+IL_00d1: stloc.s V_4
+IL_00d3: ldloc.2
+IL_00d4: ldfld System.Collections.Generic.Dictionary`2<System.String,System.Single> AutoCodes.fire_logic::UI_explosion_dmg
+IL_00d9: brfalse IL_0122
+IL_00de: ldstr "
+ - 爆炸伤害: "
+IL_00e3: ldarg.0
+IL_00e4: ldloc.2
+IL_00e5: ldfld System.Collections.Generic.Dictionary`2<System.String,System.Single> AutoCodes.fire_logic::UI_explosion_dmg
+IL_00ea: ldloca.s V_7
+IL_00ec: call System.Boolean World.Business.DeviceInfoView_Obsolete::get_device_total_dmg(System.Collections.Generic.Dictionary`2<System.String,System.Single>,System.String&)
+IL_00f1: brtrue IL_00fd
+IL_00f6: ldloc.s V_7
+IL_00f8: br IL_0110
+IL_00fd: ldloc.s V_7
+IL_00ff: ldarg.0
+IL_0100: ldloc.2
+IL_0101: ldfld System.Collections.Generic.Dictionary`2<System.String,System.Single> AutoCodes.fire_logic::UI_explosion_dmg
+IL_0106: call System.String World.Business.DeviceInfoView_Obsolete::get_device_dmgs_string(System.Collections.Generic.Dictionary`2<System.String,System.Single>)
+IL_010b: call System.String System.String::Concat(System.String,System.String)
+IL_0110: call System.String System.String::Concat(System.String,System.String)
+IL_0115: stloc.s V_6
+IL_0117: ldloc.s V_4
+IL_0119: ldloc.3
+IL_011a: ldloc.s V_6
+IL_011c: call System.String System.String::Concat(System.String,System.String,System.String)
+IL_0121: ret
+IL_0122: ldloc.s V_4
+IL_0124: ldloc.3
+IL_0125: call System.String System.String::Concat(System.String,System.String)
+IL_012a: ret
+IL_012b: ldarg.1
+IL_012c: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_0131: ldfld System.Int32 AutoCodes.device_all::shield_logic
+IL_0136: brfalse IL_017f
+IL_013b: ldarg.1
+IL_013c: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_0141: ldflda System.Int32 AutoCodes.device_all::shield_logic
+IL_0146: call System.String System.Int32::ToString()
+IL_014b: ldloca.s V_8
+IL_014d: call System.Boolean AutoCodes.shield_logics::TryGetValue(System.String,AutoCodes.shield_logic&)
+IL_0152: pop
+IL_0153: ldarg.0
+IL_0154: ldloc.s V_8
+IL_0156: ldfld System.Collections.Generic.Dictionary`2<System.String,System.Single> AutoCodes.shield_logic::damage
+IL_015b: ldloca.s V_9
+IL_015d: call System.Boolean World.Business.DeviceInfoView_Obsolete::get_device_total_dmg(System.Collections.Generic.Dictionary`2<System.String,System.Single>,System.String&)
+IL_0162: brtrue IL_016a
+IL_0167: ldloc.s V_9
+IL_0169: ret
+IL_016a: ldloc.s V_9
+IL_016c: ldarg.0
+IL_016d: ldloc.s V_8
+IL_016f: ldfld System.Collections.Generic.Dictionary`2<System.String,System.Single> AutoCodes.shield_logic::damage
+IL_0174: call System.String World.Business.DeviceInfoView_Obsolete::get_device_dmgs_string(System.Collections.Generic.Dictionary`2<System.String,System.Single>)
+IL_0179: call System.String System.String::Concat(System.String,System.String)
+IL_017e: ret
+IL_017f: ldarg.1
+IL_0180: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_0185: ldfld System.Int32 AutoCodes.device_all::ram_logic
+IL_018a: brfalse IL_0200
+IL_018f: ldarg.1
+IL_0190: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_0195: ldflda System.Int32 AutoCodes.device_all::ram_logic
+IL_019a: call System.String System.Int32::ToString()
+IL_019f: ldloca.s V_10
+IL_01a1: call System.Boolean AutoCodes.ram_logics::TryGetValue(System.String,AutoCodes.ram_logic&)
+IL_01a6: pop
+IL_01a7: ldstr "
+ - 速度加成: {0:F2}"
+IL_01ac: ldloc.s V_10
+IL_01ae: ldfld System.Single AutoCodes.ram_logic::damage_v_coef
+IL_01b3: box System.Single
+IL_01b8: call System.String System.String::Format(System.String,System.Object)
+IL_01bd: ldstr "×"
+IL_01c2: call System.String System.String::Concat(System.String,System.String)
+IL_01c7: stloc.s V_11
+IL_01c9: ldarg.0
+IL_01ca: ldloc.s V_10
+IL_01cc: ldfld System.Collections.Generic.Dictionary`2<System.String,System.Single> AutoCodes.ram_logic::damage
+IL_01d1: ldloca.s V_12
+IL_01d3: call System.Boolean World.Business.DeviceInfoView_Obsolete::get_device_total_dmg(System.Collections.Generic.Dictionary`2<System.String,System.Single>,System.String&)
+IL_01d8: brtrue IL_01e4
+IL_01dd: ldloc.s V_12
+IL_01df: br IL_01f8
+IL_01e4: ldloc.s V_12
+IL_01e6: ldarg.0
+IL_01e7: ldloc.s V_10
+IL_01e9: ldfld System.Collections.Generic.Dictionary`2<System.String,System.Single> AutoCodes.ram_logic::damage
+IL_01ee: call System.String World.Business.DeviceInfoView_Obsolete::get_device_dmgs_string(System.Collections.Generic.Dictionary`2<System.String,System.Single>)
+IL_01f3: call System.String System.String::Concat(System.String,System.String)
+IL_01f8: ldloc.s V_11
+IL_01fa: call System.String System.String::Concat(System.String,System.String)
+IL_01ff: ret
+IL_0200: ldarg.1
+IL_0201: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_0206: ldfld System.Int32 AutoCodes.device_all::other_logic
+IL_020b: brfalse IL_0254
+IL_0210: ldarg.1
+IL_0211: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_0216: ldflda System.Int32 AutoCodes.device_all::other_logic
+IL_021b: call System.String System.Int32::ToString()
+IL_0220: ldloca.s V_13
+IL_0222: call System.Boolean AutoCodes.other_logics::TryGetValue(System.String,AutoCodes.other_logic&)
+IL_0227: pop
+IL_0228: ldarg.0
+IL_0229: ldloc.s V_13
+IL_022b: ldfld System.Collections.Generic.Dictionary`2<System.String,System.Single> AutoCodes.other_logic::damage
+IL_0230: ldloca.s V_14
+IL_0232: call System.Boolean World.Business.DeviceInfoView_Obsolete::get_device_total_dmg(System.Collections.Generic.Dictionary`2<System.String,System.Single>,System.String&)
+IL_0237: brtrue IL_023f
+IL_023c: ldloc.s V_14
+IL_023e: ret
+IL_023f: ldloc.s V_14
+IL_0241: ldarg.0
+IL_0242: ldloc.s V_13
+IL_0244: ldfld System.Collections.Generic.Dictionary`2<System.String,System.Single> AutoCodes.other_logic::damage
+IL_0249: call System.String World.Business.DeviceInfoView_Obsolete::get_device_dmgs_string(System.Collections.Generic.Dictionary`2<System.String,System.Single>)
+IL_024e: call System.String System.String::Concat(System.String,System.String)
+IL_0253: ret
+IL_0254: ldstr "--"
+IL_0259: ret
+METHOD System.Boolean World.Business.DeviceInfoView_Obsolete::get_device_total_dmg(System.Collections.Generic.Dictionary`2<System.String,System.Single>,System.String&)
+IL_0000: ldarg.2
+IL_0001: ldstr ""
+IL_0006: stind.ref
+IL_0007: ldc.r4 0
+IL_000c: stloc.0
+IL_000d: ldc.i4.0
+IL_000e: stloc.1
+IL_000f: ldarg.1
+IL_0010: brtrue IL_0017
+IL_0015: ldc.i4.0
+IL_0016: ret
+IL_0017: ldarg.1
+IL_0018: callvirt System.Collections.Generic.Dictionary`2/Enumerator<!0,!1> System.Collections.Generic.Dictionary`2<System.String,System.Single>::GetEnumerator()
+IL_001d: stloc.2
+IL_001e: br IL_0047
+IL_0023: ldloca.s V_2
+IL_0025: call System.Collections.Generic.KeyValuePair`2<!0,!1> System.Collections.Generic.Dictionary`2/Enumerator<System.String,System.Single>::get_Current()
+IL_002a: stloc.3
+IL_002b: ldloc.0
+IL_002c: ldloca.s V_3
+IL_002e: call !1 System.Collections.Generic.KeyValuePair`2<System.String,System.Single>::get_Value()
+IL_0033: add
+IL_0034: stloc.0
+IL_0035: ldloca.s V_3
+IL_0037: call !0 System.Collections.Generic.KeyValuePair`2<System.String,System.Single>::get_Key()
+IL_003c: ldstr "sharp"
+IL_0041: call System.Boolean System.String::op_Inequality(System.String,System.String)
+IL_0046: stloc.1
+IL_0047: ldloca.s V_2
+IL_0049: call System.Boolean System.Collections.Generic.Dictionary`2/Enumerator<System.String,System.Single>::MoveNext()
+IL_004e: brtrue IL_0023
+IL_0053: leave IL_0066
+IL_0058: ldloca.s V_2
+IL_005a: constrained. System.Collections.Generic.Dictionary`2/Enumerator<System.String,System.Single>
+IL_0060: callvirt System.Void System.IDisposable::Dispose()
+IL_0065: endfinally
+IL_0066: ldarg.2
+IL_0067: ldloca.s V_0
+IL_0069: ldstr "F0"
+IL_006e: call System.String System.Single::ToString(System.String)
+IL_0073: stind.ref
+IL_0074: ldloc.1
+IL_0075: brtrue IL_0084
+IL_007a: ldarg.1
+IL_007b: callvirt System.Int32 System.Collections.Generic.Dictionary`2<System.String,System.Single>::get_Count()
+IL_0080: ldc.i4.1
+IL_0081: cgt
+IL_0083: ret
+IL_0084: ldc.i4.1
+IL_0085: ret
+METHOD System.String World.Business.DeviceInfoView_Obsolete::get_device_dmgs_string(System.Collections.Generic.Dictionary`2<System.String,System.Single>)
+IL_0000: ldstr ""
+IL_0005: stloc.0
+IL_0006: ldc.i4.1
+IL_0007: stloc.1
+IL_0008: ldarg.1
+IL_0009: brtrue IL_0014
+IL_000e: ldstr "--"
+IL_0013: ret
+IL_0014: ldarg.1
+IL_0015: callvirt System.Collections.Generic.Dictionary`2/Enumerator<!0,!1> System.Collections.Generic.Dictionary`2<System.String,System.Single>::GetEnumerator()
+IL_001a: stloc.2
+IL_001b: br IL_0146
+IL_0020: ldloca.s V_2
+IL_0022: call System.Collections.Generic.KeyValuePair`2<!0,!1> System.Collections.Generic.Dictionary`2/Enumerator<System.String,System.Single>::get_Current()
+IL_0027: stloc.3
+IL_0028: ldloc.1
+IL_0029: brfalse IL_0035
+IL_002e: ldc.i4.0
+IL_002f: stloc.1
+IL_0030: br IL_0041
+IL_0035: ldloc.0
+IL_0036: ldstr "+"
+IL_003b: call System.String System.String::Concat(System.String,System.String)
+IL_0040: stloc.0
+IL_0041: ldloca.s V_3
+IL_0043: call !0 System.Collections.Generic.KeyValuePair`2<System.String,System.Single>::get_Key()
+IL_0048: stloc.s V_6
+IL_004a: ldloc.s V_6
+IL_004c: ldstr "blunt"
+IL_0051: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_0056: brtrue IL_00a4
+IL_005b: ldloc.s V_6
+IL_005d: ldstr "fire"
+IL_0062: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_0067: brtrue IL_00ba
+IL_006c: ldloc.s V_6
+IL_006e: ldstr "acid"
+IL_0073: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_0078: brtrue IL_00d0
+IL_007d: ldloc.s V_6
+IL_007f: ldstr "wrap"
+IL_0084: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_0089: brtrue IL_00e6
+IL_008e: ldloc.s V_6
+IL_0090: ldstr "flash"
+IL_0095: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_009a: brtrue IL_00fc
+IL_009f: br IL_0112
+IL_00a4: ldsfld Commons.Config Commons.Config::current
+IL_00a9: ldfld UnityEngine.Color Commons.Config::blunt_color
+IL_00ae: call System.String UnityEngine.ColorUtility::ToHtmlStringRGBA(UnityEngine.Color)
+IL_00b3: stloc.s V_5
+IL_00b5: br IL_0123
+IL_00ba: ldsfld Commons.Config Commons.Config::current
+IL_00bf: ldfld UnityEngine.Color Commons.Config::fire_color
+IL_00c4: call System.String UnityEngine.ColorUtility::ToHtmlStringRGBA(UnityEngine.Color)
+IL_00c9: stloc.s V_5
+IL_00cb: br IL_0123
+IL_00d0: ldsfld Commons.Config Commons.Config::current
+IL_00d5: ldfld UnityEngine.Color Commons.Config::acid_color
+IL_00da: call System.String UnityEngine.ColorUtility::ToHtmlStringRGBA(UnityEngine.Color)
+IL_00df: stloc.s V_5
+IL_00e1: br IL_0123
+IL_00e6: ldsfld Commons.Config Commons.Config::current
+IL_00eb: ldfld UnityEngine.Color Commons.Config::wrap_color
+IL_00f0: call System.String UnityEngine.ColorUtility::ToHtmlStringRGBA(UnityEngine.Color)
+IL_00f5: stloc.s V_5
+IL_00f7: br IL_0123
+IL_00fc: ldsfld Commons.Config Commons.Config::current
+IL_0101: ldfld UnityEngine.Color Commons.Config::flash_color
+IL_0106: call System.String UnityEngine.ColorUtility::ToHtmlStringRGBA(UnityEngine.Color)
+IL_010b: stloc.s V_5
+IL_010d: br IL_0123
+IL_0112: ldsfld Commons.Config Commons.Config::current
+IL_0117: ldfld UnityEngine.Color Commons.Config::normal_ui_color
+IL_011c: call System.String UnityEngine.ColorUtility::ToHtmlStringRGBA(UnityEngine.Color)
+IL_0121: stloc.s V_5
+IL_0123: ldloc.s V_5
+IL_0125: stloc.s V_4
+IL_0127: ldloc.0
+IL_0128: ldstr "<color=#{0}>{1:F0}</color>"
+IL_012d: ldloc.s V_4
+IL_012f: ldloca.s V_3
+IL_0131: call !1 System.Collections.Generic.KeyValuePair`2<System.String,System.Single>::get_Value()
+IL_0136: box System.Single
+IL_013b: call System.String System.String::Format(System.String,System.Object,System.Object)
+IL_0140: call System.String System.String::Concat(System.String,System.String)
+IL_0145: stloc.0
+IL_0146: ldloca.s V_2
+IL_0148: call System.Boolean System.Collections.Generic.Dictionary`2/Enumerator<System.String,System.Single>::MoveNext()
+IL_014d: brtrue IL_0020
+IL_0152: leave IL_0165
+IL_0157: ldloca.s V_2
+IL_0159: constrained. System.Collections.Generic.Dictionary`2/Enumerator<System.String,System.Single>
+IL_015f: callvirt System.Void System.IDisposable::Dispose()
+IL_0164: endfinally
+IL_0165: ldstr " ("
+IL_016a: ldloc.0
+IL_016b: ldstr ")"
+IL_0170: call System.String System.String::Concat(System.String,System.String,System.String)
+IL_0175: stloc.0
+IL_0176: ldloc.0
+IL_0177: ret
+METHOD System.String World.Business.DeviceInfoView_Obsolete::get_device_atk_data(World.Devices.Device)
+IL_0000: ldarg.1
+IL_0001: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_0006: ldfld System.Int32 AutoCodes.device_all::melee_logic
+IL_000b: brfalse IL_0045
+IL_0010: ldarg.1
+IL_0011: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_0016: ldflda System.Int32 AutoCodes.device_all::melee_logic
+IL_001b: call System.String System.Int32::ToString()
+IL_0020: ldloca.s V_0
+IL_0022: call System.Boolean AutoCodes.melee_logics::TryGetValue(System.String,AutoCodes.melee_logic&)
+IL_0027: pop
+IL_0028: ldstr "攻击间隔: {0:F2} 秒"
+IL_002d: ldloc.0
+IL_002e: ldfld System.Int32 AutoCodes.melee_logic::cd
+IL_0033: conv.r4
+IL_0034: ldc.r4 120
+IL_0039: div
+IL_003a: box System.Single
+IL_003f: call System.String System.String::Format(System.String,System.Object)
+IL_0044: ret
+IL_0045: ldarg.1
+IL_0046: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_004b: ldfld System.Int32 AutoCodes.device_all::fire_logic
+IL_0050: brfalse IL_013c
+IL_0055: ldarg.1
+IL_0056: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_005b: ldflda System.Int32 AutoCodes.device_all::fire_logic
+IL_0060: call System.String System.Int32::ToString()
+IL_0065: ldloca.s V_1
+IL_0067: call System.Boolean AutoCodes.fire_logics::TryGetValue(System.String,AutoCodes.fire_logic&)
+IL_006c: pop
+IL_006d: ldstr "精准: {0:P1}"
+IL_0072: ldc.r4 1
+IL_0077: ldloc.1
+IL_0078: ldfld System.Single AutoCodes.fire_logic::angle
+IL_007d: ldc.r4 0.04
+IL_0082: mul
+IL_0083: sub
+IL_0084: box System.Single
+IL_0089: call System.String System.String::Format(System.String,System.Object)
+IL_008e: ldstr "
+弹容: {0}"
+IL_0093: ldloc.1
+IL_0094: ldfld System.UInt32 AutoCodes.fire_logic::capacity
+IL_0099: box System.UInt32
+IL_009e: call System.String System.String::Format(System.String,System.Object)
+IL_00a3: stloc.2
+IL_00a4: ldstr ""
+IL_00a9: stloc.3
+IL_00aa: ldloc.1
+IL_00ab: ldfld System.Int32 AutoCodes.fire_logic::cd
+IL_00b0: ldc.i4 300
+IL_00b5: blt IL_00dc
+IL_00ba: ldstr "
+射击冷却: {0:F2} 秒"
+IL_00bf: ldloc.1
+IL_00c0: ldfld System.Int32 AutoCodes.fire_logic::cd
+IL_00c5: conv.r4
+IL_00c6: ldc.r4 120
+IL_00cb: div
+IL_00cc: box System.Single
+IL_00d1: call System.String System.String::Format(System.String,System.Object)
+IL_00d6: stloc.3
+IL_00d7: br IL_0134
+IL_00dc: ldstr "
+装填: "
+IL_00e1: stloc.3
+IL_00e2: ldloc.1
+IL_00e3: ldfld System.Int32 AutoCodes.fire_logic::ui_reloading_trigger_ticks
+IL_00e8: ldc.i4.1
+IL_00e9: ble IL_0111
+IL_00ee: ldloc.3
+IL_00ef: ldstr "{0:F2} 秒 + "
+IL_00f4: ldloc.1
+IL_00f5: ldfld System.Int32 AutoCodes.fire_logic::ui_reloading_trigger_ticks
+IL_00fa: conv.r4
+IL_00fb: ldc.r4 120
+IL_0100: div
+IL_0101: box System.Single
+IL_0106: call System.String System.String::Format(System.String,System.Object)
+IL_010b: call System.String System.String::Concat(System.String,System.String)
+IL_0110: stloc.3
+IL_0111: ldloc.3
+IL_0112: ldstr "{0:F2} 秒/发"
+IL_0117: ldloc.1
+IL_0118: ldfld System.Int32 AutoCodes.fire_logic::ui_reloading_ticks
+IL_011d: conv.r4
+IL_011e: ldc.r4 120
+IL_0123: div
+IL_0124: box System.Single
+IL_0129: call System.String System.String::Format(System.String,System.Object)
+IL_012e: call System.String System.String::Concat(System.String,System.String)
+IL_0133: stloc.3
+IL_0134: ldloc.2
+IL_0135: ldloc.3
+IL_0136: call System.String System.String::Concat(System.String,System.String,System.String)
+IL_013b: ret
+IL_013c: ldarg.1
+IL_013d: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_0142: ldfld System.Int32 AutoCodes.device_all::ram_logic
+IL_0147: brfalse IL_01a4
+IL_014c: ldarg.1
+IL_014d: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_0152: ldflda System.Int32 AutoCodes.device_all::ram_logic
+IL_0157: call System.String System.Int32::ToString()
+IL_015c: ldloca.s V_4
+IL_015e: call System.Boolean AutoCodes.ram_logics::TryGetValue(System.String,AutoCodes.ram_logic&)
+IL_0163: pop
+IL_0164: ldstr "击退: {0:F2}"
+IL_0169: ldloc.s V_4
+IL_016b: ldfld System.Single AutoCodes.ram_logic::ft
+IL_0170: box System.Single
+IL_0175: call System.String System.String::Format(System.String,System.Object)
+IL_017a: ldstr "
+ - 速度加成: {0:F2}"
+IL_017f: ldloc.s V_4
+IL_0181: ldfld System.Single AutoCodes.ram_logic::ft_v_coef
+IL_0186: box System.Single
+IL_018b: call System.String System.String::Format(System.String,System.Object)
+IL_0190: ldstr "×"
+IL_0195: call System.String System.String::Concat(System.String,System.String)
+IL_019a: stloc.s V_5
+IL_019c: ldloc.s V_5
+IL_019e: call System.String System.String::Concat(System.String,System.String)
+IL_01a3: ret
+IL_01a4: ldstr "--"
+IL_01a9: ret
+METHOD System.Void World.Business.DeviceInfoView_Obsolete::resize()
+IL_0000: ldarg.0
+IL_0001: call UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_0006: callvirt System.Boolean UnityEngine.GameObject::get_activeSelf()
+IL_000b: brtrue IL_0011
+IL_0010: ret
+IL_0011: ldarg.0
+IL_0012: ldfld TMPro.TextMeshProUGUI World.Business.DeviceInfoView_Obsolete::device_dmg
+IL_0017: callvirt System.Void UnityEngine.UI.Graphic::SetLayoutDirty()
+IL_001c: ldarg.0
+IL_001d: ldfld TMPro.TextMeshProUGUI World.Business.DeviceInfoView_Obsolete::device_dmg
+IL_0022: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_0027: callvirt !!0 UnityEngine.GameObject::GetComponentInParent<UnityEngine.UI.ContentSizeFitter>()
+IL_002c: callvirt System.Void UnityEngine.UI.ContentSizeFitter::SetLayoutVertical()
+IL_0031: ldarg.0
+IL_0032: ldfld TMPro.TextMeshProUGUI World.Business.DeviceInfoView_Obsolete::device_atk_data
+IL_0037: callvirt System.Void UnityEngine.UI.Graphic::SetLayoutDirty()
+IL_003c: ldarg.0
+IL_003d: ldfld TMPro.TextMeshProUGUI World.Business.DeviceInfoView_Obsolete::device_atk_data
+IL_0042: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_0047: callvirt !!0 UnityEngine.GameObject::GetComponentInParent<UnityEngine.UI.ContentSizeFitter>()
+IL_004c: callvirt System.Void UnityEngine.UI.ContentSizeFitter::SetLayoutVertical()
+IL_0051: ldarg.0
+IL_0052: ldfld UnityEngine.UI.VerticalLayoutGroup World.Business.DeviceInfoView_Obsolete::layout
+IL_0057: callvirt System.Void UnityEngine.UI.LayoutGroup::SetLayoutVertical()
+IL_005c: ret
+METHOD System.Void World.Business.DeviceInfoView_Obsolete::ShowKeyword(System.Boolean)
+IL_0000: ldarg.0
+IL_0001: ldfld World.Business.KeywordsView World.Business.DeviceInfoView_Obsolete::keywords_view
+IL_0006: ldnull
+IL_0007: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_000c: brfalse IL_0022
+IL_0011: ldarg.0
+IL_0012: ldfld World.Business.KeywordsView World.Business.DeviceInfoView_Obsolete::keywords_view
+IL_0017: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_001c: ldarg.1
+IL_001d: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0022: ret
+METHOD System.Void World.Business.DeviceInfoView_Obsolete::.ctor()
+IL_0000: ldarg.0
+IL_0001: call System.Void UnityEngine.MonoBehaviour::.ctor()
+IL_0006: ret

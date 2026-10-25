@@ -1,0 +1,1291 @@
+TYPE World.Devices.DeviceViews.DeviceView : UnityEngine.MonoBehaviour
+FIELD World.Devices.Device World.Devices.DeviceViews.DeviceView::owner
+FIELD System.Collections.Generic.List`1<World.Devices.DeviceKeyPoint> World.Devices.DeviceViews.DeviceView::dkp
+FIELD System.Collections.Generic.List`1<World.Devices.DeviceCollider> World.Devices.DeviceViews.DeviceView::colliders
+FIELD World.VFXs.VFX World.Devices.DeviceViews.DeviceView::outlier_vfx
+FIELD World.VFXs.VFX World.Devices.DeviceViews.DeviceView::smoke_vfx
+METHOD System.Void World.Devices.DeviceViews.DeviceView::attach(World.Devices.Device)
+IL_0000: ldarg.0
+IL_0001: ldarg.1
+IL_0002: stfld World.Devices.Device World.Devices.DeviceViews.DeviceView::owner
+IL_0007: ldarg.0
+IL_0008: call UnityEngine.Transform UnityEngine.Component::get_transform()
+IL_000d: ldarg.1
+IL_000e: ldfld UnityEngine.Vector2 World.Devices.Device::position
+IL_0013: call UnityEngine.Vector3 UnityEngine.Vector2::op_Implicit(UnityEngine.Vector2)
+IL_0018: callvirt System.Void UnityEngine.Transform::set_localPosition(UnityEngine.Vector3)
+IL_001d: ldarg.0
+IL_001e: ldfld System.Collections.Generic.List`1<World.Devices.DeviceCollider> World.Devices.DeviceViews.DeviceView::colliders
+IL_0023: callvirt System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<World.Devices.DeviceCollider>::GetEnumerator()
+IL_0028: stloc.0
+IL_0029: br IL_003b
+IL_002e: ldloca.s V_0
+IL_0030: call !0 System.Collections.Generic.List`1/Enumerator<World.Devices.DeviceCollider>::get_Current()
+IL_0035: ldarg.1
+IL_0036: stfld World.Devices.Device World.Devices.DeviceCollider::device
+IL_003b: ldloca.s V_0
+IL_003d: call System.Boolean System.Collections.Generic.List`1/Enumerator<World.Devices.DeviceCollider>::MoveNext()
+IL_0042: brtrue IL_002e
+IL_0047: leave IL_005a
+IL_004c: ldloca.s V_0
+IL_004e: constrained. System.Collections.Generic.List`1/Enumerator<World.Devices.DeviceCollider>
+IL_0054: callvirt System.Void System.IDisposable::Dispose()
+IL_0059: endfinally
+IL_005a: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView::detach(World.Devices.Device)
+IL_0000: ldarg.0
+IL_0001: ldnull
+IL_0002: stfld World.Devices.Device World.Devices.DeviceViews.DeviceView::owner
+IL_0007: ldarg.0
+IL_0008: call UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_000d: call System.Void UnityEngine.Object::Destroy(UnityEngine.Object)
+IL_0012: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView::init()
+IL_0000: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView::init_pos()
+IL_0000: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView::notify_add_emergency(World.Devices.DeviceEmergencies.DeviceEmergency)
+IL_0000: ldarg.0
+IL_0001: ldfld System.Collections.Generic.List`1<World.Devices.DeviceKeyPoint> World.Devices.DeviceViews.DeviceView::dkp
+IL_0006: ldsfld System.Predicate`1<World.Devices.DeviceKeyPoint> World.Devices.DeviceViews.DeviceView/<>c::<>9__8_0
+IL_000b: dup
+IL_000c: brtrue IL_0028
+IL_0011: pop
+IL_0012: ldsfld World.Devices.DeviceViews.DeviceView/<>c World.Devices.DeviceViews.DeviceView/<>c::<>9
+IL_0017: ldftn System.Boolean World.Devices.DeviceViews.DeviceView/<>c::<notify_add_emergency>b__8_0(World.Devices.DeviceKeyPoint)
+IL_001d: newobj System.Void System.Predicate`1<World.Devices.DeviceKeyPoint>::.ctor(System.Object,System.IntPtr)
+IL_0022: dup
+IL_0023: stsfld System.Predicate`1<World.Devices.DeviceKeyPoint> World.Devices.DeviceViews.DeviceView/<>c::<>9__8_0
+IL_0028: callvirt !0 System.Collections.Generic.List`1<World.Devices.DeviceKeyPoint>::Find(System.Predicate`1<!0>)
+IL_002d: stloc.0
+IL_002e: ldarg.1
+IL_002f: isinst World.Devices.DeviceEmergencies.DeviceFired
+IL_0034: brfalse IL_0066
+IL_0039: ldloc.0
+IL_003a: ldnull
+IL_003b: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_0040: brfalse IL_00dd
+IL_0045: ldarg.0
+IL_0046: ldstr "buff_fire_vfx"
+IL_004b: ldc.i4 9999
+IL_0050: ldloc.0
+IL_0051: callvirt UnityEngine.Transform UnityEngine.Component::get_transform()
+IL_0056: ldc.i4.1
+IL_0057: call World.VFXs.VFX World.Helpers.Vfx_Helper::InstantiateVfx(System.String,System.Int32,UnityEngine.Transform,System.Boolean)
+IL_005c: stfld World.VFXs.VFX World.Devices.DeviceViews.DeviceView::outlier_vfx
+IL_0061: br IL_00dd
+IL_0066: ldarg.1
+IL_0067: isinst World.Devices.DeviceEmergencies.DeviceAcid
+IL_006c: brfalse IL_009e
+IL_0071: ldloc.0
+IL_0072: ldnull
+IL_0073: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_0078: brfalse IL_00dd
+IL_007d: ldarg.0
+IL_007e: ldstr "buff_acid_vfx"
+IL_0083: ldc.i4 9999
+IL_0088: ldloc.0
+IL_0089: callvirt UnityEngine.Transform UnityEngine.Component::get_transform()
+IL_008e: ldc.i4.1
+IL_008f: call World.VFXs.VFX World.Helpers.Vfx_Helper::InstantiateVfx(System.String,System.Int32,UnityEngine.Transform,System.Boolean)
+IL_0094: stfld World.VFXs.VFX World.Devices.DeviceViews.DeviceView::outlier_vfx
+IL_0099: br IL_00dd
+IL_009e: ldarg.1
+IL_009f: isinst World.Devices.DeviceEmergencies.DeviceStupor
+IL_00a4: brfalse IL_00d6
+IL_00a9: ldloc.0
+IL_00aa: ldnull
+IL_00ab: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_00b0: brfalse IL_00dd
+IL_00b5: ldarg.0
+IL_00b6: ldstr "buff_stupor_vfx"
+IL_00bb: ldc.i4 9999
+IL_00c0: ldloc.0
+IL_00c1: callvirt UnityEngine.Transform UnityEngine.Component::get_transform()
+IL_00c6: ldc.i4.1
+IL_00c7: call World.VFXs.VFX World.Helpers.Vfx_Helper::InstantiateVfx(System.String,System.Int32,UnityEngine.Transform,System.Boolean)
+IL_00cc: stfld World.VFXs.VFX World.Devices.DeviceViews.DeviceView::outlier_vfx
+IL_00d1: br IL_00dd
+IL_00d6: ldarg.1
+IL_00d7: isinst World.Devices.DeviceEmergencies.DeviceBind
+IL_00dc: pop
+IL_00dd: ldstr "发生紧急情况"
+IL_00e2: call System.Void UnityEngine.Debug::Log(System.Object)
+IL_00e7: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView::notify_attack_radius(System.Boolean)
+IL_0000: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView::notify_change_anim(System.String,System.Boolean)
+IL_0000: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView::notify_change_anim(System.String,System.Boolean,System.Single)
+IL_0000: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView::notify_change_anim_speed(System.Single)
+IL_0000: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView::notify_close_collider(System.String)
+IL_0000: ldarg.0
+IL_0001: ldfld System.Collections.Generic.List`1<World.Devices.DeviceCollider> World.Devices.DeviceViews.DeviceView::colliders
+IL_0006: callvirt System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<World.Devices.DeviceCollider>::GetEnumerator()
+IL_000b: stloc.0
+IL_000c: br IL_004b
+IL_0011: ldloca.s V_0
+IL_0013: call !0 System.Collections.Generic.List`1/Enumerator<World.Devices.DeviceCollider>::get_Current()
+IL_0018: stloc.1
+IL_0019: ldloc.1
+IL_001a: ldfld System.String World.Devices.DeviceCollider::collider_name
+IL_001f: ldarg.1
+IL_0020: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_0025: brfalse IL_004b
+IL_002a: ldloc.1
+IL_002b: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_0030: ldc.i4.0
+IL_0031: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0036: ldloc.1
+IL_0037: ldnull
+IL_0038: stfld System.Action`1<World.ITarget> World.Devices.DeviceCollider::enter_event
+IL_003d: ldloc.1
+IL_003e: ldnull
+IL_003f: stfld System.Action`1<World.ITarget> World.Devices.DeviceCollider::stay_event
+IL_0044: ldloc.1
+IL_0045: ldnull
+IL_0046: stfld System.Action`1<World.ITarget> World.Devices.DeviceCollider::exit_event
+IL_004b: ldloca.s V_0
+IL_004d: call System.Boolean System.Collections.Generic.List`1/Enumerator<World.Devices.DeviceCollider>::MoveNext()
+IL_0052: brtrue IL_0011
+IL_0057: leave IL_006a
+IL_005c: ldloca.s V_0
+IL_005e: constrained. System.Collections.Generic.List`1/Enumerator<World.Devices.DeviceCollider>
+IL_0064: callvirt System.Void System.IDisposable::Dispose()
+IL_0069: endfinally
+IL_006a: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView::notify_disable()
+IL_0000: ldsfld Commons.Config Commons.Config::current
+IL_0005: ldfld System.String Commons.Config::devicedestroy_vfx
+IL_000a: ldc.i4 240
+IL_000f: ldarg.0
+IL_0010: call UnityEngine.Transform UnityEngine.Component::get_transform()
+IL_0015: callvirt UnityEngine.Vector3 UnityEngine.Transform::get_position()
+IL_001a: call UnityEngine.Vector2 UnityEngine.Vector2::op_Implicit(UnityEngine.Vector3)
+IL_001f: ldc.i4.0
+IL_0020: call World.VFXs.VFX World.Helpers.Vfx_Helper::InstantiateVfx(System.String,System.Int32,UnityEngine.Vector2,System.Boolean)
+IL_0025: pop
+IL_0026: ldarg.0
+IL_0027: ldfld System.Collections.Generic.List`1<World.Devices.DeviceKeyPoint> World.Devices.DeviceViews.DeviceView::dkp
+IL_002c: ldsfld System.Predicate`1<World.Devices.DeviceKeyPoint> World.Devices.DeviceViews.DeviceView/<>c::<>9__15_0
+IL_0031: dup
+IL_0032: brtrue IL_004e
+IL_0037: pop
+IL_0038: ldsfld World.Devices.DeviceViews.DeviceView/<>c World.Devices.DeviceViews.DeviceView/<>c::<>9
+IL_003d: ldftn System.Boolean World.Devices.DeviceViews.DeviceView/<>c::<notify_disable>b__15_0(World.Devices.DeviceKeyPoint)
+IL_0043: newobj System.Void System.Predicate`1<World.Devices.DeviceKeyPoint>::.ctor(System.Object,System.IntPtr)
+IL_0048: dup
+IL_0049: stsfld System.Predicate`1<World.Devices.DeviceKeyPoint> World.Devices.DeviceViews.DeviceView/<>c::<>9__15_0
+IL_004e: callvirt !0 System.Collections.Generic.List`1<World.Devices.DeviceKeyPoint>::Find(System.Predicate`1<!0>)
+IL_0053: stloc.0
+IL_0054: ldloc.0
+IL_0055: ldnull
+IL_0056: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_005b: brfalse IL_0081
+IL_0060: ldarg.0
+IL_0061: ldsfld Commons.Config Commons.Config::current
+IL_0066: ldfld System.String Commons.Config::devicesmoke_vfx
+IL_006b: ldc.i4 9999
+IL_0070: ldloc.0
+IL_0071: callvirt UnityEngine.Transform UnityEngine.Component::get_transform()
+IL_0076: ldc.i4.1
+IL_0077: call World.VFXs.VFX World.Helpers.Vfx_Helper::InstantiateVfx(System.String,System.Int32,UnityEngine.Transform,System.Boolean)
+IL_007c: stfld World.VFXs.VFX World.Devices.DeviceViews.DeviceView::smoke_vfx
+IL_0081: call !0 Foundations.MonoBehaviourSingleton`1<Commons.AudioSystem>::get_instance()
+IL_0086: ldc.i4.2
+IL_0087: ldarg.0
+IL_0088: ldfld World.Devices.Device World.Devices.DeviceViews.DeviceView::owner
+IL_008d: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_0092: ldfld System.String AutoCodes.device_all::se_broken
+IL_0097: callvirt System.Void Commons.AudioSystem::PlayOneShot(Commons.SFXType,System.String)
+IL_009c: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView::notify_enable()
+IL_0000: ldarg.0
+IL_0001: ldfld World.VFXs.VFX World.Devices.DeviceViews.DeviceView::smoke_vfx
+IL_0006: brfalse IL_0017
+IL_000b: ldarg.0
+IL_000c: ldfld World.VFXs.VFX World.Devices.DeviceViews.DeviceView::smoke_vfx
+IL_0011: ldc.i4.0
+IL_0012: stfld System.Int32 World.VFXs.VFX::duration
+IL_0017: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView::notify_fix(System.Int32)
+IL_0000: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView::notify_hurt(System.Int32)
+IL_0000: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView::notify_on_tick()
+IL_0000: ldarg.0
+IL_0001: call UnityEngine.Transform UnityEngine.Component::get_transform()
+IL_0006: ldarg.0
+IL_0007: ldfld World.Devices.Device World.Devices.DeviceViews.DeviceView::owner
+IL_000c: callvirt UnityEngine.Vector2 World.Devices.Device::get_view_position()
+IL_0011: call UnityEngine.Vector3 UnityEngine.Vector2::op_Implicit(UnityEngine.Vector2)
+IL_0016: callvirt System.Void UnityEngine.Transform::set_localPosition(UnityEngine.Vector3)
+IL_001b: ldarg.0
+IL_001c: ldfld World.Devices.Device World.Devices.DeviceViews.DeviceView::owner
+IL_0021: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_0026: ldfld System.Boolean AutoCodes.device_all::rotate_by_car
+IL_002b: brfalse IL_004a
+IL_0030: ldarg.0
+IL_0031: call UnityEngine.Transform UnityEngine.Component::get_transform()
+IL_0036: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_003b: callvirt UnityEngine.Vector2 World.WorldContext::get_caravan_dir()
+IL_0040: call UnityEngine.Quaternion Foundations.EX_Utility::look_rotation_from_left(UnityEngine.Vector2)
+IL_0045: callvirt System.Void UnityEngine.Transform::set_localRotation(UnityEngine.Quaternion)
+IL_004a: ldarg.0
+IL_004b: ldfld World.Devices.Device World.Devices.DeviceViews.DeviceView::owner
+IL_0050: ldfld World.Devices.Device/DeviceType World.Devices.Device::device_type
+IL_0055: brtrue IL_0079
+IL_005a: ldarg.0
+IL_005b: call UnityEngine.Transform UnityEngine.Component::get_transform()
+IL_0060: call UnityEngine.Vector3 UnityEngine.Vector3::get_one()
+IL_0065: call !0 Foundations.Singleton`1<World.BattleContext>::get_instance()
+IL_006a: callvirt System.Single World.BattleContext::get_melee_size_coef()
+IL_006f: call UnityEngine.Vector3 UnityEngine.Vector3::op_Multiply(UnityEngine.Vector3,System.Single)
+IL_0074: callvirt System.Void UnityEngine.Transform::set_localScale(UnityEngine.Vector3)
+IL_0079: ldarg.0
+IL_007a: ldfld System.Collections.Generic.List`1<World.Devices.DeviceCollider> World.Devices.DeviceViews.DeviceView::colliders
+IL_007f: callvirt System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<World.Devices.DeviceCollider>::GetEnumerator()
+IL_0084: stloc.0
+IL_0085: br IL_0096
+IL_008a: ldloca.s V_0
+IL_008c: call !0 System.Collections.Generic.List`1/Enumerator<World.Devices.DeviceCollider>::get_Current()
+IL_0091: callvirt System.Void World.Devices.DeviceCollider::collider_tick()
+IL_0096: ldloca.s V_0
+IL_0098: call System.Boolean System.Collections.Generic.List`1/Enumerator<World.Devices.DeviceCollider>::MoveNext()
+IL_009d: brtrue IL_008a
+IL_00a2: leave IL_00b5
+IL_00a7: ldloca.s V_0
+IL_00a9: constrained. System.Collections.Generic.List`1/Enumerator<World.Devices.DeviceCollider>
+IL_00af: callvirt System.Void System.IDisposable::Dispose()
+IL_00b4: endfinally
+IL_00b5: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView::notify_open_collider(System.String,System.Action`1<World.ITarget>,System.Action`1<World.ITarget>,System.Action`1<World.ITarget>)
+IL_0000: ldarg.0
+IL_0001: ldfld System.Collections.Generic.List`1<World.Devices.DeviceCollider> World.Devices.DeviceViews.DeviceView::colliders
+IL_0006: callvirt System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<World.Devices.DeviceCollider>::GetEnumerator()
+IL_000b: stloc.0
+IL_000c: br IL_008c
+IL_0011: ldloca.s V_0
+IL_0013: call !0 System.Collections.Generic.List`1/Enumerator<World.Devices.DeviceCollider>::get_Current()
+IL_0018: stloc.1
+IL_0019: ldloc.1
+IL_001a: ldfld System.String World.Devices.DeviceCollider::collider_name
+IL_001f: ldarg.1
+IL_0020: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_0025: brfalse IL_008c
+IL_002a: ldloc.1
+IL_002b: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_0030: callvirt System.Boolean UnityEngine.GameObject::get_activeInHierarchy()
+IL_0035: brtrue IL_008c
+IL_003a: ldloc.1
+IL_003b: callvirt UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_0040: ldc.i4.1
+IL_0041: callvirt System.Void UnityEngine.GameObject::SetActive(System.Boolean)
+IL_0046: ldloc.1
+IL_0047: dup
+IL_0048: ldfld System.Action`1<World.ITarget> World.Devices.DeviceCollider::enter_event
+IL_004d: ldarg.2
+IL_004e: call System.Delegate System.Delegate::Combine(System.Delegate,System.Delegate)
+IL_0053: castclass System.Action`1<World.ITarget>
+IL_0058: stfld System.Action`1<World.ITarget> World.Devices.DeviceCollider::enter_event
+IL_005d: ldloc.1
+IL_005e: dup
+IL_005f: ldfld System.Action`1<World.ITarget> World.Devices.DeviceCollider::stay_event
+IL_0064: ldarg.3
+IL_0065: call System.Delegate System.Delegate::Combine(System.Delegate,System.Delegate)
+IL_006a: castclass System.Action`1<World.ITarget>
+IL_006f: stfld System.Action`1<World.ITarget> World.Devices.DeviceCollider::stay_event
+IL_0074: ldloc.1
+IL_0075: dup
+IL_0076: ldfld System.Action`1<World.ITarget> World.Devices.DeviceCollider::exit_event
+IL_007b: ldarg.s exit_e
+IL_007d: call System.Delegate System.Delegate::Combine(System.Delegate,System.Delegate)
+IL_0082: castclass System.Action`1<World.ITarget>
+IL_0087: stfld System.Action`1<World.ITarget> World.Devices.DeviceCollider::exit_event
+IL_008c: ldloca.s V_0
+IL_008e: call System.Boolean System.Collections.Generic.List`1/Enumerator<World.Devices.DeviceCollider>::MoveNext()
+IL_0093: brtrue IL_0011
+IL_0098: leave IL_00ab
+IL_009d: ldloca.s V_0
+IL_009f: constrained. System.Collections.Generic.List`1/Enumerator<World.Devices.DeviceCollider>
+IL_00a5: callvirt System.Void System.IDisposable::Dispose()
+IL_00aa: endfinally
+IL_00ab: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView::notify_player_oper(System.Boolean)
+IL_0000: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView::notify_play_audio_one_shot(System.String)
+IL_0000: call !0 Foundations.MonoBehaviourSingleton`1<Commons.AudioSystem>::get_instance()
+IL_0005: ldc.i4.2
+IL_0006: ldarg.1
+IL_0007: callvirt System.Void Commons.AudioSystem::PlayOneShot(Commons.SFXType,System.String)
+IL_000c: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView::notify_remove_emergency(World.Devices.DeviceEmergencies.DeviceEmergency)
+IL_0000: ldarg.0
+IL_0001: ldfld World.VFXs.VFX World.Devices.DeviceViews.DeviceView::outlier_vfx
+IL_0006: brfalse IL_0017
+IL_000b: ldarg.0
+IL_000c: ldfld World.VFXs.VFX World.Devices.DeviceViews.DeviceView::outlier_vfx
+IL_0011: ldc.i4.0
+IL_0012: stfld System.Int32 World.VFXs.VFX::duration
+IL_0017: ldstr "解除紧急情况"
+IL_001c: call System.Void UnityEngine.Debug::Log(System.Object)
+IL_0021: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView::notify_trigger_event(System.Object[])
+IL_0000: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView::notify_update_data()
+IL_0000: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView::World.Devices.IDeviceView.notify_play_audio_clip(System.String,System.Boolean)
+IL_0000: call !0 Foundations.MonoBehaviourSingleton`1<Commons.AudioSystem>::get_instance()
+IL_0005: ldc.i4.2
+IL_0006: ldarg.1
+IL_0007: ldarg.2
+IL_0008: callvirt System.Void Commons.AudioSystem::PlayClip(Commons.SFXType,System.String,System.Boolean)
+IL_000d: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView::World.Devices.IDeviceView.notify_stop_audio_clip(System.String)
+IL_0000: call !0 Foundations.MonoBehaviourSingleton`1<Commons.AudioSystem>::get_instance()
+IL_0005: ldc.i4.2
+IL_0006: ldarg.1
+IL_0007: callvirt System.Void Commons.AudioSystem::StopClip(Commons.SFXType,System.String)
+IL_000c: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView::World.Devices.IDeviceView.notify_set_cubicle(System.Boolean)
+IL_0000: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView::World.Devices.IDeviceView.notify_start()
+IL_0000: ldarg.0
+IL_0001: ldfld World.Devices.Device World.Devices.DeviceViews.DeviceView::owner
+IL_0006: ldfld System.Int32 World.Devices.Device::current_hp
+IL_000b: ldc.i4.0
+IL_000c: ble IL_0021
+IL_0011: ldarg.0
+IL_0012: ldfld World.Devices.Device World.Devices.DeviceViews.DeviceView::owner
+IL_0017: ldfld System.Boolean World.Devices.Device::is_validate
+IL_001c: brtrue IL_007c
+IL_0021: ldarg.0
+IL_0022: ldfld System.Collections.Generic.List`1<World.Devices.DeviceKeyPoint> World.Devices.DeviceViews.DeviceView::dkp
+IL_0027: ldsfld System.Predicate`1<World.Devices.DeviceKeyPoint> World.Devices.DeviceViews.DeviceView/<>c::<>9__29_0
+IL_002c: dup
+IL_002d: brtrue IL_0049
+IL_0032: pop
+IL_0033: ldsfld World.Devices.DeviceViews.DeviceView/<>c World.Devices.DeviceViews.DeviceView/<>c::<>9
+IL_0038: ldftn System.Boolean World.Devices.DeviceViews.DeviceView/<>c::<World.Devices.IDeviceView.notify_start>b__29_0(World.Devices.DeviceKeyPoint)
+IL_003e: newobj System.Void System.Predicate`1<World.Devices.DeviceKeyPoint>::.ctor(System.Object,System.IntPtr)
+IL_0043: dup
+IL_0044: stsfld System.Predicate`1<World.Devices.DeviceKeyPoint> World.Devices.DeviceViews.DeviceView/<>c::<>9__29_0
+IL_0049: callvirt !0 System.Collections.Generic.List`1<World.Devices.DeviceKeyPoint>::Find(System.Predicate`1<!0>)
+IL_004e: stloc.0
+IL_004f: ldloc.0
+IL_0050: ldnull
+IL_0051: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_0056: brfalse IL_007c
+IL_005b: ldarg.0
+IL_005c: ldsfld Commons.Config Commons.Config::current
+IL_0061: ldfld System.String Commons.Config::devicesmoke_vfx
+IL_0066: ldc.i4 9999
+IL_006b: ldloc.0
+IL_006c: callvirt UnityEngine.Transform UnityEngine.Component::get_transform()
+IL_0071: ldc.i4.1
+IL_0072: call World.VFXs.VFX World.Helpers.Vfx_Helper::InstantiateVfx(System.String,System.Int32,UnityEngine.Transform,System.Boolean)
+IL_0077: stfld World.VFXs.VFX World.Devices.DeviceViews.DeviceView::smoke_vfx
+IL_007c: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView::.ctor()
+IL_0000: ldarg.0
+IL_0001: newobj System.Void System.Collections.Generic.List`1<World.Devices.DeviceKeyPoint>::.ctor()
+IL_0006: stfld System.Collections.Generic.List`1<World.Devices.DeviceKeyPoint> World.Devices.DeviceViews.DeviceView::dkp
+IL_000b: ldarg.0
+IL_000c: newobj System.Void System.Collections.Generic.List`1<World.Devices.DeviceCollider>::.ctor()
+IL_0011: stfld System.Collections.Generic.List`1<World.Devices.DeviceCollider> World.Devices.DeviceViews.DeviceView::colliders
+IL_0016: ldarg.0
+IL_0017: call System.Void UnityEngine.MonoBehaviour::.ctor()
+IL_001c: ret
+TYPE World.Devices.DeviceViews.DeviceView/<>c : System.Object
+FIELD World.Devices.DeviceViews.DeviceView/<>c World.Devices.DeviceViews.DeviceView/<>c::<>9
+FIELD System.Predicate`1<World.Devices.DeviceKeyPoint> World.Devices.DeviceViews.DeviceView/<>c::<>9__8_0
+FIELD System.Predicate`1<World.Devices.DeviceKeyPoint> World.Devices.DeviceViews.DeviceView/<>c::<>9__15_0
+FIELD System.Predicate`1<World.Devices.DeviceKeyPoint> World.Devices.DeviceViews.DeviceView/<>c::<>9__29_0
+METHOD System.Void World.Devices.DeviceViews.DeviceView/<>c::.cctor()
+IL_0000: newobj System.Void World.Devices.DeviceViews.DeviceView/<>c::.ctor()
+IL_0005: stsfld World.Devices.DeviceViews.DeviceView/<>c World.Devices.DeviceViews.DeviceView/<>c::<>9
+IL_000a: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView/<>c::.ctor()
+IL_0000: ldarg.0
+IL_0001: call System.Void System.Object::.ctor()
+IL_0006: ret
+METHOD System.Boolean World.Devices.DeviceViews.DeviceView/<>c::<notify_add_emergency>b__8_0(World.Devices.DeviceKeyPoint)
+IL_0000: ldarg.1
+IL_0001: ldfld System.String World.Devices.DeviceKeyPoint::key_name
+IL_0006: ldstr "fire"
+IL_000b: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_0010: ret
+METHOD System.Boolean World.Devices.DeviceViews.DeviceView/<>c::<notify_disable>b__15_0(World.Devices.DeviceKeyPoint)
+IL_0000: ldarg.1
+IL_0001: ldfld System.String World.Devices.DeviceKeyPoint::key_name
+IL_0006: ldstr "fire"
+IL_000b: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_0010: ret
+METHOD System.Boolean World.Devices.DeviceViews.DeviceView/<>c::<World.Devices.IDeviceView.notify_start>b__29_0(World.Devices.DeviceKeyPoint)
+IL_0000: ldarg.1
+IL_0001: ldfld System.String World.Devices.DeviceKeyPoint::key_name
+IL_0006: ldstr "fire"
+IL_000b: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_0010: ret
+TYPE World.Devices.DeviceViews.DeviceView_Animator : World.Devices.DeviceViews.DeviceView
+FIELD World.Devices.DeviceViews.DeviceAnimator World.Devices.DeviceViews.DeviceView_Animator::device_animator
+METHOD System.Void World.Devices.DeviceViews.DeviceView_Animator::notify_change_anim(System.String,System.Boolean)
+IL_0000: ldstr "Trigger_"
+IL_0005: ldarg.1
+IL_0006: ldc.i4.0
+IL_0007: callvirt System.Char System.String::get_Chars(System.Int32)
+IL_000c: call System.Char System.Char::ToUpper(System.Char)
+IL_0011: stloc.1
+IL_0012: ldloca.s V_1
+IL_0014: call System.String System.Char::ToString()
+IL_0019: ldarg.1
+IL_001a: ldc.i4.1
+IL_001b: callvirt System.String System.String::Substring(System.Int32)
+IL_0020: call System.String System.String::Concat(System.String,System.String,System.String)
+IL_0025: stloc.0
+IL_0026: ldarg.0
+IL_0027: ldfld World.Devices.DeviceViews.DeviceAnimator World.Devices.DeviceViews.DeviceView_Animator::device_animator
+IL_002c: ldloc.0
+IL_002d: callvirt System.Void World.Devices.DeviceViews.DeviceAnimator::SetTrigger(System.String)
+IL_0032: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView_Animator::notify_hurt(System.Int32)
+IL_0000: ldarg.0
+IL_0001: ldarg.1
+IL_0002: call System.Void World.Devices.DeviceViews.DeviceView::notify_hurt(System.Int32)
+IL_0007: ldarg.0
+IL_0008: ldfld World.Devices.DeviceViews.DeviceAnimator World.Devices.DeviceViews.DeviceView_Animator::device_animator
+IL_000d: ldstr "Trigger_Hurt"
+IL_0012: callvirt System.Void World.Devices.DeviceViews.DeviceAnimator::SetTrigger(System.String)
+IL_0017: ldarg.0
+IL_0018: ldfld World.Devices.Device World.Devices.DeviceViews.DeviceView::owner
+IL_001d: ldfld System.Int32 World.Devices.Device::current_hp
+IL_0022: ldc.i4.0
+IL_0023: ble IL_0093
+IL_0028: ldarg.0
+IL_0029: ldfld World.Devices.Device World.Devices.DeviceViews.DeviceView::owner
+IL_002e: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_0033: ldfld System.Collections.Generic.List`1<System.String> AutoCodes.device_all::se_be_hit
+IL_0038: brfalse IL_0093
+IL_003d: ldarg.0
+IL_003e: ldfld World.Devices.Device World.Devices.DeviceViews.DeviceView::owner
+IL_0043: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_0048: ldfld System.Collections.Generic.List`1<System.String> AutoCodes.device_all::se_be_hit
+IL_004d: callvirt System.Int32 System.Collections.Generic.List`1<System.String>::get_Count()
+IL_0052: ldc.i4.0
+IL_0053: ble IL_0093
+IL_0058: call !0 Foundations.MonoBehaviourSingleton`1<Commons.AudioSystem>::get_instance()
+IL_005d: ldc.i4.2
+IL_005e: ldarg.0
+IL_005f: ldfld World.Devices.Device World.Devices.DeviceViews.DeviceView::owner
+IL_0064: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_0069: ldfld System.Collections.Generic.List`1<System.String> AutoCodes.device_all::se_be_hit
+IL_006e: ldc.i4.0
+IL_006f: ldarg.0
+IL_0070: ldfld World.Devices.Device World.Devices.DeviceViews.DeviceView::owner
+IL_0075: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_007a: ldfld System.Collections.Generic.List`1<System.String> AutoCodes.device_all::se_be_hit
+IL_007f: callvirt System.Int32 System.Collections.Generic.List`1<System.String>::get_Count()
+IL_0084: call System.Int32 UnityEngine.Random::Range(System.Int32,System.Int32)
+IL_0089: callvirt !0 System.Collections.Generic.List`1<System.String>::get_Item(System.Int32)
+IL_008e: callvirt System.Void Commons.AudioSystem::PlayOneShot(Commons.SFXType,System.String)
+IL_0093: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView_Animator::notify_on_tick()
+IL_0000: ldarg.0
+IL_0001: call System.Void World.Devices.DeviceViews.DeviceView::notify_on_tick()
+IL_0006: ldarg.0
+IL_0007: ldfld World.Devices.Device World.Devices.DeviceViews.DeviceView::owner
+IL_000c: ldfld System.Collections.Generic.Dictionary`2<System.String,UnityEngine.Vector2> World.Devices.Device::bones_direction
+IL_0011: callvirt System.Collections.Generic.Dictionary`2/Enumerator<!0,!1> System.Collections.Generic.Dictionary`2<System.String,UnityEngine.Vector2>::GetEnumerator()
+IL_0016: stloc.0
+IL_0017: br IL_0073
+IL_001c: ldloca.s V_0
+IL_001e: call System.Collections.Generic.KeyValuePair`2<!0,!1> System.Collections.Generic.Dictionary`2/Enumerator<System.String,UnityEngine.Vector2>::get_Current()
+IL_0023: stloc.2
+IL_0024: ldloca.s V_2
+IL_0026: ldloca.s V_3
+IL_0028: ldloca.s V_4
+IL_002a: call System.Void System.Collections.Generic.KeyValuePair`2<System.String,UnityEngine.Vector2>::Deconstruct(!0&,!1&)
+IL_002f: ldloc.3
+IL_0030: ldloc.s V_4
+IL_0032: stloc.1
+IL_0033: ldstr "roll_control"
+IL_0038: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_003d: brfalse IL_0073
+IL_0042: call UnityEngine.Vector2 UnityEngine.Vector2::get_right()
+IL_0047: ldloc.1
+IL_0048: call System.Single UnityEngine.Vector2::SignedAngle(UnityEngine.Vector2,UnityEngine.Vector2)
+IL_004d: stloc.s V_5
+IL_004f: ldarg.0
+IL_0050: ldfld World.Devices.DeviceViews.DeviceAnimator World.Devices.DeviceViews.DeviceView_Animator::device_animator
+IL_0055: ldstr "Float_FixedAngle"
+IL_005a: ldloc.s V_5
+IL_005c: ldc.r4 360
+IL_0061: add
+IL_0062: ldc.r4 360
+IL_0067: rem
+IL_0068: ldc.r4 360
+IL_006d: div
+IL_006e: callvirt System.Void World.Devices.DeviceViews.DeviceAnimator::SetFloat(System.String,System.Single)
+IL_0073: ldloca.s V_0
+IL_0075: call System.Boolean System.Collections.Generic.Dictionary`2/Enumerator<System.String,UnityEngine.Vector2>::MoveNext()
+IL_007a: brtrue IL_001c
+IL_007f: leave IL_0092
+IL_0084: ldloca.s V_0
+IL_0086: constrained. System.Collections.Generic.Dictionary`2/Enumerator<System.String,UnityEngine.Vector2>
+IL_008c: callvirt System.Void System.IDisposable::Dispose()
+IL_0091: endfinally
+IL_0092: ldarg.0
+IL_0093: ldfld World.Devices.DeviceViews.DeviceAnimator World.Devices.DeviceViews.DeviceView_Animator::device_animator
+IL_0098: callvirt System.Void World.Devices.DeviceViews.DeviceAnimator::tick()
+IL_009d: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView_Animator::init_pos()
+IL_0000: ldarg.0
+IL_0001: ldfld World.Devices.Device World.Devices.DeviceViews.DeviceView::owner
+IL_0006: ldfld System.Collections.Generic.Dictionary`2<System.String,UnityEngine.Vector2> World.Devices.Device::bones_direction
+IL_000b: callvirt System.Collections.Generic.Dictionary`2/Enumerator<!0,!1> System.Collections.Generic.Dictionary`2<System.String,UnityEngine.Vector2>::GetEnumerator()
+IL_0010: stloc.0
+IL_0011: br IL_006d
+IL_0016: ldloca.s V_0
+IL_0018: call System.Collections.Generic.KeyValuePair`2<!0,!1> System.Collections.Generic.Dictionary`2/Enumerator<System.String,UnityEngine.Vector2>::get_Current()
+IL_001d: stloc.2
+IL_001e: ldloca.s V_2
+IL_0020: ldloca.s V_3
+IL_0022: ldloca.s V_4
+IL_0024: call System.Void System.Collections.Generic.KeyValuePair`2<System.String,UnityEngine.Vector2>::Deconstruct(!0&,!1&)
+IL_0029: ldloc.3
+IL_002a: ldloc.s V_4
+IL_002c: stloc.1
+IL_002d: ldstr "roll_control"
+IL_0032: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_0037: brfalse IL_006d
+IL_003c: call UnityEngine.Vector2 UnityEngine.Vector2::get_right()
+IL_0041: ldloc.1
+IL_0042: call System.Single UnityEngine.Vector2::SignedAngle(UnityEngine.Vector2,UnityEngine.Vector2)
+IL_0047: stloc.s V_5
+IL_0049: ldarg.0
+IL_004a: ldfld World.Devices.DeviceViews.DeviceAnimator World.Devices.DeviceViews.DeviceView_Animator::device_animator
+IL_004f: ldstr "Float_FixedAngle"
+IL_0054: ldloc.s V_5
+IL_0056: ldc.r4 360
+IL_005b: add
+IL_005c: ldc.r4 360
+IL_0061: rem
+IL_0062: ldc.r4 360
+IL_0067: div
+IL_0068: callvirt System.Void World.Devices.DeviceViews.DeviceAnimator::SetFloat(System.String,System.Single)
+IL_006d: ldloca.s V_0
+IL_006f: call System.Boolean System.Collections.Generic.Dictionary`2/Enumerator<System.String,UnityEngine.Vector2>::MoveNext()
+IL_0074: brtrue IL_0016
+IL_0079: leave IL_008c
+IL_007e: ldloca.s V_0
+IL_0080: constrained. System.Collections.Generic.Dictionary`2/Enumerator<System.String,UnityEngine.Vector2>
+IL_0086: callvirt System.Void System.IDisposable::Dispose()
+IL_008b: endfinally
+IL_008c: ldarg.0
+IL_008d: call UnityEngine.Transform UnityEngine.Component::get_transform()
+IL_0092: ldarg.0
+IL_0093: ldfld World.Devices.Device World.Devices.DeviceViews.DeviceView::owner
+IL_0098: callvirt UnityEngine.Vector2 World.Devices.Device::get_view_position()
+IL_009d: call UnityEngine.Vector3 UnityEngine.Vector2::op_Implicit(UnityEngine.Vector2)
+IL_00a2: callvirt System.Void UnityEngine.Transform::set_localPosition(UnityEngine.Vector3)
+IL_00a7: ldarg.0
+IL_00a8: ldfld World.Devices.Device World.Devices.DeviceViews.DeviceView::owner
+IL_00ad: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_00b2: ldfld System.Boolean AutoCodes.device_all::rotate_by_car
+IL_00b7: brfalse IL_00d6
+IL_00bc: ldarg.0
+IL_00bd: call UnityEngine.Transform UnityEngine.Component::get_transform()
+IL_00c2: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_00c7: callvirt UnityEngine.Vector2 World.WorldContext::get_caravan_dir()
+IL_00cc: call UnityEngine.Quaternion Foundations.EX_Utility::look_rotation_from_left(UnityEngine.Vector2)
+IL_00d1: callvirt System.Void UnityEngine.Transform::set_localRotation(UnityEngine.Quaternion)
+IL_00d6: ldarg.0
+IL_00d7: ldfld World.Devices.Device World.Devices.DeviceViews.DeviceView::owner
+IL_00dc: ldfld World.Devices.Device/DeviceType World.Devices.Device::device_type
+IL_00e1: brtrue IL_0105
+IL_00e6: ldarg.0
+IL_00e7: call UnityEngine.Transform UnityEngine.Component::get_transform()
+IL_00ec: call UnityEngine.Vector3 UnityEngine.Vector3::get_one()
+IL_00f1: call !0 Foundations.Singleton`1<World.BattleContext>::get_instance()
+IL_00f6: callvirt System.Single World.BattleContext::get_melee_size_coef()
+IL_00fb: call UnityEngine.Vector3 UnityEngine.Vector3::op_Multiply(UnityEngine.Vector3,System.Single)
+IL_0100: callvirt System.Void UnityEngine.Transform::set_localScale(UnityEngine.Vector3)
+IL_0105: ldarg.0
+IL_0106: ldfld World.Devices.DeviceViews.DeviceAnimator World.Devices.DeviceViews.DeviceView_Animator::device_animator
+IL_010b: callvirt System.Void World.Devices.DeviceViews.DeviceAnimator::tick()
+IL_0110: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView_Animator::.ctor()
+IL_0000: ldarg.0
+IL_0001: call System.Void World.Devices.DeviceViews.DeviceView::.ctor()
+IL_0006: ret
+TYPE World.Devices.DeviceViews.DeviceView_Spine : World.Devices.DeviceViews.DeviceView
+FIELD Spine.Unity.SkeletonAnimation World.Devices.DeviceViews.DeviceView_Spine::anim
+FIELD UnityEngine.MaterialPropertyBlock World.Devices.DeviceViews.DeviceView_Spine::mpb
+METHOD System.Void World.Devices.DeviceViews.DeviceView_Spine::set_anim_process(System.Single)
+IL_0000: ldarg.0
+IL_0001: ldfld Spine.Unity.SkeletonAnimation World.Devices.DeviceViews.DeviceView_Spine::anim
+IL_0006: callvirt Spine.AnimationState Spine.Unity.SkeletonAnimation::get_AnimationState()
+IL_000b: ldc.i4.0
+IL_000c: callvirt Spine.TrackEntry Spine.AnimationState::GetCurrent(System.Int32)
+IL_0011: dup
+IL_0012: callvirt Spine.Animation Spine.TrackEntry::get_Animation()
+IL_0017: callvirt System.Single Spine.Animation::get_Duration()
+IL_001c: ldarg.1
+IL_001d: mul
+IL_001e: callvirt System.Void Spine.TrackEntry::set_AnimationStart(System.Single)
+IL_0023: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView_Spine::init_pos()
+IL_0000: call !0 Foundations.Singleton`1<Foundations.Mission>::get_instance()
+IL_0005: ldstr "DeviceMgr"
+IL_000a: ldloca.s V_0
+IL_000c: callvirt System.Boolean Foundations.Mission::try_get_mgr<World.Devices.DeviceMgr>(System.String,!!0&)
+IL_0011: pop
+IL_0012: ldloc.0
+IL_0013: ldfld System.Collections.Generic.List`1<World.Devices.DeviceSlot> World.Devices.DeviceMgr::slots_device
+IL_0018: callvirt System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<World.Devices.DeviceSlot>::GetEnumerator()
+IL_001d: stloc.1
+IL_001e: br IL_006a
+IL_0023: ldloca.s V_1
+IL_0025: call !0 System.Collections.Generic.List`1/Enumerator<World.Devices.DeviceSlot>::get_Current()
+IL_002a: dup
+IL_002b: ldfld World.Devices.Device World.Devices.DeviceSlot::slot_device
+IL_0030: stloc.2
+IL_0031: ldfld System.String World.Devices.DeviceSlot::_name
+IL_0036: stloc.3
+IL_0037: ldloc.2
+IL_0038: ldarg.0
+IL_0039: ldfld World.Devices.Device World.Devices.DeviceViews.DeviceView::owner
+IL_003e: bne.un IL_006a
+IL_0043: ldarg.0
+IL_0044: ldfld Spine.Unity.SkeletonAnimation World.Devices.DeviceViews.DeviceView_Spine::anim
+IL_0049: ldnull
+IL_004a: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_004f: brfalse IL_006a
+IL_0054: ldarg.0
+IL_0055: ldfld Spine.Unity.SkeletonAnimation World.Devices.DeviceViews.DeviceView_Spine::anim
+IL_005a: callvirt !!0 UnityEngine.Component::GetComponent<UnityEngine.MeshRenderer>()
+IL_005f: ldloc.3
+IL_0060: call System.Int32 World.BattleUtility::slot_2_order_in_layer(System.String)
+IL_0065: callvirt System.Void UnityEngine.Renderer::set_sortingOrder(System.Int32)
+IL_006a: ldloca.s V_1
+IL_006c: call System.Boolean System.Collections.Generic.List`1/Enumerator<World.Devices.DeviceSlot>::MoveNext()
+IL_0071: brtrue IL_0023
+IL_0076: leave IL_0089
+IL_007b: ldloca.s V_1
+IL_007d: constrained. System.Collections.Generic.List`1/Enumerator<World.Devices.DeviceSlot>
+IL_0083: callvirt System.Void System.IDisposable::Dispose()
+IL_0088: endfinally
+IL_0089: ldarg.0
+IL_008a: call UnityEngine.Transform UnityEngine.Component::get_transform()
+IL_008f: ldarg.0
+IL_0090: ldfld World.Devices.Device World.Devices.DeviceViews.DeviceView::owner
+IL_0095: callvirt UnityEngine.Vector2 World.Devices.Device::get_view_position()
+IL_009a: call UnityEngine.Vector3 UnityEngine.Vector2::op_Implicit(UnityEngine.Vector2)
+IL_009f: callvirt System.Void UnityEngine.Transform::set_localPosition(UnityEngine.Vector3)
+IL_00a4: ldarg.0
+IL_00a5: ldfld World.Devices.Device World.Devices.DeviceViews.DeviceView::owner
+IL_00aa: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_00af: ldfld System.Boolean AutoCodes.device_all::rotate_by_car
+IL_00b4: brfalse IL_00d3
+IL_00b9: ldarg.0
+IL_00ba: call UnityEngine.Transform UnityEngine.Component::get_transform()
+IL_00bf: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_00c4: callvirt UnityEngine.Vector2 World.WorldContext::get_caravan_dir()
+IL_00c9: call UnityEngine.Quaternion Foundations.EX_Utility::look_rotation_from_left(UnityEngine.Vector2)
+IL_00ce: callvirt System.Void UnityEngine.Transform::set_localRotation(UnityEngine.Quaternion)
+IL_00d3: ldarg.0
+IL_00d4: ldfld World.Devices.Device World.Devices.DeviceViews.DeviceView::owner
+IL_00d9: ldfld World.Devices.Device/DeviceType World.Devices.Device::device_type
+IL_00de: brtrue IL_0102
+IL_00e3: ldarg.0
+IL_00e4: call UnityEngine.Transform UnityEngine.Component::get_transform()
+IL_00e9: call UnityEngine.Vector3 UnityEngine.Vector3::get_one()
+IL_00ee: call !0 Foundations.Singleton`1<World.BattleContext>::get_instance()
+IL_00f3: callvirt System.Single World.BattleContext::get_melee_size_coef()
+IL_00f8: call UnityEngine.Vector3 UnityEngine.Vector3::op_Multiply(UnityEngine.Vector3,System.Single)
+IL_00fd: callvirt System.Void UnityEngine.Transform::set_localScale(UnityEngine.Vector3)
+IL_0102: ldarg.0
+IL_0103: ldfld World.Devices.Device World.Devices.DeviceViews.DeviceView::owner
+IL_0108: ldfld System.Collections.Generic.Dictionary`2<System.String,UnityEngine.Vector2> World.Devices.Device::bones_direction
+IL_010d: callvirt System.Collections.Generic.Dictionary`2/Enumerator<!0,!1> System.Collections.Generic.Dictionary`2<System.String,UnityEngine.Vector2>::GetEnumerator()
+IL_0112: stloc.s V_4
+IL_0114: br IL_0240
+IL_0119: ldloca.s V_4
+IL_011b: call System.Collections.Generic.KeyValuePair`2<!0,!1> System.Collections.Generic.Dictionary`2/Enumerator<System.String,UnityEngine.Vector2>::get_Current()
+IL_0120: stloc.s V_7
+IL_0122: ldloca.s V_7
+IL_0124: ldloca.s V_8
+IL_0126: ldloca.s V_9
+IL_0128: call System.Void System.Collections.Generic.KeyValuePair`2<System.String,UnityEngine.Vector2>::Deconstruct(!0&,!1&)
+IL_012d: ldloc.s V_8
+IL_012f: stloc.s V_5
+IL_0131: ldloc.s V_9
+IL_0133: stloc.s V_6
+IL_0135: call UnityEngine.Vector3 UnityEngine.Vector3::get_zero()
+IL_013a: ldarg.0
+IL_013b: call UnityEngine.Transform UnityEngine.Component::get_transform()
+IL_0140: callvirt UnityEngine.Quaternion UnityEngine.Transform::get_rotation()
+IL_0145: call UnityEngine.Vector3 UnityEngine.Vector3::get_one()
+IL_014a: call UnityEngine.Matrix4x4 UnityEngine.Matrix4x4::TRS(UnityEngine.Vector3,UnityEngine.Quaternion,UnityEngine.Vector3)
+IL_014f: stloc.s V_10
+IL_0151: ldloca.s V_10
+IL_0153: call UnityEngine.Matrix4x4 UnityEngine.Matrix4x4::get_inverse()
+IL_0158: stloc.s V_11
+IL_015a: ldloca.s V_11
+IL_015c: ldloc.s V_6
+IL_015e: call UnityEngine.Vector3 UnityEngine.Vector2::op_Implicit(UnityEngine.Vector2)
+IL_0163: call UnityEngine.Vector3 UnityEngine.Matrix4x4::MultiplyVector(UnityEngine.Vector3)
+IL_0168: stloc.s V_12
+IL_016a: ldarg.0
+IL_016b: ldfld Spine.Unity.SkeletonAnimation World.Devices.DeviceViews.DeviceView_Spine::anim
+IL_0170: ldfld Spine.Skeleton Spine.Unity.SkeletonRenderer::skeleton
+IL_0175: ldloc.s V_5
+IL_0177: callvirt Spine.Bone Spine.Skeleton::FindBone(System.String)
+IL_017c: stloc.s V_13
+IL_017e: ldloc.s V_13
+IL_0180: brfalse IL_0240
+IL_0185: call UnityEngine.Vector2 UnityEngine.Vector2::get_right()
+IL_018a: ldloc.s V_12
+IL_018c: call UnityEngine.Vector2 UnityEngine.Vector2::op_Implicit(UnityEngine.Vector3)
+IL_0191: call System.Single UnityEngine.Vector2::SignedAngle(UnityEngine.Vector2,UnityEngine.Vector2)
+IL_0196: ldc.r4 90
+IL_019b: ble.un IL_01ce
+IL_01a0: ldarg.0
+IL_01a1: ldfld Spine.Unity.SkeletonAnimation World.Devices.DeviceViews.DeviceView_Spine::anim
+IL_01a6: ldfld Spine.Skeleton Spine.Unity.SkeletonRenderer::skeleton
+IL_01ab: ldc.i4.1
+IL_01ac: callvirt System.Void Spine.Skeleton::set_FlipX(System.Boolean)
+IL_01b1: ldloc.s V_13
+IL_01b3: ldloc.s V_12
+IL_01b5: call UnityEngine.Vector2 UnityEngine.Vector2::op_Implicit(UnityEngine.Vector3)
+IL_01ba: call UnityEngine.Vector2 UnityEngine.Vector2::get_left()
+IL_01bf: call System.Single UnityEngine.Vector2::SignedAngle(UnityEngine.Vector2,UnityEngine.Vector2)
+IL_01c4: callvirt System.Void Spine.Bone::set_Rotation(System.Single)
+IL_01c9: br IL_0240
+IL_01ce: call UnityEngine.Vector2 UnityEngine.Vector2::get_right()
+IL_01d3: ldloc.s V_12
+IL_01d5: call UnityEngine.Vector2 UnityEngine.Vector2::op_Implicit(UnityEngine.Vector3)
+IL_01da: call System.Single UnityEngine.Vector2::SignedAngle(UnityEngine.Vector2,UnityEngine.Vector2)
+IL_01df: ldc.r4 -90
+IL_01e4: bge.un IL_0217
+IL_01e9: ldarg.0
+IL_01ea: ldfld Spine.Unity.SkeletonAnimation World.Devices.DeviceViews.DeviceView_Spine::anim
+IL_01ef: ldfld Spine.Skeleton Spine.Unity.SkeletonRenderer::skeleton
+IL_01f4: ldc.i4.1
+IL_01f5: callvirt System.Void Spine.Skeleton::set_FlipX(System.Boolean)
+IL_01fa: ldloc.s V_13
+IL_01fc: ldloc.s V_12
+IL_01fe: call UnityEngine.Vector2 UnityEngine.Vector2::op_Implicit(UnityEngine.Vector3)
+IL_0203: call UnityEngine.Vector2 UnityEngine.Vector2::get_left()
+IL_0208: call System.Single UnityEngine.Vector2::SignedAngle(UnityEngine.Vector2,UnityEngine.Vector2)
+IL_020d: callvirt System.Void Spine.Bone::set_Rotation(System.Single)
+IL_0212: br IL_0240
+IL_0217: ldarg.0
+IL_0218: ldfld Spine.Unity.SkeletonAnimation World.Devices.DeviceViews.DeviceView_Spine::anim
+IL_021d: ldfld Spine.Skeleton Spine.Unity.SkeletonRenderer::skeleton
+IL_0222: ldc.i4.0
+IL_0223: callvirt System.Void Spine.Skeleton::set_FlipX(System.Boolean)
+IL_0228: ldloc.s V_13
+IL_022a: call UnityEngine.Vector2 UnityEngine.Vector2::get_right()
+IL_022f: ldloc.s V_12
+IL_0231: call UnityEngine.Vector2 UnityEngine.Vector2::op_Implicit(UnityEngine.Vector3)
+IL_0236: call System.Single UnityEngine.Vector2::SignedAngle(UnityEngine.Vector2,UnityEngine.Vector2)
+IL_023b: callvirt System.Void Spine.Bone::set_Rotation(System.Single)
+IL_0240: ldloca.s V_4
+IL_0242: call System.Boolean System.Collections.Generic.Dictionary`2/Enumerator<System.String,UnityEngine.Vector2>::MoveNext()
+IL_0247: brtrue IL_0119
+IL_024c: leave IL_025f
+IL_0251: ldloca.s V_4
+IL_0253: constrained. System.Collections.Generic.Dictionary`2/Enumerator<System.String,UnityEngine.Vector2>
+IL_0259: callvirt System.Void System.IDisposable::Dispose()
+IL_025e: endfinally
+IL_025f: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView_Spine::notify_change_anim(System.String,System.Boolean)
+IL_0000: ldarg.1
+IL_0001: ldstr "broken"
+IL_0006: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_000b: brfalse IL_0011
+IL_0010: ret
+IL_0011: ldarg.0
+IL_0012: ldfld Spine.Unity.SkeletonAnimation World.Devices.DeviceViews.DeviceView_Spine::anim
+IL_0017: ldnull
+IL_0018: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_001d: brfalse IL_0036
+IL_0022: ldarg.0
+IL_0023: ldfld Spine.Unity.SkeletonAnimation World.Devices.DeviceViews.DeviceView_Spine::anim
+IL_0028: ldfld Spine.AnimationState Spine.Unity.SkeletonAnimation::state
+IL_002d: ldc.i4.0
+IL_002e: ldarg.1
+IL_002f: ldarg.2
+IL_0030: callvirt Spine.TrackEntry Spine.AnimationState::SetAnimation(System.Int32,System.String,System.Boolean)
+IL_0035: pop
+IL_0036: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView_Spine::AnimComplete(Spine.TrackEntry)
+IL_0000: ldarg.0
+IL_0001: ldfld Spine.Unity.SkeletonAnimation World.Devices.DeviceViews.DeviceView_Spine::anim
+IL_0006: ldfld Spine.AnimationState Spine.Unity.SkeletonAnimation::state
+IL_000b: ldc.i4.0
+IL_000c: callvirt Spine.TrackEntry Spine.AnimationState::GetCurrent(System.Int32)
+IL_0011: stloc.0
+IL_0012: ldarg.1
+IL_0013: callvirt Spine.Animation Spine.TrackEntry::get_Animation()
+IL_0018: callvirt System.String Spine.Animation::get_Name()
+IL_001d: ldloc.0
+IL_001e: callvirt Spine.Animation Spine.TrackEntry::get_Animation()
+IL_0023: callvirt System.String Spine.Animation::get_Name()
+IL_0028: call System.Boolean System.String::op_Inequality(System.String,System.String)
+IL_002d: brfalse IL_0033
+IL_0032: ret
+IL_0033: ldloc.0
+IL_0034: callvirt System.Boolean Spine.TrackEntry::get_IsComplete()
+IL_0039: brfalse IL_00e7
+IL_003e: ldarg.0
+IL_003f: ldfld World.Devices.Device World.Devices.DeviceViews.DeviceView::owner
+IL_0044: ldfld System.Collections.Generic.List`1<World.Devices.AnimEvent> World.Devices.Device::anim_events
+IL_0049: callvirt System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<World.Devices.AnimEvent>::GetEnumerator()
+IL_004e: stloc.1
+IL_004f: br IL_00c8
+IL_0054: ldloca.s V_1
+IL_0056: call !0 System.Collections.Generic.List`1/Enumerator<World.Devices.AnimEvent>::get_Current()
+IL_005b: stloc.2
+IL_005c: ldloc.2
+IL_005d: ldfld System.String World.Devices.AnimEvent::anim_name
+IL_0062: ldloc.0
+IL_0063: callvirt Spine.Animation Spine.TrackEntry::get_Animation()
+IL_0068: callvirt System.String Spine.Animation::get_Name()
+IL_006d: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_0072: brfalse IL_00a6
+IL_0077: ldloc.2
+IL_0078: ldfld System.Boolean World.Devices.AnimEvent::triggered
+IL_007d: brtrue IL_00a6
+IL_0082: ldloc.2
+IL_0083: ldc.i4.1
+IL_0084: stfld System.Boolean World.Devices.AnimEvent::triggered
+IL_0089: ldloc.2
+IL_008a: ldfld System.Action`1<World.Devices.Device> World.Devices.AnimEvent::anim_event
+IL_008f: dup
+IL_0090: brtrue IL_009b
+IL_0095: pop
+IL_0096: br IL_00a6
+IL_009b: ldarg.0
+IL_009c: ldfld World.Devices.Device World.Devices.DeviceViews.DeviceView::owner
+IL_00a1: callvirt System.Void System.Action`1<World.Devices.Device>::Invoke(!0)
+IL_00a6: ldloc.2
+IL_00a7: ldfld System.String World.Devices.AnimEvent::anim_name
+IL_00ac: ldloc.0
+IL_00ad: callvirt Spine.Animation Spine.TrackEntry::get_Animation()
+IL_00b2: callvirt System.String Spine.Animation::get_Name()
+IL_00b7: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_00bc: brfalse IL_00c8
+IL_00c1: ldloc.2
+IL_00c2: ldc.i4.0
+IL_00c3: stfld System.Boolean World.Devices.AnimEvent::triggered
+IL_00c8: ldloca.s V_1
+IL_00ca: call System.Boolean System.Collections.Generic.List`1/Enumerator<World.Devices.AnimEvent>::MoveNext()
+IL_00cf: brtrue IL_0054
+IL_00d4: leave IL_00e7
+IL_00d9: ldloca.s V_1
+IL_00db: constrained. System.Collections.Generic.List`1/Enumerator<World.Devices.AnimEvent>
+IL_00e1: callvirt System.Void System.IDisposable::Dispose()
+IL_00e6: endfinally
+IL_00e7: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView_Spine::notify_on_tick()
+IL_0000: ldarg.0
+IL_0001: call System.Void World.Devices.DeviceViews.DeviceView::notify_on_tick()
+IL_0006: ldarg.0
+IL_0007: ldfld Spine.Unity.SkeletonAnimation World.Devices.DeviceViews.DeviceView_Spine::anim
+IL_000c: ldnull
+IL_000d: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_0012: brfalse IL_01e1
+IL_0017: ldarg.0
+IL_0018: ldfld Spine.Unity.SkeletonAnimation World.Devices.DeviceViews.DeviceView_Spine::anim
+IL_001d: ldc.r4 0.008333334
+IL_0022: callvirt System.Void Spine.Unity.SkeletonAnimation::Update(System.Single)
+IL_0027: ldarg.0
+IL_0028: ldfld World.Devices.Device World.Devices.DeviceViews.DeviceView::owner
+IL_002d: ldfld System.Collections.Generic.Dictionary`2<System.String,UnityEngine.Vector2> World.Devices.Device::bones_direction
+IL_0032: callvirt System.Collections.Generic.Dictionary`2/Enumerator<!0,!1> System.Collections.Generic.Dictionary`2<System.String,UnityEngine.Vector2>::GetEnumerator()
+IL_0037: stloc.0
+IL_0038: br IL_015f
+IL_003d: ldloca.s V_0
+IL_003f: call System.Collections.Generic.KeyValuePair`2<!0,!1> System.Collections.Generic.Dictionary`2/Enumerator<System.String,UnityEngine.Vector2>::get_Current()
+IL_0044: stloc.3
+IL_0045: ldloca.s V_3
+IL_0047: ldloca.s V_4
+IL_0049: ldloca.s V_5
+IL_004b: call System.Void System.Collections.Generic.KeyValuePair`2<System.String,UnityEngine.Vector2>::Deconstruct(!0&,!1&)
+IL_0050: ldloc.s V_4
+IL_0052: stloc.1
+IL_0053: ldloc.s V_5
+IL_0055: stloc.2
+IL_0056: call UnityEngine.Vector3 UnityEngine.Vector3::get_zero()
+IL_005b: ldarg.0
+IL_005c: call UnityEngine.Transform UnityEngine.Component::get_transform()
+IL_0061: callvirt UnityEngine.Quaternion UnityEngine.Transform::get_rotation()
+IL_0066: call UnityEngine.Vector3 UnityEngine.Vector3::get_one()
+IL_006b: call UnityEngine.Matrix4x4 UnityEngine.Matrix4x4::TRS(UnityEngine.Vector3,UnityEngine.Quaternion,UnityEngine.Vector3)
+IL_0070: stloc.s V_6
+IL_0072: ldloca.s V_6
+IL_0074: call UnityEngine.Matrix4x4 UnityEngine.Matrix4x4::get_inverse()
+IL_0079: stloc.s V_7
+IL_007b: ldloca.s V_7
+IL_007d: ldloc.2
+IL_007e: call UnityEngine.Vector3 UnityEngine.Vector2::op_Implicit(UnityEngine.Vector2)
+IL_0083: call UnityEngine.Vector3 UnityEngine.Matrix4x4::MultiplyVector(UnityEngine.Vector3)
+IL_0088: stloc.s V_8
+IL_008a: ldarg.0
+IL_008b: ldfld Spine.Unity.SkeletonAnimation World.Devices.DeviceViews.DeviceView_Spine::anim
+IL_0090: ldfld Spine.Skeleton Spine.Unity.SkeletonRenderer::skeleton
+IL_0095: ldloc.1
+IL_0096: callvirt Spine.Bone Spine.Skeleton::FindBone(System.String)
+IL_009b: stloc.s V_9
+IL_009d: ldloc.s V_9
+IL_009f: brfalse IL_015f
+IL_00a4: call UnityEngine.Vector2 UnityEngine.Vector2::get_right()
+IL_00a9: ldloc.s V_8
+IL_00ab: call UnityEngine.Vector2 UnityEngine.Vector2::op_Implicit(UnityEngine.Vector3)
+IL_00b0: call System.Single UnityEngine.Vector2::SignedAngle(UnityEngine.Vector2,UnityEngine.Vector2)
+IL_00b5: ldc.r4 90
+IL_00ba: ble.un IL_00ed
+IL_00bf: ldarg.0
+IL_00c0: ldfld Spine.Unity.SkeletonAnimation World.Devices.DeviceViews.DeviceView_Spine::anim
+IL_00c5: ldfld Spine.Skeleton Spine.Unity.SkeletonRenderer::skeleton
+IL_00ca: ldc.i4.1
+IL_00cb: callvirt System.Void Spine.Skeleton::set_FlipX(System.Boolean)
+IL_00d0: ldloc.s V_9
+IL_00d2: ldloc.s V_8
+IL_00d4: call UnityEngine.Vector2 UnityEngine.Vector2::op_Implicit(UnityEngine.Vector3)
+IL_00d9: call UnityEngine.Vector2 UnityEngine.Vector2::get_left()
+IL_00de: call System.Single UnityEngine.Vector2::SignedAngle(UnityEngine.Vector2,UnityEngine.Vector2)
+IL_00e3: callvirt System.Void Spine.Bone::set_Rotation(System.Single)
+IL_00e8: br IL_015f
+IL_00ed: call UnityEngine.Vector2 UnityEngine.Vector2::get_right()
+IL_00f2: ldloc.s V_8
+IL_00f4: call UnityEngine.Vector2 UnityEngine.Vector2::op_Implicit(UnityEngine.Vector3)
+IL_00f9: call System.Single UnityEngine.Vector2::SignedAngle(UnityEngine.Vector2,UnityEngine.Vector2)
+IL_00fe: ldc.r4 -90
+IL_0103: bge.un IL_0136
+IL_0108: ldarg.0
+IL_0109: ldfld Spine.Unity.SkeletonAnimation World.Devices.DeviceViews.DeviceView_Spine::anim
+IL_010e: ldfld Spine.Skeleton Spine.Unity.SkeletonRenderer::skeleton
+IL_0113: ldc.i4.1
+IL_0114: callvirt System.Void Spine.Skeleton::set_FlipX(System.Boolean)
+IL_0119: ldloc.s V_9
+IL_011b: ldloc.s V_8
+IL_011d: call UnityEngine.Vector2 UnityEngine.Vector2::op_Implicit(UnityEngine.Vector3)
+IL_0122: call UnityEngine.Vector2 UnityEngine.Vector2::get_left()
+IL_0127: call System.Single UnityEngine.Vector2::SignedAngle(UnityEngine.Vector2,UnityEngine.Vector2)
+IL_012c: callvirt System.Void Spine.Bone::set_Rotation(System.Single)
+IL_0131: br IL_015f
+IL_0136: ldarg.0
+IL_0137: ldfld Spine.Unity.SkeletonAnimation World.Devices.DeviceViews.DeviceView_Spine::anim
+IL_013c: ldfld Spine.Skeleton Spine.Unity.SkeletonRenderer::skeleton
+IL_0141: ldc.i4.0
+IL_0142: callvirt System.Void Spine.Skeleton::set_FlipX(System.Boolean)
+IL_0147: ldloc.s V_9
+IL_0149: call UnityEngine.Vector2 UnityEngine.Vector2::get_right()
+IL_014e: ldloc.s V_8
+IL_0150: call UnityEngine.Vector2 UnityEngine.Vector2::op_Implicit(UnityEngine.Vector3)
+IL_0155: call System.Single UnityEngine.Vector2::SignedAngle(UnityEngine.Vector2,UnityEngine.Vector2)
+IL_015a: callvirt System.Void Spine.Bone::set_Rotation(System.Single)
+IL_015f: ldloca.s V_0
+IL_0161: call System.Boolean System.Collections.Generic.Dictionary`2/Enumerator<System.String,UnityEngine.Vector2>::MoveNext()
+IL_0166: brtrue IL_003d
+IL_016b: leave IL_017e
+IL_0170: ldloca.s V_0
+IL_0172: constrained. System.Collections.Generic.Dictionary`2/Enumerator<System.String,UnityEngine.Vector2>
+IL_0178: callvirt System.Void System.IDisposable::Dispose()
+IL_017d: endfinally
+IL_017e: ldarg.0
+IL_017f: ldfld World.Devices.Device World.Devices.DeviceViews.DeviceView::owner
+IL_0184: ldfld System.Collections.Generic.List`1<World.Devices.AnimEvent> World.Devices.Device::anim_events
+IL_0189: callvirt System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<World.Devices.AnimEvent>::GetEnumerator()
+IL_018e: stloc.s V_10
+IL_0190: br IL_01c2
+IL_0195: ldloca.s V_10
+IL_0197: call !0 System.Collections.Generic.List`1/Enumerator<World.Devices.AnimEvent>::get_Current()
+IL_019c: stloc.s V_11
+IL_019e: ldloc.s V_11
+IL_01a0: ldfld System.String World.Devices.AnimEvent::anim_name
+IL_01a5: ldarg.0
+IL_01a6: ldfld Spine.Unity.SkeletonAnimation World.Devices.DeviceViews.DeviceView_Spine::anim
+IL_01ab: callvirt System.String Spine.Unity.SkeletonAnimation::get_AnimationName()
+IL_01b0: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_01b5: brfalse IL_01c2
+IL_01ba: ldarg.0
+IL_01bb: ldloc.s V_11
+IL_01bd: call System.Void World.Devices.DeviceViews.DeviceView_Spine::anim_event_trigger(World.Devices.AnimEvent)
+IL_01c2: ldloca.s V_10
+IL_01c4: call System.Boolean System.Collections.Generic.List`1/Enumerator<World.Devices.AnimEvent>::MoveNext()
+IL_01c9: brtrue IL_0195
+IL_01ce: leave IL_01e1
+IL_01d3: ldloca.s V_10
+IL_01d5: constrained. System.Collections.Generic.List`1/Enumerator<World.Devices.AnimEvent>
+IL_01db: callvirt System.Void System.IDisposable::Dispose()
+IL_01e0: endfinally
+IL_01e1: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView_Spine::anim_event_trigger(World.Devices.AnimEvent)
+IL_0000: ldarg.1
+IL_0001: ldfld System.Boolean World.Devices.AnimEvent::triggered
+IL_0006: brfalse IL_000c
+IL_000b: ret
+IL_000c: ldarg.0
+IL_000d: ldfld Spine.Unity.SkeletonAnimation World.Devices.DeviceViews.DeviceView_Spine::anim
+IL_0012: ldfld Spine.AnimationState Spine.Unity.SkeletonAnimation::state
+IL_0017: ldc.i4.0
+IL_0018: callvirt Spine.TrackEntry Spine.AnimationState::GetCurrent(System.Int32)
+IL_001d: dup
+IL_001e: callvirt Spine.Animation Spine.TrackEntry::get_Animation()
+IL_0023: callvirt System.Single Spine.Animation::get_Duration()
+IL_0028: ldc.r4 120
+IL_002d: mul
+IL_002e: call System.Int32 UnityEngine.Mathf::CeilToInt(System.Single)
+IL_0033: stloc.0
+IL_0034: callvirt System.Single Spine.TrackEntry::get_AnimationTime()
+IL_0039: ldc.r4 120
+IL_003e: mul
+IL_003f: call System.Int32 UnityEngine.Mathf::CeilToInt(System.Single)
+IL_0044: stloc.1
+IL_0045: ldloc.0
+IL_0046: conv.r4
+IL_0047: ldarg.1
+IL_0048: ldfld System.Single World.Devices.AnimEvent::percent
+IL_004d: mul
+IL_004e: call System.Int32 UnityEngine.Mathf::CeilToInt(System.Single)
+IL_0053: stloc.2
+IL_0054: ldloc.1
+IL_0055: ldloc.2
+IL_0056: blt IL_008d
+IL_005b: ldarg.1
+IL_005c: ldfld System.Boolean World.Devices.AnimEvent::triggered
+IL_0061: brtrue IL_008d
+IL_0066: ldloc.1
+IL_0067: ldloc.0
+IL_0068: bge IL_008d
+IL_006d: ldarg.1
+IL_006e: ldc.i4.1
+IL_006f: stfld System.Boolean World.Devices.AnimEvent::triggered
+IL_0074: ldarg.1
+IL_0075: ldfld System.Action`1<World.Devices.Device> World.Devices.AnimEvent::anim_event
+IL_007a: dup
+IL_007b: brtrue IL_0082
+IL_0080: pop
+IL_0081: ret
+IL_0082: ldarg.0
+IL_0083: ldfld World.Devices.Device World.Devices.DeviceViews.DeviceView::owner
+IL_0088: callvirt System.Void System.Action`1<World.Devices.Device>::Invoke(!0)
+IL_008d: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView_Spine::notify_change_anim_speed(System.Single)
+IL_0000: ldarg.0
+IL_0001: ldfld Spine.Unity.SkeletonAnimation World.Devices.DeviceViews.DeviceView_Spine::anim
+IL_0006: ldarg.1
+IL_0007: stfld System.Single Spine.Unity.SkeletonAnimation::timeScale
+IL_000c: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView_Spine::notify_hurt(System.Int32)
+IL_0000: ldarg.0
+IL_0001: ldfld Spine.Unity.SkeletonAnimation World.Devices.DeviceViews.DeviceView_Spine::anim
+IL_0006: ldnull
+IL_0007: call System.Boolean UnityEngine.Object::op_Equality(UnityEngine.Object,UnityEngine.Object)
+IL_000c: brfalse IL_0012
+IL_0011: ret
+IL_0012: ldarg.0
+IL_0013: ldfld Spine.Unity.SkeletonAnimation World.Devices.DeviceViews.DeviceView_Spine::anim
+IL_0018: callvirt !!0 UnityEngine.Component::GetComponent<UnityEngine.MeshRenderer>()
+IL_001d: ldarg.0
+IL_001e: newobj System.Void UnityEngine.MaterialPropertyBlock::.ctor()
+IL_0023: stfld UnityEngine.MaterialPropertyBlock World.Devices.DeviceViews.DeviceView_Spine::mpb
+IL_0028: ldarg.0
+IL_0029: ldfld UnityEngine.MaterialPropertyBlock World.Devices.DeviceViews.DeviceView_Spine::mpb
+IL_002e: ldstr "_FillPhase"
+IL_0033: ldc.r4 1
+IL_0038: callvirt System.Void UnityEngine.MaterialPropertyBlock::SetFloat(System.String,System.Single)
+IL_003d: ldarg.0
+IL_003e: ldfld UnityEngine.MaterialPropertyBlock World.Devices.DeviceViews.DeviceView_Spine::mpb
+IL_0043: callvirt System.Void UnityEngine.Renderer::SetPropertyBlock(UnityEngine.MaterialPropertyBlock)
+IL_0048: ldarg.0
+IL_0049: ldstr "IColorRevert"
+IL_004e: call System.Void UnityEngine.MonoBehaviour::StopCoroutine(System.String)
+IL_0053: ldarg.0
+IL_0054: ldstr "IColorRevert"
+IL_0059: call UnityEngine.Coroutine UnityEngine.MonoBehaviour::StartCoroutine(System.String)
+IL_005e: pop
+IL_005f: ldarg.0
+IL_0060: ldfld World.Devices.Device World.Devices.DeviceViews.DeviceView::owner
+IL_0065: ldfld System.Int32 World.Devices.Device::current_hp
+IL_006a: ldc.i4.0
+IL_006b: ble IL_00db
+IL_0070: ldarg.0
+IL_0071: ldfld World.Devices.Device World.Devices.DeviceViews.DeviceView::owner
+IL_0076: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_007b: ldfld System.Collections.Generic.List`1<System.String> AutoCodes.device_all::se_be_hit
+IL_0080: brfalse IL_00db
+IL_0085: ldarg.0
+IL_0086: ldfld World.Devices.Device World.Devices.DeviceViews.DeviceView::owner
+IL_008b: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_0090: ldfld System.Collections.Generic.List`1<System.String> AutoCodes.device_all::se_be_hit
+IL_0095: callvirt System.Int32 System.Collections.Generic.List`1<System.String>::get_Count()
+IL_009a: ldc.i4.0
+IL_009b: ble IL_00db
+IL_00a0: call !0 Foundations.MonoBehaviourSingleton`1<Commons.AudioSystem>::get_instance()
+IL_00a5: ldc.i4.2
+IL_00a6: ldarg.0
+IL_00a7: ldfld World.Devices.Device World.Devices.DeviceViews.DeviceView::owner
+IL_00ac: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_00b1: ldfld System.Collections.Generic.List`1<System.String> AutoCodes.device_all::se_be_hit
+IL_00b6: ldc.i4.0
+IL_00b7: ldarg.0
+IL_00b8: ldfld World.Devices.Device World.Devices.DeviceViews.DeviceView::owner
+IL_00bd: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_00c2: ldfld System.Collections.Generic.List`1<System.String> AutoCodes.device_all::se_be_hit
+IL_00c7: callvirt System.Int32 System.Collections.Generic.List`1<System.String>::get_Count()
+IL_00cc: call System.Int32 UnityEngine.Random::Range(System.Int32,System.Int32)
+IL_00d1: callvirt !0 System.Collections.Generic.List`1<System.String>::get_Item(System.Int32)
+IL_00d6: callvirt System.Void Commons.AudioSystem::PlayOneShot(Commons.SFXType,System.String)
+IL_00db: ret
+METHOD System.Collections.IEnumerator World.Devices.DeviceViews.DeviceView_Spine::IColorRevert()
+IL_0000: ldc.i4.0
+IL_0001: newobj System.Void World.Devices.DeviceViews.DeviceView_Spine/<IColorRevert>d__10::.ctor(System.Int32)
+IL_0006: dup
+IL_0007: ldarg.0
+IL_0008: stfld World.Devices.DeviceViews.DeviceView_Spine World.Devices.DeviceViews.DeviceView_Spine/<IColorRevert>d__10::<>4__this
+IL_000d: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView_Spine::attach(World.Devices.Device)
+IL_0000: ldarg.0
+IL_0001: ldarg.1
+IL_0002: call System.Void World.Devices.DeviceViews.DeviceView::attach(World.Devices.Device)
+IL_0007: ldarg.0
+IL_0008: ldfld Spine.Unity.SkeletonAnimation World.Devices.DeviceViews.DeviceView_Spine::anim
+IL_000d: ldnull
+IL_000e: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_0013: brfalse IL_0035
+IL_0018: ldarg.0
+IL_0019: ldfld Spine.Unity.SkeletonAnimation World.Devices.DeviceViews.DeviceView_Spine::anim
+IL_001e: ldfld Spine.AnimationState Spine.Unity.SkeletonAnimation::state
+IL_0023: ldarg.0
+IL_0024: dup
+IL_0025: ldvirtftn System.Void World.Devices.DeviceViews.DeviceView_Spine::AnimComplete(Spine.TrackEntry)
+IL_002b: newobj System.Void Spine.AnimationState/TrackEntryDelegate::.ctor(System.Object,System.IntPtr)
+IL_0030: callvirt System.Void Spine.AnimationState::add_Complete(Spine.AnimationState/TrackEntryDelegate)
+IL_0035: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView_Spine::notify_change_anim(System.String,System.Boolean,System.Single)
+IL_0000: ldarg.0
+IL_0001: ldfld Spine.Unity.SkeletonAnimation World.Devices.DeviceViews.DeviceView_Spine::anim
+IL_0006: ldnull
+IL_0007: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_000c: brfalse IL_002c
+IL_0011: ldarg.0
+IL_0012: ldfld Spine.Unity.SkeletonAnimation World.Devices.DeviceViews.DeviceView_Spine::anim
+IL_0017: ldfld Spine.AnimationState Spine.Unity.SkeletonAnimation::state
+IL_001c: ldc.i4.0
+IL_001d: ldarg.1
+IL_001e: ldarg.2
+IL_001f: callvirt Spine.TrackEntry Spine.AnimationState::SetAnimation(System.Int32,System.String,System.Boolean)
+IL_0024: pop
+IL_0025: ldarg.0
+IL_0026: ldarg.3
+IL_0027: call System.Void World.Devices.DeviceViews.DeviceView_Spine::set_anim_process(System.Single)
+IL_002c: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView_Spine::.ctor()
+IL_0000: ldarg.0
+IL_0001: call System.Void World.Devices.DeviceViews.DeviceView::.ctor()
+IL_0006: ret
+TYPE World.Devices.DeviceViews.DeviceView_Spine/<IColorRevert>d__10 : System.Object
+FIELD System.Int32 World.Devices.DeviceViews.DeviceView_Spine/<IColorRevert>d__10::<>1__state
+FIELD System.Object World.Devices.DeviceViews.DeviceView_Spine/<IColorRevert>d__10::<>2__current
+FIELD World.Devices.DeviceViews.DeviceView_Spine World.Devices.DeviceViews.DeviceView_Spine/<IColorRevert>d__10::<>4__this
+FIELD System.Single World.Devices.DeviceViews.DeviceView_Spine/<IColorRevert>d__10::<p>5__2
+FIELD UnityEngine.MeshRenderer World.Devices.DeviceViews.DeviceView_Spine/<IColorRevert>d__10::<r>5__3
+METHOD System.Void World.Devices.DeviceViews.DeviceView_Spine/<IColorRevert>d__10::.ctor(System.Int32)
+IL_0000: ldarg.0
+IL_0001: call System.Void System.Object::.ctor()
+IL_0006: ldarg.0
+IL_0007: ldarg.1
+IL_0008: stfld System.Int32 World.Devices.DeviceViews.DeviceView_Spine/<IColorRevert>d__10::<>1__state
+IL_000d: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView_Spine/<IColorRevert>d__10::System.IDisposable.Dispose()
+IL_0000: ret
+METHOD System.Boolean World.Devices.DeviceViews.DeviceView_Spine/<IColorRevert>d__10::MoveNext()
+IL_0000: ldarg.0
+IL_0001: ldfld System.Int32 World.Devices.DeviceViews.DeviceView_Spine/<IColorRevert>d__10::<>1__state
+IL_0006: stloc.0
+IL_0007: ldarg.0
+IL_0008: ldfld World.Devices.DeviceViews.DeviceView_Spine World.Devices.DeviceViews.DeviceView_Spine/<IColorRevert>d__10::<>4__this
+IL_000d: stloc.1
+IL_000e: ldloc.0
+IL_000f: switch IL_0022,IL_0042,IL_00be
+IL_0020: ldc.i4.0
+IL_0021: ret
+IL_0022: ldarg.0
+IL_0023: ldc.i4.m1
+IL_0024: stfld System.Int32 World.Devices.DeviceViews.DeviceView_Spine/<IColorRevert>d__10::<>1__state
+IL_0029: ldarg.0
+IL_002a: ldc.r4 0.1
+IL_002f: newobj System.Void UnityEngine.WaitForSeconds::.ctor(System.Single)
+IL_0034: stfld System.Object World.Devices.DeviceViews.DeviceView_Spine/<IColorRevert>d__10::<>2__current
+IL_0039: ldarg.0
+IL_003a: ldc.i4.1
+IL_003b: stfld System.Int32 World.Devices.DeviceViews.DeviceView_Spine/<IColorRevert>d__10::<>1__state
+IL_0040: ldc.i4.1
+IL_0041: ret
+IL_0042: ldarg.0
+IL_0043: ldc.i4.m1
+IL_0044: stfld System.Int32 World.Devices.DeviceViews.DeviceView_Spine/<IColorRevert>d__10::<>1__state
+IL_0049: ldarg.0
+IL_004a: ldc.r4 1
+IL_004f: stfld System.Single World.Devices.DeviceViews.DeviceView_Spine/<IColorRevert>d__10::<p>5__2
+IL_0054: ldarg.0
+IL_0055: ldloc.1
+IL_0056: ldfld Spine.Unity.SkeletonAnimation World.Devices.DeviceViews.DeviceView_Spine::anim
+IL_005b: callvirt !!0 UnityEngine.Component::GetComponent<UnityEngine.MeshRenderer>()
+IL_0060: stfld UnityEngine.MeshRenderer World.Devices.DeviceViews.DeviceView_Spine/<IColorRevert>d__10::<r>5__3
+IL_0065: ldloc.1
+IL_0066: newobj System.Void UnityEngine.MaterialPropertyBlock::.ctor()
+IL_006b: stfld UnityEngine.MaterialPropertyBlock World.Devices.DeviceViews.DeviceView_Spine::mpb
+IL_0070: br IL_00c5
+IL_0075: ldarg.0
+IL_0076: ldarg.0
+IL_0077: ldfld System.Single World.Devices.DeviceViews.DeviceView_Spine/<IColorRevert>d__10::<p>5__2
+IL_007c: ldc.r4 0.02
+IL_0081: sub
+IL_0082: stfld System.Single World.Devices.DeviceViews.DeviceView_Spine/<IColorRevert>d__10::<p>5__2
+IL_0087: ldloc.1
+IL_0088: ldfld UnityEngine.MaterialPropertyBlock World.Devices.DeviceViews.DeviceView_Spine::mpb
+IL_008d: ldstr "_FillPhase"
+IL_0092: ldarg.0
+IL_0093: ldfld System.Single World.Devices.DeviceViews.DeviceView_Spine/<IColorRevert>d__10::<p>5__2
+IL_0098: callvirt System.Void UnityEngine.MaterialPropertyBlock::SetFloat(System.String,System.Single)
+IL_009d: ldarg.0
+IL_009e: ldfld UnityEngine.MeshRenderer World.Devices.DeviceViews.DeviceView_Spine/<IColorRevert>d__10::<r>5__3
+IL_00a3: ldloc.1
+IL_00a4: ldfld UnityEngine.MaterialPropertyBlock World.Devices.DeviceViews.DeviceView_Spine::mpb
+IL_00a9: callvirt System.Void UnityEngine.Renderer::SetPropertyBlock(UnityEngine.MaterialPropertyBlock)
+IL_00ae: ldarg.0
+IL_00af: ldnull
+IL_00b0: stfld System.Object World.Devices.DeviceViews.DeviceView_Spine/<IColorRevert>d__10::<>2__current
+IL_00b5: ldarg.0
+IL_00b6: ldc.i4.2
+IL_00b7: stfld System.Int32 World.Devices.DeviceViews.DeviceView_Spine/<IColorRevert>d__10::<>1__state
+IL_00bc: ldc.i4.1
+IL_00bd: ret
+IL_00be: ldarg.0
+IL_00bf: ldc.i4.m1
+IL_00c0: stfld System.Int32 World.Devices.DeviceViews.DeviceView_Spine/<IColorRevert>d__10::<>1__state
+IL_00c5: ldarg.0
+IL_00c6: ldfld System.Single World.Devices.DeviceViews.DeviceView_Spine/<IColorRevert>d__10::<p>5__2
+IL_00cb: ldc.r4 0
+IL_00d0: bge IL_0075
+IL_00d5: ldc.i4.0
+IL_00d6: ret
+METHOD System.Object World.Devices.DeviceViews.DeviceView_Spine/<IColorRevert>d__10::System.Collections.Generic.IEnumerator<System.Object>.get_Current()
+IL_0000: ldarg.0
+IL_0001: ldfld System.Object World.Devices.DeviceViews.DeviceView_Spine/<IColorRevert>d__10::<>2__current
+IL_0006: ret
+METHOD System.Void World.Devices.DeviceViews.DeviceView_Spine/<IColorRevert>d__10::System.Collections.IEnumerator.Reset()
+IL_0000: newobj System.Void System.NotSupportedException::.ctor()
+IL_0005: throw
+METHOD System.Object World.Devices.DeviceViews.DeviceView_Spine/<IColorRevert>d__10::System.Collections.IEnumerator.get_Current()
+IL_0000: ldarg.0
+IL_0001: ldfld System.Object World.Devices.DeviceViews.DeviceView_Spine/<IColorRevert>d__10::<>2__current
+IL_0006: ret

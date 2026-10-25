@@ -1,0 +1,226 @@
+{
+  "Schema": 1,
+  "ActiveRunId": "21f4f2dcbb514ef2aef8dda6ead1bcdd",
+  "Runs": [
+    {
+      "Id": "071827b09ffe40ce9858c16aefa4714e",
+      "WorldKey": "34:4008",
+      "WorldName": "大湖",
+      "StartedUtc": "2026-10-25T13:34:44.6459873Z",
+      "UpdatedUtc": "2026-10-25T14:25:07.2228747Z",
+      "EndedUtc": "2026-10-25T14:25:07.2228747Z",
+      "BranchOf": "",
+      "Outcome": 2,
+      "Partial": true,
+      "PlayTicks": 5656,
+      "CombatTicks": 2152,
+      "SpeedTicks": 2152,
+      "FirstDamageTick": 559,
+      "NativeTicks": 7236,
+      "SceneIndex": 1,
+      "Damage": 1154.0,
+      "ReportedDamage": 71857.0,
+      "SpeedDistance": 659.68896942138531,
+      "PeakSpeed": 59.48211669921875,
+      "NativeDistance": 1081.6497802734375,
+      "Sources": [
+        {
+          "Key": "device:13601022",
+          "Name": "金属铲斗",
+          "Kind": "weapon",
+          "ContentId": 13601022,
+          "Rank": 2,
+          "MergedDamage": 900.0,
+          "SeparateDamage": 900.0
+        },
+        {
+          "Key": "other",
+          "Name": "其他伤害",
+          "Kind": "other",
+          "ContentId": 0,
+          "Rank": 0,
+          "MergedDamage": 230.0,
+          "SeparateDamage": 230.0
+        },
+        {
+          "Key": "device:13111011",
+          "Name": "镇暴钉锤",
+          "Kind": "weapon",
+          "ContentId": 13111011,
+          "Rank": 1,
+          "MergedDamage": 24.0,
+          "SeparateDamage": 24.0
+        }
+      ]
+    },
+    {
+      "Id": "21f4f2dcbb514ef2aef8dda6ead1bcdd",
+      "WorldKey": "35:4001",
+      "WorldName": "渊墟",
+      "StartedUtc": "2026-10-25T14:25:49.7791180Z",
+      "UpdatedUtc": "2026-10-25T14:36:45.9825155Z",
+      "EndedUtc": "",
+      "BranchOf": "",
+      "Outcome": 1,
+      "Partial": false,
+      "PlayTicks": 75645,
+      "CombatTicks": 2163,
+      "SpeedTicks": 2163,
+      "FirstDamageTick": 257,
+      "NativeTicks": 75645,
+      "SceneIndex": 0,
+      "Damage": 897.0,
+      "ReportedDamage": 1924.0,
+      "SpeedDistance": 422.78087978363152,
+      "PeakSpeed": 51.0,
+      "NativeDistance": 422.42459106445313,
+      "Sources": [
+        {
+          "Key": "other",
+          "Name": "其他伤害",
+          "Kind": "other",
+          "ContentId": 0,
+          "Rank": 0,
+          "MergedDamage": 193.0,
+          "SeparateDamage": 193.0
+        },
+        {
+          "Key": "device:13201111",
+          "Name": "轻机枪",
+          "Kind": "weapon",
+          "ContentId": 13201111,
+          "Rank": 1,
+          "MergedDamage": 704.0,
+          "SeparateDamage": 704.0
+        }
+      ]
+    }
+  ],
+  "Checkpoints": [
+    {
+      "Fingerprint": "05DB5060354C721D0C844F6661B84876CCF4E08A761724D183CA75974C78022B",
+      "Snapshot": {
+        "Id": "071827b09ffe40ce9858c16aefa4714e",
+        "WorldKey": "34:4008",
+        "WorldName": "大湖",
+        "StartedUtc": "2026-10-25T13:34:44.6459873Z",
+        "UpdatedUtc": "2026-10-25T13:34:44.6469641Z",
+        "EndedUtc": "",
+        "BranchOf": "",
+        "Outcome": 0,
+        "Partial": true,
+        "PlayTicks": 0,
+        "CombatTicks": 0,
+        "SpeedTicks": 0,
+        "FirstDamageTick": -1,
+        "NativeTicks": 1582,
+        "SceneIndex": 0,
+        "Damage": 0.0,
+        "ReportedDamage": 0.0,
+        "SpeedDistance": 0.0,
+        "PeakSpeed": 0.0,
+        "NativeDistance": 422.4400634765625,
+        "Sources": []
+      }
+    },
+    {
+      "Fingerprint": "9C5FB10C2037032E58C118A79BCFF5C59F4404E908251303983B5FEAB64109E4",
+      "Snapshot": {
+        "Id": "071827b09ffe40ce9858c16aefa4714e",
+        "WorldKey": "34:4008",
+        "WorldName": "大湖",
+        "StartedUtc": "2026-10-25T13:34:44.6459873Z",
+        "UpdatedUtc": "2026-10-25T14:24:48.8263397Z",
+        "EndedUtc": "",
+        "BranchOf": "",
+        "Outcome": 0,
+        "Partial": true,
+        "PlayTicks": 3597,
+        "CombatTicks": 2152,
+        "SpeedTicks": 2152,
+        "FirstDamageTick": 559,
+        "NativeTicks": 5177,
+        "SceneIndex": 1,
+        "Damage": 1154.0,
+        "ReportedDamage": 71857.0,
+        "SpeedDistance": 659.68896942138531,
+        "PeakSpeed": 59.48211669921875,
+        "NativeDistance": 1081.6497802734375,
+        "Sources": [
+          {
+            "Key": "device:13601022",
+            "Name": "金属铲斗",
+            "Kind": "weapon",
+            "ContentId": 13601022,
+            "Rank": 2,
+            "MergedDamage": 900.0,
+            "SeparateDamage": 900.0
+          },
+          {
+            "Key": "other",
+            "Name": "其他伤害",
+            "Kind": "other",
+            "ContentId": 0,
+            "Rank": 0,
+            "MergedDamage": 230.0,
+            "SeparateDamage": 230.0
+          },
+          {
+            "Key": "device:13111011",
+            "Name": "镇暴钉锤",
+            "Kind": "weapon",
+            "ContentId": 13111011,
+            "Rank": 1,
+            "MergedDamage": 24.0,
+            "SeparateDamage": 24.0
+          }
+        ]
+      }
+    },
+    {
+      "Fingerprint": "ED2C3E9220BEB772EED30DF98F74ECC9968C1D94258A64FE6ACBAD11B03F5788",
+      "Snapshot": {
+        "Id": "21f4f2dcbb514ef2aef8dda6ead1bcdd",
+        "WorldKey": "35:4001",
+        "WorldName": "渊墟",
+        "StartedUtc": "2026-10-25T14:25:49.7791180Z",
+        "UpdatedUtc": "2026-10-25T14:26:12.1114784Z",
+        "EndedUtc": "",
+        "BranchOf": "",
+        "Outcome": 0,
+        "Partial": false,
+        "PlayTicks": 2215,
+        "CombatTicks": 2163,
+        "SpeedTicks": 2163,
+        "FirstDamageTick": 257,
+        "NativeTicks": 2215,
+        "SceneIndex": 0,
+        "Damage": 897.0,
+        "ReportedDamage": 1924.0,
+        "SpeedDistance": 422.78087978363152,
+        "PeakSpeed": 51.0,
+        "NativeDistance": 422.42459106445313,
+        "Sources": [
+          {
+            "Key": "other",
+            "Name": "其他伤害",
+            "Kind": "other",
+            "ContentId": 0,
+            "Rank": 0,
+            "MergedDamage": 193.0,
+            "SeparateDamage": 193.0
+          },
+          {
+            "Key": "device:13201111",
+            "Name": "轻机枪",
+            "Kind": "weapon",
+            "ContentId": 13201111,
+            "Rank": 1,
+            "MergedDamage": 704.0,
+            "SeparateDamage": 704.0
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,339 @@
+TYPE World.Helpers.Safe_Area_Helper : System.Object
+METHOD System.Void World.Helpers.Safe_Area_Helper::enter()
+IL_0000: call !0 Foundations.MonoBehaviourSingleton`1<World.WorldSceneRoot>::get_instance()
+IL_0005: callvirt System.Void World.WorldSceneRoot::BlackScreen()
+IL_000a: call !0 Foundations.Singleton`1<Foundations.Mission>::get_instance()
+IL_000f: ldstr "Weather"
+IL_0014: ldloca.s V_0
+IL_0016: callvirt System.Boolean Foundations.Mission::try_get_mgr<World.Weather.WeatherMgr>(System.String,!!0&)
+IL_001b: pop
+IL_001c: ldloc.0
+IL_001d: callvirt System.Void World.Weather.WeatherMgr::ClearWeather()
+IL_0022: call System.Void World.Helpers.Adherent_Helper::ClearAll()
+IL_0027: call System.Void World.Helpers.Drop_Loot_Helper::get_all()
+IL_002c: call System.Void World.Helpers.Audio_Helper::enter_safe_area()
+IL_0031: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_0036: ldc.i4.1
+IL_0037: stfld System.Boolean World.WorldContext::in_safe_area
+IL_003c: ret
+METHOD System.Void World.Helpers.Safe_Area_Helper::enter_without_blackscreen()
+IL_0000: call !0 Foundations.MonoBehaviourSingleton`1<World.WorldSceneRoot>::get_instance()
+IL_0005: callvirt System.Void World.WorldSceneRoot::BlackScreen()
+IL_000a: call !0 Foundations.Singleton`1<Foundations.Mission>::get_instance()
+IL_000f: ldstr "Weather"
+IL_0014: ldloca.s V_0
+IL_0016: callvirt System.Boolean Foundations.Mission::try_get_mgr<World.Weather.WeatherMgr>(System.String,!!0&)
+IL_001b: pop
+IL_001c: ldloc.0
+IL_001d: callvirt System.Void World.Weather.WeatherMgr::ClearWeather()
+IL_0022: ret
+METHOD System.Void World.Helpers.Safe_Area_Helper::enter_before_calc()
+IL_0000: call !0 Foundations.Singleton`1<Foundations.Share_DS>::get_instance()
+IL_0005: dup
+IL_0006: ldstr "scene_info"
+IL_000b: ldloca.s V_0
+IL_000d: callvirt System.Boolean Foundations.Share_DS::try_get_value<System.ValueTuple`3<System.UInt32,Commons.Levels.Game_Frame_Mgr/EN_scene_type,Commons.Levels.RouteData>>(System.String,!!0&)
+IL_0012: pop
+IL_0013: ldstr "scene_info-1"
+IL_0018: ldloc.0
+IL_0019: callvirt System.Void Foundations.Share_DS::add<System.ValueTuple`3<System.UInt32,Commons.Levels.Game_Frame_Mgr/EN_scene_type,Commons.Levels.RouteData>>(System.String,!!0)
+IL_001e: ret
+METHOD System.Void World.Helpers.Safe_Area_Helper::enter_after_calc()
+IL_0000: call !0 Foundations.Singleton`1<Commons.CommonContext>::get_instance()
+IL_0005: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_000a: ldfld Commons.Levels.RouteData World.WorldContext::routeData
+IL_000f: stfld System.Object Commons.CommonContext::route_data
+IL_0014: ldnull
+IL_0015: ldftn System.Void World.Helpers.Safe_Area_Helper::<enter_after_calc>g__opr_save_dic|3_0(System.Collections.Generic.Dictionary`2<System.String,System.Object>)
+IL_001b: newobj System.Void System.Action`1<System.Collections.Generic.Dictionary`2<System.String,System.Object>>::.ctor(System.Object,System.IntPtr)
+IL_0020: call System.Void Commons.SL_Helper::save_game_safearea(System.Action`1<System.Collections.Generic.Dictionary`2<System.String,System.Object>>)
+IL_0025: ldstr "存档：安全区"
+IL_002a: call System.Void UnityEngine.Debug::Log(System.Object)
+IL_002f: ret
+METHOD System.Void World.Helpers.Safe_Area_Helper::leave()
+IL_0000: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_0005: ldc.i4.0
+IL_0006: stfld System.Boolean World.WorldContext::in_safe_area
+IL_000b: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_0010: ldc.i4.0
+IL_0011: stfld System.Boolean World.WorldContext::in_safe_area2
+IL_0016: call !0 Foundations.Singleton`1<World.Saves.Save_DS>::get_instance()
+IL_001b: pop
+IL_001c: call !0 Foundations.Singleton`1<Foundations.Mission>::get_instance()
+IL_0021: ldstr "CharacterMgr"
+IL_0026: ldloca.s V_0
+IL_0028: callvirt System.Boolean Foundations.Mission::try_get_mgr<World.Characters.CharacterMgr>(System.String,!!0&)
+IL_002d: pop
+IL_002e: ldloc.0
+IL_002f: ldfld System.Collections.Generic.List`1<World.Characters.Character> World.Characters.CharacterMgr::characters
+IL_0034: callvirt System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<World.Characters.Character>::GetEnumerator()
+IL_0039: stloc.3
+IL_003a: br IL_0056
+IL_003f: ldloca.s V_3
+IL_0041: call !0 System.Collections.Generic.List`1/Enumerator<World.Characters.Character>::get_Current()
+IL_0046: stloc.s V_4
+IL_0048: ldloc.s V_4
+IL_004a: brfalse IL_0056
+IL_004f: ldloc.s V_4
+IL_0051: callvirt System.Void World.Characters.Character::LeaveSafeArea()
+IL_0056: ldloca.s V_3
+IL_0058: call System.Boolean System.Collections.Generic.List`1/Enumerator<World.Characters.Character>::MoveNext()
+IL_005d: brtrue IL_003f
+IL_0062: leave IL_0075
+IL_0067: ldloca.s V_3
+IL_0069: constrained. System.Collections.Generic.List`1/Enumerator<World.Characters.Character>
+IL_006f: callvirt System.Void System.IDisposable::Dispose()
+IL_0074: endfinally
+IL_0075: call !0 Foundations.Singleton`1<Foundations.Mission>::get_instance()
+IL_007a: ldstr "BackPack"
+IL_007f: ldloca.s V_1
+IL_0081: callvirt System.Boolean Foundations.Mission::try_get_mgr<World.BackPack.BackPackMgr>(System.String,!!0&)
+IL_0086: pop
+IL_0087: ldc.i4.0
+IL_0088: stloc.s V_5
+IL_008a: br IL_00a5
+IL_008f: ldloc.1
+IL_0090: ldsfld Commons.Config Commons.Config::current
+IL_0095: ldfld System.UInt32 Commons.Config::coin_id
+IL_009a: callvirt System.Void World.BackPack.BackPackMgr::AddLoot(System.UInt32)
+IL_009f: ldloc.s V_5
+IL_00a1: ldc.i4.1
+IL_00a2: add
+IL_00a3: stloc.s V_5
+IL_00a5: ldloc.s V_5
+IL_00a7: conv.r4
+IL_00a8: ldloc.1
+IL_00a9: ldfld System.Int32 World.BackPack.BackPackMgr::coin_count
+IL_00ae: call !0 Foundations.Singleton`1<World.BattleContext>::get_instance()
+IL_00b3: ldfld System.Int32 World.BattleContext::global_safearea_interest
+IL_00b8: mul
+IL_00b9: conv.r4
+IL_00ba: ldc.r4 0.001
+IL_00bf: mul
+IL_00c0: blt IL_008f
+IL_00c5: call System.Void World.Helpers.Audio_Helper::exit_safe_area()
+IL_00ca: call !0 Foundations.Singleton`1<World.Progresss.Progress_Context>::get_instance()
+IL_00cf: callvirt System.Void World.Progresss.Progress_Context::leave_with_next_scene()
+IL_00d4: call !0 Foundations.Singleton`1<Foundations.Mission>::get_instance()
+IL_00d9: ldstr "BusinessMgr"
+IL_00de: ldloca.s V_2
+IL_00e0: callvirt System.Boolean Foundations.Mission::try_get_mgr<World.Business.BusinessMgr>(System.String,!!0&)
+IL_00e5: pop
+IL_00e6: ldloc.2
+IL_00e7: callvirt System.Void World.Business.BusinessMgr::RemoveAll()
+IL_00ec: ret
+METHOD System.Void World.Helpers.Safe_Area_Helper::create_routes()
+IL_0000: call !0 Foundations.Singleton`1<Foundations.Share_DS>::get_instance()
+IL_0005: dup
+IL_0006: ldstr "scene_index"
+IL_000b: ldloca.s V_0
+IL_000d: callvirt System.Boolean Foundations.Share_DS::try_get_value<System.Int32>(System.String,!!0&)
+IL_0012: pop
+IL_0013: ldloc.0
+IL_0014: ldc.i4.1
+IL_0015: add
+IL_0016: dup
+IL_0017: stloc.0
+IL_0018: ldloca.s V_1
+IL_001a: ldloca.s V_2
+IL_001c: call System.Boolean Commons.Levels.Game_Frame_Mgr::try_calc_scene_id(System.Int32,System.UInt32&,Commons.Levels.Game_Frame_Mgr/EN_scene_type&)
+IL_0021: pop
+IL_0022: ldloc.1
+IL_0023: ldloc.2
+IL_0024: call System.Collections.Generic.List`1<Commons.Levels.RouteData> Commons.Levels.Game_Frame_Mgr::get_scene_routes(System.UInt32,Commons.Levels.Game_Frame_Mgr/EN_scene_type)
+IL_0029: stloc.3
+IL_002a: dup
+IL_002b: ldstr "scene_info"
+IL_0030: ldloc.1
+IL_0031: ldloc.2
+IL_0032: ldloc.3
+IL_0033: ldc.i4.0
+IL_0034: callvirt !0 System.Collections.Generic.List`1<Commons.Levels.RouteData>::get_Item(System.Int32)
+IL_0039: newobj System.Void System.ValueTuple`3<System.UInt32,Commons.Levels.Game_Frame_Mgr/EN_scene_type,Commons.Levels.RouteData>::.ctor(!0,!1,!2)
+IL_003e: callvirt System.Void Foundations.Share_DS::add<System.ValueTuple`3<System.UInt32,Commons.Levels.Game_Frame_Mgr/EN_scene_type,Commons.Levels.RouteData>>(System.String,!!0)
+IL_0043: ldstr "routes"
+IL_0048: ldloc.3
+IL_0049: callvirt System.Void Foundations.Share_DS::add<System.Collections.Generic.List`1<Commons.Levels.RouteData>>(System.String,!!0)
+IL_004e: ret
+METHOD System.Void World.Helpers.Safe_Area_Helper::select_route(Commons.Levels.RouteData)
+IL_0000: call !0 Foundations.Singleton`1<Foundations.Share_DS>::get_instance()
+IL_0005: dup
+IL_0006: ldstr "scene_info"
+IL_000b: ldloca.s V_0
+IL_000d: callvirt System.Boolean Foundations.Share_DS::try_get_value<System.ValueTuple`3<System.UInt32,Commons.Levels.Game_Frame_Mgr/EN_scene_type,Commons.Levels.RouteData>>(System.String,!!0&)
+IL_0012: pop
+IL_0013: ldstr "scene_info"
+IL_0018: ldloc.0
+IL_0019: ldfld !0 System.ValueTuple`3<System.UInt32,Commons.Levels.Game_Frame_Mgr/EN_scene_type,Commons.Levels.RouteData>::Item1
+IL_001e: ldloc.0
+IL_001f: ldfld !1 System.ValueTuple`3<System.UInt32,Commons.Levels.Game_Frame_Mgr/EN_scene_type,Commons.Levels.RouteData>::Item2
+IL_0024: ldarg.0
+IL_0025: newobj System.Void System.ValueTuple`3<System.UInt32,Commons.Levels.Game_Frame_Mgr/EN_scene_type,Commons.Levels.RouteData>::.ctor(!0,!1,!2)
+IL_002a: callvirt System.Void Foundations.Share_DS::add<System.ValueTuple`3<System.UInt32,Commons.Levels.Game_Frame_Mgr/EN_scene_type,Commons.Levels.RouteData>>(System.String,!!0)
+IL_002f: ret
+METHOD System.Int32 World.Helpers.Safe_Area_Helper::GetLootCount(System.Int32)
+IL_0000: call !0 Foundations.Singleton`1<Foundations.Mission>::get_instance()
+IL_0005: ldstr "BackPack"
+IL_000a: ldloca.s V_0
+IL_000c: callvirt System.Boolean Foundations.Mission::try_get_mgr<World.BackPack.BackPackMgr>(System.String,!!0&)
+IL_0011: pop
+IL_0012: ldarg.0
+IL_0013: conv.i8
+IL_0014: ldsfld Commons.Config Commons.Config::current
+IL_0019: ldfld System.UInt32 Commons.Config::coin_id
+IL_001e: conv.u8
+IL_001f: bne.un IL_002b
+IL_0024: ldloc.0
+IL_0025: ldfld System.Int32 World.BackPack.BackPackMgr::coin_count
+IL_002a: ret
+IL_002b: ldloc.0
+IL_002c: ldarg.0
+IL_002d: callvirt System.Int32 World.BackPack.BackPackMgr::GetLootAmount(System.Int32)
+IL_0032: ret
+METHOD System.Boolean World.Helpers.Safe_Area_Helper::SpendLootCount(System.Int32,System.Int32)
+IL_0000: call !0 Foundations.Singleton`1<Foundations.Mission>::get_instance()
+IL_0005: ldstr "BackPack"
+IL_000a: ldloca.s V_0
+IL_000c: callvirt System.Boolean Foundations.Mission::try_get_mgr<World.BackPack.BackPackMgr>(System.String,!!0&)
+IL_0011: pop
+IL_0012: ldloc.0
+IL_0013: ldarg.0
+IL_0014: ldarg.1
+IL_0015: callvirt System.Boolean World.BackPack.BackPackMgr::RemoveLoot(System.Int32,System.Int32)
+IL_001a: ret
+METHOD System.Void World.Helpers.Safe_Area_Helper::TryToSellDevice(World.Business.DeviceBusiness)
+IL_0000: call !0 Foundations.Singleton`1<Foundations.Mission>::get_instance()
+IL_0005: ldstr "BackPack"
+IL_000a: ldloca.s V_0
+IL_000c: callvirt System.Boolean Foundations.Mission::try_get_mgr<World.BackPack.BackPackMgr>(System.String,!!0&)
+IL_0011: pop
+IL_0012: call !0 Foundations.Singleton`1<Foundations.Mission>::get_instance()
+IL_0017: ldstr "EquipMgr"
+IL_001c: ldloca.s V_1
+IL_001e: callvirt System.Boolean Foundations.Mission::try_get_mgr<World.Devices.Equip.EquipmentMgr>(System.String,!!0&)
+IL_0023: pop
+IL_0024: ldloc.1
+IL_0025: ldfld World.Devices.Device World.Devices.Equip.EquipmentMgr::select_device
+IL_002a: brfalse IL_0098
+IL_002f: ldloc.1
+IL_0030: ldloc.1
+IL_0031: ldfld World.Devices.Device World.Devices.Equip.EquipmentMgr::select_device
+IL_0036: callvirt System.Void World.Devices.Equip.EquipmentMgr::RemoveDevice(World.Devices.Device)
+IL_003b: ldloc.1
+IL_003c: ldfld World.Devices.Device World.Devices.Equip.EquipmentMgr::select_device
+IL_0041: callvirt AutoCodes.device_all World.Devices.Device::get_desc()
+IL_0046: ldfld System.Int32 AutoCodes.device_all::base_value
+IL_004b: conv.r4
+IL_004c: ldsfld Commons.Config Commons.Config::current
+IL_0051: ldfld System.Single Commons.Config::shop_device_sell_coef
+IL_0056: mul
+IL_0057: call System.Int32 UnityEngine.Mathf::CeilToInt(System.Single)
+IL_005c: stloc.2
+IL_005d: ldc.i4.0
+IL_005e: stloc.3
+IL_005f: br IL_0078
+IL_0064: ldloc.0
+IL_0065: ldsfld Commons.Config Commons.Config::current
+IL_006a: ldfld System.UInt32 Commons.Config::coin_id
+IL_006f: callvirt System.Void World.BackPack.BackPackMgr::AddLoot(System.UInt32)
+IL_0074: ldloc.3
+IL_0075: ldc.i4.1
+IL_0076: add
+IL_0077: stloc.3
+IL_0078: ldloc.3
+IL_0079: ldloc.2
+IL_007a: blt IL_0064
+IL_007f: ldarg.0
+IL_0080: ldloc.1
+IL_0081: ldfld World.Devices.Device World.Devices.Equip.EquipmentMgr::select_device
+IL_0086: ldc.i4 10000
+IL_008b: ldloc.2
+IL_008c: callvirt System.Void World.Business.DeviceBusiness::PurchaseDevice(World.Devices.Device,System.Int32,System.Int32)
+IL_0091: ldloc.1
+IL_0092: ldnull
+IL_0093: callvirt System.Void World.Devices.Equip.EquipmentMgr::SelectDevice(World.Devices.Device)
+IL_0098: ret
+METHOD System.Void World.Helpers.Safe_Area_Helper::TryToSellCharacter(World.Business.Business)
+IL_0000: call !0 Foundations.Singleton`1<Foundations.Mission>::get_instance()
+IL_0005: ldstr "BackPack"
+IL_000a: ldloca.s V_0
+IL_000c: callvirt System.Boolean Foundations.Mission::try_get_mgr<World.BackPack.BackPackMgr>(System.String,!!0&)
+IL_0011: pop
+IL_0012: call !0 Foundations.Singleton`1<Foundations.Mission>::get_instance()
+IL_0017: ldstr "CharacterMgr"
+IL_001c: ldloca.s V_1
+IL_001e: callvirt System.Boolean Foundations.Mission::try_get_mgr<World.Characters.CharacterMgr>(System.String,!!0&)
+IL_0023: pop
+IL_0024: ldloc.1
+IL_0025: ldfld World.Characters.Character World.Characters.CharacterMgr::select_character
+IL_002a: brfalse IL_008a
+IL_002f: ldloc.1
+IL_0030: ldfld World.Characters.Character World.Characters.CharacterMgr::select_character
+IL_0035: call System.Void World.Helpers.Character_Helper::RemoveCharacter(World.Characters.Character)
+IL_003a: ldc.i4.0
+IL_003b: stloc.2
+IL_003c: br IL_0055
+IL_0041: ldloc.0
+IL_0042: ldsfld Commons.Config Commons.Config::current
+IL_0047: ldfld System.UInt32 Commons.Config::coin_id
+IL_004c: callvirt System.Void World.BackPack.BackPackMgr::AddLoot(System.UInt32)
+IL_0051: ldloc.2
+IL_0052: ldc.i4.1
+IL_0053: add
+IL_0054: stloc.2
+IL_0055: ldloc.2
+IL_0056: ldc.i4.0
+IL_0057: blt IL_0041
+IL_005c: ldarg.0
+IL_005d: ldloc.1
+IL_005e: ldfld World.Characters.Character World.Characters.CharacterMgr::select_character
+IL_0063: ldc.i4.2
+IL_0064: ldloc.1
+IL_0065: ldfld World.Characters.Character World.Characters.CharacterMgr::select_character
+IL_006a: ldfld AutoCodes.role World.Characters.Character::desc
+IL_006f: ldfld System.UInt32 AutoCodes.role::id
+IL_0074: ldsfld Commons.Config Commons.Config::current
+IL_0079: ldfld System.UInt32 Commons.Config::coin_id
+IL_007e: ldc.i4.0
+IL_007f: callvirt System.Void World.Business.Business::AddGoods(System.Object,World.Business.GoodsType,System.UInt32,System.Int32,System.Int32)
+IL_0084: ldnull
+IL_0085: call System.Void World.Helpers.Cubicle_Helper::SetSelectCharacter(World.Characters.Character)
+IL_008a: ret
+METHOD World.Characters.Character World.Helpers.Safe_Area_Helper::CreateCharacter(AutoCodes.role)
+IL_0000: newobj System.Void World.Characters.Character::.ctor()
+IL_0005: dup
+IL_0006: ldarg.0
+IL_0007: callvirt System.Void World.Characters.Character::Init(AutoCodes.role)
+IL_000c: dup
+IL_000d: callvirt System.Void World.Characters.Character::Start()
+IL_0012: ret
+METHOD World.Business.DeviceBusinessPanel World.Helpers.Safe_Area_Helper::InsDeviceBusinessPanel(UnityEngine.Transform)
+IL_0000: ldstr "BusinessPanel"
+IL_0005: ldloca.s V_0
+IL_0007: call System.Boolean Addrs.Addressable_Utility::try_load_asset<World.Business.DeviceBusinessPanel>(System.String,!!0&)
+IL_000c: pop
+IL_000d: ldloc.0
+IL_000e: ldarg.0
+IL_000f: ldc.i4.0
+IL_0010: call !!0 UnityEngine.Object::Instantiate<World.Business.DeviceBusinessPanel>(!!0,UnityEngine.Transform,System.Boolean)
+IL_0015: ret
+METHOD System.Void World.Helpers.Safe_Area_Helper::InsRelicStore(System.Int32)
+IL_0000: ret
+METHOD System.Collections.Generic.List`1<World.Business.Business> World.Helpers.Safe_Area_Helper::GetAllBusiness()
+IL_0000: call !0 Foundations.Singleton`1<Foundations.Mission>::get_instance()
+IL_0005: ldstr "BusinessMgr"
+IL_000a: ldloca.s V_0
+IL_000c: callvirt System.Boolean Foundations.Mission::try_get_mgr<World.Business.BusinessMgr>(System.String,!!0&)
+IL_0011: pop
+IL_0012: ldloc.0
+IL_0013: ldfld System.Collections.Generic.List`1<World.Business.Business> World.Business.BusinessMgr::business_list
+IL_0018: ret
+METHOD System.Void World.Helpers.Safe_Area_Helper::.ctor()
+IL_0000: ldarg.0
+IL_0001: call System.Void System.Object::.ctor()
+IL_0006: ret
+METHOD System.Void World.Helpers.Safe_Area_Helper::<enter_after_calc>g__opr_save_dic|3_0(System.Collections.Generic.Dictionary`2<System.String,System.Object>)
+IL_0000: call !0 Foundations.Singleton`1<World.Saves.Save_DS>::get_instance()
+IL_0005: ldarga.s save_dic
+IL_0007: callvirt System.Void World.Saves.Save_DS::record_to_save(System.Collections.Generic.Dictionary`2<System.String,System.Object>&)
+IL_000c: ret

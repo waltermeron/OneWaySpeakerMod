@@ -1,0 +1,178 @@
+TYPE World.Devices.Equip.EquipmentMgrView : UnityEngine.MonoBehaviour
+FIELD World.Devices.Equip.EquipmentMgr World.Devices.Equip.EquipmentMgrView::owner
+FIELD UnityEngine.UI.RawImage World.Devices.Equip.EquipmentMgrView::caravan_image
+FIELD System.Collections.Generic.List`1<World.Devices.Equip.EquipSlot> World.Devices.Equip.EquipmentMgrView::slots
+FIELD TMPro.TextMeshProUGUI World.Devices.Equip.EquipmentMgrView::caravan_text
+FIELD World.Devices.Equip.EquipmentStore World.Devices.Equip.EquipmentMgrView::store
+METHOD System.Boolean World.Devices.Equip.EquipmentMgrView::get_can_install()
+IL_0000: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_0005: ldfld System.Boolean World.WorldContext::in_safe_area
+IL_000a: ret
+METHOD System.Void World.Devices.Equip.EquipmentMgrView::World.Devices.Equip.IEquipmentMgrView.add_device(World.Devices.Device)
+IL_0000: ldarg.0
+IL_0001: ldfld World.Devices.Equip.EquipmentStore World.Devices.Equip.EquipmentMgrView::store
+IL_0006: ldnull
+IL_0007: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_000c: brfalse IL_001d
+IL_0011: ldarg.0
+IL_0012: ldfld World.Devices.Equip.EquipmentStore World.Devices.Equip.EquipmentMgrView::store
+IL_0017: ldarg.1
+IL_0018: callvirt System.Void World.Devices.Equip.EquipmentStore::add_device(World.Devices.Device)
+IL_001d: ret
+METHOD System.Void World.Devices.Equip.EquipmentMgrView::Foundations.MVVM.IModelView<World.Devices.Equip.EquipmentMgr>.attach(World.Devices.Equip.EquipmentMgr)
+IL_0000: ldarg.0
+IL_0001: ldarg.1
+IL_0002: stfld World.Devices.Equip.EquipmentMgr World.Devices.Equip.EquipmentMgrView::owner
+IL_0007: ret
+METHOD System.Void World.Devices.Equip.EquipmentMgrView::Foundations.MVVM.IModelView<World.Devices.Equip.EquipmentMgr>.detach(World.Devices.Equip.EquipmentMgr)
+IL_0000: ldarg.0
+IL_0001: ldnull
+IL_0002: stfld World.Devices.Equip.EquipmentMgr World.Devices.Equip.EquipmentMgrView::owner
+IL_0007: ldarg.0
+IL_0008: call UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_000d: call System.Void UnityEngine.Object::Destroy(UnityEngine.Object)
+IL_0012: ret
+METHOD System.Void World.Devices.Equip.EquipmentMgrView::World.Devices.Equip.IEquipmentMgrView.init()
+IL_0000: call !0 Foundations.Singleton`1<Foundations.Mission>::get_instance()
+IL_0005: ldstr "CaravanMgr"
+IL_000a: ldloca.s V_0
+IL_000c: callvirt System.Boolean Foundations.Mission::try_get_mgr<World.Caravans.CaravanMgr>(System.String,!!0&)
+IL_0011: pop
+IL_0012: ldarg.0
+IL_0013: ldfld TMPro.TextMeshProUGUI World.Devices.Equip.EquipmentMgrView::caravan_text
+IL_0018: ldnull
+IL_0019: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_001e: brfalse IL_0043
+IL_0023: ldarg.0
+IL_0024: ldfld TMPro.TextMeshProUGUI World.Devices.Equip.EquipmentMgrView::caravan_text
+IL_0029: ldloc.0
+IL_002a: ldfld World.Caravans.Caravan World.Caravans.CaravanMgr::cell
+IL_002f: ldfld AutoCodes.caravan_body World.Caravans.Caravan::_desc
+IL_0034: ldfld System.String AutoCodes.caravan_body::name
+IL_0039: call System.String Commons.Localization_Utility::get_localization(System.String)
+IL_003e: callvirt System.Void TMPro.TMP_Text::set_text(System.String)
+IL_0043: ldarg.0
+IL_0044: ldfld System.Collections.Generic.List`1<World.Devices.Equip.EquipSlot> World.Devices.Equip.EquipmentMgrView::slots
+IL_0049: callvirt System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<World.Devices.Equip.EquipSlot>::GetEnumerator()
+IL_004e: stloc.1
+IL_004f: br IL_0060
+IL_0054: ldloca.s V_1
+IL_0056: call !0 System.Collections.Generic.List`1/Enumerator<World.Devices.Equip.EquipSlot>::get_Current()
+IL_005b: callvirt System.Void World.Devices.Equip.EquipSlot::init()
+IL_0060: ldloca.s V_1
+IL_0062: call System.Boolean System.Collections.Generic.List`1/Enumerator<World.Devices.Equip.EquipSlot>::MoveNext()
+IL_0067: brtrue IL_0054
+IL_006c: leave IL_007f
+IL_0071: ldloca.s V_1
+IL_0073: constrained. System.Collections.Generic.List`1/Enumerator<World.Devices.Equip.EquipSlot>
+IL_0079: callvirt System.Void System.IDisposable::Dispose()
+IL_007e: endfinally
+IL_007f: ldarg.0
+IL_0080: ldfld World.Devices.Equip.EquipmentStore World.Devices.Equip.EquipmentMgrView::store
+IL_0085: ldnull
+IL_0086: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_008b: brfalse IL_00ac
+IL_0090: ldarg.0
+IL_0091: ldfld World.Devices.Equip.EquipmentMgr World.Devices.Equip.EquipmentMgrView::owner
+IL_0096: brfalse IL_00ac
+IL_009b: ldarg.0
+IL_009c: ldfld World.Devices.Equip.EquipmentStore World.Devices.Equip.EquipmentMgrView::store
+IL_00a1: ldarg.0
+IL_00a2: ldfld World.Devices.Equip.EquipmentMgr World.Devices.Equip.EquipmentMgrView::owner
+IL_00a7: callvirt System.Void World.Devices.Equip.EquipmentStore::init(World.Devices.Equip.EquipmentMgr)
+IL_00ac: ret
+METHOD System.Void World.Devices.Equip.EquipmentMgrView::World.Devices.Equip.IEquipmentMgrView.remove_device(World.Devices.Device)
+IL_0000: ldarg.0
+IL_0001: ldfld World.Devices.Equip.EquipmentStore World.Devices.Equip.EquipmentMgrView::store
+IL_0006: ldnull
+IL_0007: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_000c: brfalse IL_001d
+IL_0011: ldarg.0
+IL_0012: ldfld World.Devices.Equip.EquipmentStore World.Devices.Equip.EquipmentMgrView::store
+IL_0017: ldarg.1
+IL_0018: callvirt System.Void World.Devices.Equip.EquipmentStore::remove_device(World.Devices.Device)
+IL_001d: ret
+METHOD System.Void World.Devices.Equip.EquipmentMgrView::World.Devices.Equip.IEquipmentMgrView.select_device(World.Devices.Device)
+IL_0000: ldarg.0
+IL_0001: ldfld System.Collections.Generic.List`1<World.Devices.Equip.EquipSlot> World.Devices.Equip.EquipmentMgrView::slots
+IL_0006: callvirt System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<World.Devices.Equip.EquipSlot>::GetEnumerator()
+IL_000b: stloc.0
+IL_000c: br IL_001d
+IL_0011: ldloca.s V_0
+IL_0013: call !0 System.Collections.Generic.List`1/Enumerator<World.Devices.Equip.EquipSlot>::get_Current()
+IL_0018: callvirt System.Void World.Devices.Equip.EquipSlot::update_slot()
+IL_001d: ldloca.s V_0
+IL_001f: call System.Boolean System.Collections.Generic.List`1/Enumerator<World.Devices.Equip.EquipSlot>::MoveNext()
+IL_0024: brtrue IL_0011
+IL_0029: leave IL_003c
+IL_002e: ldloca.s V_0
+IL_0030: constrained. System.Collections.Generic.List`1/Enumerator<World.Devices.Equip.EquipSlot>
+IL_0036: callvirt System.Void System.IDisposable::Dispose()
+IL_003b: endfinally
+IL_003c: ldarg.0
+IL_003d: ldfld World.Devices.Equip.EquipmentStore World.Devices.Equip.EquipmentMgrView::store
+IL_0042: ldnull
+IL_0043: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_0048: brfalse IL_0059
+IL_004d: ldarg.0
+IL_004e: ldfld World.Devices.Equip.EquipmentStore World.Devices.Equip.EquipmentMgrView::store
+IL_0053: ldarg.1
+IL_0054: callvirt System.Void World.Devices.Equip.EquipmentStore::select_device(World.Devices.Device)
+IL_0059: ret
+METHOD System.Void World.Devices.Equip.EquipmentMgrView::World.Devices.Equip.IEquipmentMgrView.tick()
+IL_0000: ldarg.0
+IL_0001: ldfld System.Collections.Generic.List`1<World.Devices.Equip.EquipSlot> World.Devices.Equip.EquipmentMgrView::slots
+IL_0006: callvirt System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<World.Devices.Equip.EquipSlot>::GetEnumerator()
+IL_000b: stloc.0
+IL_000c: br IL_001d
+IL_0011: ldloca.s V_0
+IL_0013: call !0 System.Collections.Generic.List`1/Enumerator<World.Devices.Equip.EquipSlot>::get_Current()
+IL_0018: callvirt System.Void World.Devices.Equip.EquipSlot::tick()
+IL_001d: ldloca.s V_0
+IL_001f: call System.Boolean System.Collections.Generic.List`1/Enumerator<World.Devices.Equip.EquipSlot>::MoveNext()
+IL_0024: brtrue IL_0011
+IL_0029: leave IL_003c
+IL_002e: ldloca.s V_0
+IL_0030: constrained. System.Collections.Generic.List`1/Enumerator<World.Devices.Equip.EquipSlot>
+IL_0036: callvirt System.Void System.IDisposable::Dispose()
+IL_003b: endfinally
+IL_003c: ret
+METHOD System.Void World.Devices.Equip.EquipmentMgrView::World.Devices.Equip.IEquipmentMgrView.update_slot()
+IL_0000: ldarg.0
+IL_0001: ldfld System.Collections.Generic.List`1<World.Devices.Equip.EquipSlot> World.Devices.Equip.EquipmentMgrView::slots
+IL_0006: callvirt System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<World.Devices.Equip.EquipSlot>::GetEnumerator()
+IL_000b: stloc.0
+IL_000c: br IL_001d
+IL_0011: ldloca.s V_0
+IL_0013: call !0 System.Collections.Generic.List`1/Enumerator<World.Devices.Equip.EquipSlot>::get_Current()
+IL_0018: callvirt System.Void World.Devices.Equip.EquipSlot::update_slot()
+IL_001d: ldloca.s V_0
+IL_001f: call System.Boolean System.Collections.Generic.List`1/Enumerator<World.Devices.Equip.EquipSlot>::MoveNext()
+IL_0024: brtrue IL_0011
+IL_0029: leave IL_003c
+IL_002e: ldloca.s V_0
+IL_0030: constrained. System.Collections.Generic.List`1/Enumerator<World.Devices.Equip.EquipSlot>
+IL_0036: callvirt System.Void System.IDisposable::Dispose()
+IL_003b: endfinally
+IL_003c: ret
+METHOD System.Void World.Devices.Equip.EquipmentMgrView::World.Devices.Equip.IEquipmentMgrView.update_store()
+IL_0000: ldarg.0
+IL_0001: ldfld World.Devices.Equip.EquipmentStore World.Devices.Equip.EquipmentMgrView::store
+IL_0006: ldnull
+IL_0007: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_000c: brfalse IL_001c
+IL_0011: ldarg.0
+IL_0012: ldfld World.Devices.Equip.EquipmentStore World.Devices.Equip.EquipmentMgrView::store
+IL_0017: callvirt System.Void World.Devices.Equip.EquipmentStore::update_devices()
+IL_001c: ret
+METHOD System.Void World.Devices.Equip.EquipmentMgrView::OnEnable()
+IL_0000: ldarg.0
+IL_0001: callvirt System.Void World.Devices.Equip.IEquipmentMgrView::init()
+IL_0006: ret
+METHOD System.Void World.Devices.Equip.EquipmentMgrView::.ctor()
+IL_0000: ldarg.0
+IL_0001: newobj System.Void System.Collections.Generic.List`1<World.Devices.Equip.EquipSlot>::.ctor()
+IL_0006: stfld System.Collections.Generic.List`1<World.Devices.Equip.EquipSlot> World.Devices.Equip.EquipmentMgrView::slots
+IL_000b: ldarg.0
+IL_000c: call System.Void UnityEngine.MonoBehaviour::.ctor()
+IL_0011: ret

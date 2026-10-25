@@ -1,0 +1,627 @@
+TYPE World.Input.WorldInputController : Commons.Input.BaseInputController`1<World.Input.WorldInputController>
+FIELD System.Action World.Input.WorldInputController::OnLeftClickPerformed
+FIELD System.Action World.Input.WorldInputController::OnRightClickPerformed
+FIELD System.Collections.Generic.Stack`1<System.Func`1<System.Boolean>> World.Input.WorldInputController::_escHandlers
+FIELD System.Action World.Input.WorldInputController::OnEscPerformed
+FIELD System.Action World.Input.WorldInputController::OnAltHoldStarted
+FIELD System.Action World.Input.WorldInputController::OnAltHoldCanceled
+FIELD UnityEngine.InputSystem.InputAction World.Input.WorldInputController::_leftClickAction
+FIELD UnityEngine.InputSystem.InputAction World.Input.WorldInputController::_rightClickAction
+FIELD UnityEngine.InputSystem.InputAction World.Input.WorldInputController::_escAction
+FIELD UnityEngine.InputSystem.InputAction World.Input.WorldInputController::_altAction
+FIELD System.Boolean World.Input.WorldInputController::_isOnUi
+FIELD System.Collections.Generic.HashSet`1<World.Devices.DeviceUiViews.IAltUi> World.Input.WorldInputController::_pressingAlt
+METHOD System.Void World.Input.WorldInputController::add_OnLeftClickPerformed(System.Action)
+IL_0000: ldarg.0
+IL_0001: ldfld System.Action World.Input.WorldInputController::OnLeftClickPerformed
+IL_0006: stloc.0
+IL_0007: ldloc.0
+IL_0008: stloc.1
+IL_0009: ldloc.1
+IL_000a: ldarg.1
+IL_000b: call System.Delegate System.Delegate::Combine(System.Delegate,System.Delegate)
+IL_0010: castclass System.Action
+IL_0015: stloc.2
+IL_0016: ldarg.0
+IL_0017: ldflda System.Action World.Input.WorldInputController::OnLeftClickPerformed
+IL_001c: ldloc.2
+IL_001d: ldloc.1
+IL_001e: call !!0 System.Threading.Interlocked::CompareExchange<System.Action>(!!0&,!!0,!!0)
+IL_0023: stloc.0
+IL_0024: ldloc.0
+IL_0025: ldloc.1
+IL_0026: bne.un IL_0007
+IL_002b: ret
+METHOD System.Void World.Input.WorldInputController::remove_OnLeftClickPerformed(System.Action)
+IL_0000: ldarg.0
+IL_0001: ldfld System.Action World.Input.WorldInputController::OnLeftClickPerformed
+IL_0006: stloc.0
+IL_0007: ldloc.0
+IL_0008: stloc.1
+IL_0009: ldloc.1
+IL_000a: ldarg.1
+IL_000b: call System.Delegate System.Delegate::Remove(System.Delegate,System.Delegate)
+IL_0010: castclass System.Action
+IL_0015: stloc.2
+IL_0016: ldarg.0
+IL_0017: ldflda System.Action World.Input.WorldInputController::OnLeftClickPerformed
+IL_001c: ldloc.2
+IL_001d: ldloc.1
+IL_001e: call !!0 System.Threading.Interlocked::CompareExchange<System.Action>(!!0&,!!0,!!0)
+IL_0023: stloc.0
+IL_0024: ldloc.0
+IL_0025: ldloc.1
+IL_0026: bne.un IL_0007
+IL_002b: ret
+METHOD System.Void World.Input.WorldInputController::add_OnRightClickPerformed(System.Action)
+IL_0000: ldarg.0
+IL_0001: ldfld System.Action World.Input.WorldInputController::OnRightClickPerformed
+IL_0006: stloc.0
+IL_0007: ldloc.0
+IL_0008: stloc.1
+IL_0009: ldloc.1
+IL_000a: ldarg.1
+IL_000b: call System.Delegate System.Delegate::Combine(System.Delegate,System.Delegate)
+IL_0010: castclass System.Action
+IL_0015: stloc.2
+IL_0016: ldarg.0
+IL_0017: ldflda System.Action World.Input.WorldInputController::OnRightClickPerformed
+IL_001c: ldloc.2
+IL_001d: ldloc.1
+IL_001e: call !!0 System.Threading.Interlocked::CompareExchange<System.Action>(!!0&,!!0,!!0)
+IL_0023: stloc.0
+IL_0024: ldloc.0
+IL_0025: ldloc.1
+IL_0026: bne.un IL_0007
+IL_002b: ret
+METHOD System.Void World.Input.WorldInputController::remove_OnRightClickPerformed(System.Action)
+IL_0000: ldarg.0
+IL_0001: ldfld System.Action World.Input.WorldInputController::OnRightClickPerformed
+IL_0006: stloc.0
+IL_0007: ldloc.0
+IL_0008: stloc.1
+IL_0009: ldloc.1
+IL_000a: ldarg.1
+IL_000b: call System.Delegate System.Delegate::Remove(System.Delegate,System.Delegate)
+IL_0010: castclass System.Action
+IL_0015: stloc.2
+IL_0016: ldarg.0
+IL_0017: ldflda System.Action World.Input.WorldInputController::OnRightClickPerformed
+IL_001c: ldloc.2
+IL_001d: ldloc.1
+IL_001e: call !!0 System.Threading.Interlocked::CompareExchange<System.Action>(!!0&,!!0,!!0)
+IL_0023: stloc.0
+IL_0024: ldloc.0
+IL_0025: ldloc.1
+IL_0026: bne.un IL_0007
+IL_002b: ret
+METHOD System.Void World.Input.WorldInputController::add_OnEscPerformed(System.Action)
+IL_0000: ldarg.0
+IL_0001: ldfld System.Action World.Input.WorldInputController::OnEscPerformed
+IL_0006: stloc.0
+IL_0007: ldloc.0
+IL_0008: stloc.1
+IL_0009: ldloc.1
+IL_000a: ldarg.1
+IL_000b: call System.Delegate System.Delegate::Combine(System.Delegate,System.Delegate)
+IL_0010: castclass System.Action
+IL_0015: stloc.2
+IL_0016: ldarg.0
+IL_0017: ldflda System.Action World.Input.WorldInputController::OnEscPerformed
+IL_001c: ldloc.2
+IL_001d: ldloc.1
+IL_001e: call !!0 System.Threading.Interlocked::CompareExchange<System.Action>(!!0&,!!0,!!0)
+IL_0023: stloc.0
+IL_0024: ldloc.0
+IL_0025: ldloc.1
+IL_0026: bne.un IL_0007
+IL_002b: ret
+METHOD System.Void World.Input.WorldInputController::remove_OnEscPerformed(System.Action)
+IL_0000: ldarg.0
+IL_0001: ldfld System.Action World.Input.WorldInputController::OnEscPerformed
+IL_0006: stloc.0
+IL_0007: ldloc.0
+IL_0008: stloc.1
+IL_0009: ldloc.1
+IL_000a: ldarg.1
+IL_000b: call System.Delegate System.Delegate::Remove(System.Delegate,System.Delegate)
+IL_0010: castclass System.Action
+IL_0015: stloc.2
+IL_0016: ldarg.0
+IL_0017: ldflda System.Action World.Input.WorldInputController::OnEscPerformed
+IL_001c: ldloc.2
+IL_001d: ldloc.1
+IL_001e: call !!0 System.Threading.Interlocked::CompareExchange<System.Action>(!!0&,!!0,!!0)
+IL_0023: stloc.0
+IL_0024: ldloc.0
+IL_0025: ldloc.1
+IL_0026: bne.un IL_0007
+IL_002b: ret
+METHOD System.Void World.Input.WorldInputController::add_OnAltHoldStarted(System.Action)
+IL_0000: ldarg.0
+IL_0001: ldfld System.Action World.Input.WorldInputController::OnAltHoldStarted
+IL_0006: stloc.0
+IL_0007: ldloc.0
+IL_0008: stloc.1
+IL_0009: ldloc.1
+IL_000a: ldarg.1
+IL_000b: call System.Delegate System.Delegate::Combine(System.Delegate,System.Delegate)
+IL_0010: castclass System.Action
+IL_0015: stloc.2
+IL_0016: ldarg.0
+IL_0017: ldflda System.Action World.Input.WorldInputController::OnAltHoldStarted
+IL_001c: ldloc.2
+IL_001d: ldloc.1
+IL_001e: call !!0 System.Threading.Interlocked::CompareExchange<System.Action>(!!0&,!!0,!!0)
+IL_0023: stloc.0
+IL_0024: ldloc.0
+IL_0025: ldloc.1
+IL_0026: bne.un IL_0007
+IL_002b: ret
+METHOD System.Void World.Input.WorldInputController::remove_OnAltHoldStarted(System.Action)
+IL_0000: ldarg.0
+IL_0001: ldfld System.Action World.Input.WorldInputController::OnAltHoldStarted
+IL_0006: stloc.0
+IL_0007: ldloc.0
+IL_0008: stloc.1
+IL_0009: ldloc.1
+IL_000a: ldarg.1
+IL_000b: call System.Delegate System.Delegate::Remove(System.Delegate,System.Delegate)
+IL_0010: castclass System.Action
+IL_0015: stloc.2
+IL_0016: ldarg.0
+IL_0017: ldflda System.Action World.Input.WorldInputController::OnAltHoldStarted
+IL_001c: ldloc.2
+IL_001d: ldloc.1
+IL_001e: call !!0 System.Threading.Interlocked::CompareExchange<System.Action>(!!0&,!!0,!!0)
+IL_0023: stloc.0
+IL_0024: ldloc.0
+IL_0025: ldloc.1
+IL_0026: bne.un IL_0007
+IL_002b: ret
+METHOD System.Void World.Input.WorldInputController::add_OnAltHoldCanceled(System.Action)
+IL_0000: ldarg.0
+IL_0001: ldfld System.Action World.Input.WorldInputController::OnAltHoldCanceled
+IL_0006: stloc.0
+IL_0007: ldloc.0
+IL_0008: stloc.1
+IL_0009: ldloc.1
+IL_000a: ldarg.1
+IL_000b: call System.Delegate System.Delegate::Combine(System.Delegate,System.Delegate)
+IL_0010: castclass System.Action
+IL_0015: stloc.2
+IL_0016: ldarg.0
+IL_0017: ldflda System.Action World.Input.WorldInputController::OnAltHoldCanceled
+IL_001c: ldloc.2
+IL_001d: ldloc.1
+IL_001e: call !!0 System.Threading.Interlocked::CompareExchange<System.Action>(!!0&,!!0,!!0)
+IL_0023: stloc.0
+IL_0024: ldloc.0
+IL_0025: ldloc.1
+IL_0026: bne.un IL_0007
+IL_002b: ret
+METHOD System.Void World.Input.WorldInputController::remove_OnAltHoldCanceled(System.Action)
+IL_0000: ldarg.0
+IL_0001: ldfld System.Action World.Input.WorldInputController::OnAltHoldCanceled
+IL_0006: stloc.0
+IL_0007: ldloc.0
+IL_0008: stloc.1
+IL_0009: ldloc.1
+IL_000a: ldarg.1
+IL_000b: call System.Delegate System.Delegate::Remove(System.Delegate,System.Delegate)
+IL_0010: castclass System.Action
+IL_0015: stloc.2
+IL_0016: ldarg.0
+IL_0017: ldflda System.Action World.Input.WorldInputController::OnAltHoldCanceled
+IL_001c: ldloc.2
+IL_001d: ldloc.1
+IL_001e: call !!0 System.Threading.Interlocked::CompareExchange<System.Action>(!!0&,!!0,!!0)
+IL_0023: stloc.0
+IL_0024: ldloc.0
+IL_0025: ldloc.1
+IL_0026: bne.un IL_0007
+IL_002b: ret
+METHOD System.Void World.Input.WorldInputController::InitializeInputSystem()
+IL_0000: ldarg.0
+IL_0001: call System.Void Commons.Input.BaseInputController`1<World.Input.WorldInputController>::InitializeInputSystem()
+IL_0006: ldarg.0
+IL_0007: ldarg.0
+IL_0008: ldstr "LeftClick"
+IL_000d: call UnityEngine.InputSystem.InputAction Commons.Input.BaseInputController`1<World.Input.WorldInputController>::GetAction(System.String)
+IL_0012: stfld UnityEngine.InputSystem.InputAction World.Input.WorldInputController::_leftClickAction
+IL_0017: ldarg.0
+IL_0018: ldfld UnityEngine.InputSystem.InputAction World.Input.WorldInputController::_leftClickAction
+IL_001d: brfalse IL_0044
+IL_0022: ldarg.0
+IL_0023: ldfld UnityEngine.InputSystem.InputAction World.Input.WorldInputController::_leftClickAction
+IL_0028: callvirt System.Void UnityEngine.InputSystem.InputAction::Enable()
+IL_002d: ldarg.0
+IL_002e: ldfld UnityEngine.InputSystem.InputAction World.Input.WorldInputController::_leftClickAction
+IL_0033: ldarg.0
+IL_0034: ldftn System.Void World.Input.WorldInputController::OnLeftClickPerformedHandler(UnityEngine.InputSystem.InputAction/CallbackContext)
+IL_003a: newobj System.Void System.Action`1<UnityEngine.InputSystem.InputAction/CallbackContext>::.ctor(System.Object,System.IntPtr)
+IL_003f: callvirt System.Void UnityEngine.InputSystem.InputAction::add_performed(System.Action`1<UnityEngine.InputSystem.InputAction/CallbackContext>)
+IL_0044: ldarg.0
+IL_0045: ldarg.0
+IL_0046: ldstr "RightClick"
+IL_004b: call UnityEngine.InputSystem.InputAction Commons.Input.BaseInputController`1<World.Input.WorldInputController>::GetAction(System.String)
+IL_0050: stfld UnityEngine.InputSystem.InputAction World.Input.WorldInputController::_rightClickAction
+IL_0055: ldarg.0
+IL_0056: ldfld UnityEngine.InputSystem.InputAction World.Input.WorldInputController::_rightClickAction
+IL_005b: brfalse IL_0082
+IL_0060: ldarg.0
+IL_0061: ldfld UnityEngine.InputSystem.InputAction World.Input.WorldInputController::_rightClickAction
+IL_0066: callvirt System.Void UnityEngine.InputSystem.InputAction::Enable()
+IL_006b: ldarg.0
+IL_006c: ldfld UnityEngine.InputSystem.InputAction World.Input.WorldInputController::_rightClickAction
+IL_0071: ldarg.0
+IL_0072: ldftn System.Void World.Input.WorldInputController::OnRightClickPerformedHandler(UnityEngine.InputSystem.InputAction/CallbackContext)
+IL_0078: newobj System.Void System.Action`1<UnityEngine.InputSystem.InputAction/CallbackContext>::.ctor(System.Object,System.IntPtr)
+IL_007d: callvirt System.Void UnityEngine.InputSystem.InputAction::add_performed(System.Action`1<UnityEngine.InputSystem.InputAction/CallbackContext>)
+IL_0082: ldarg.0
+IL_0083: ldarg.0
+IL_0084: ldstr "Esc"
+IL_0089: call UnityEngine.InputSystem.InputAction Commons.Input.BaseInputController`1<World.Input.WorldInputController>::GetAction(System.String)
+IL_008e: stfld UnityEngine.InputSystem.InputAction World.Input.WorldInputController::_escAction
+IL_0093: ldarg.0
+IL_0094: ldfld UnityEngine.InputSystem.InputAction World.Input.WorldInputController::_escAction
+IL_0099: brfalse IL_00c0
+IL_009e: ldarg.0
+IL_009f: ldfld UnityEngine.InputSystem.InputAction World.Input.WorldInputController::_escAction
+IL_00a4: callvirt System.Void UnityEngine.InputSystem.InputAction::Enable()
+IL_00a9: ldarg.0
+IL_00aa: ldfld UnityEngine.InputSystem.InputAction World.Input.WorldInputController::_escAction
+IL_00af: ldarg.0
+IL_00b0: ldftn System.Void World.Input.WorldInputController::OnEscPerformedHandler(UnityEngine.InputSystem.InputAction/CallbackContext)
+IL_00b6: newobj System.Void System.Action`1<UnityEngine.InputSystem.InputAction/CallbackContext>::.ctor(System.Object,System.IntPtr)
+IL_00bb: callvirt System.Void UnityEngine.InputSystem.InputAction::add_performed(System.Action`1<UnityEngine.InputSystem.InputAction/CallbackContext>)
+IL_00c0: ldarg.0
+IL_00c1: ldarg.0
+IL_00c2: ldstr "Alt"
+IL_00c7: call UnityEngine.InputSystem.InputAction Commons.Input.BaseInputController`1<World.Input.WorldInputController>::GetAction(System.String)
+IL_00cc: stfld UnityEngine.InputSystem.InputAction World.Input.WorldInputController::_altAction
+IL_00d1: ldarg.0
+IL_00d2: ldfld UnityEngine.InputSystem.InputAction World.Input.WorldInputController::_altAction
+IL_00d7: brfalse IL_0115
+IL_00dc: ldarg.0
+IL_00dd: ldfld UnityEngine.InputSystem.InputAction World.Input.WorldInputController::_altAction
+IL_00e2: callvirt System.Void UnityEngine.InputSystem.InputAction::Enable()
+IL_00e7: ldarg.0
+IL_00e8: ldfld UnityEngine.InputSystem.InputAction World.Input.WorldInputController::_altAction
+IL_00ed: ldarg.0
+IL_00ee: ldftn System.Void World.Input.WorldInputController::OnAltStarted(UnityEngine.InputSystem.InputAction/CallbackContext)
+IL_00f4: newobj System.Void System.Action`1<UnityEngine.InputSystem.InputAction/CallbackContext>::.ctor(System.Object,System.IntPtr)
+IL_00f9: callvirt System.Void UnityEngine.InputSystem.InputAction::add_started(System.Action`1<UnityEngine.InputSystem.InputAction/CallbackContext>)
+IL_00fe: ldarg.0
+IL_00ff: ldfld UnityEngine.InputSystem.InputAction World.Input.WorldInputController::_altAction
+IL_0104: ldarg.0
+IL_0105: ldftn System.Void World.Input.WorldInputController::OnAltCanceled(UnityEngine.InputSystem.InputAction/CallbackContext)
+IL_010b: newobj System.Void System.Action`1<UnityEngine.InputSystem.InputAction/CallbackContext>::.ctor(System.Object,System.IntPtr)
+IL_0110: callvirt System.Void UnityEngine.InputSystem.InputAction::add_canceled(System.Action`1<UnityEngine.InputSystem.InputAction/CallbackContext>)
+IL_0115: ret
+METHOD System.Void World.Input.WorldInputController::Update()
+IL_0000: ldarg.0
+IL_0001: ldarg.0
+IL_0002: ldfld UnityEngine.EventSystems.EventSystem Commons.Input.BaseInputController`1<World.Input.WorldInputController>::m_EventSystem
+IL_0007: ldnull
+IL_0008: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_000d: brfalse IL_0022
+IL_0012: ldarg.0
+IL_0013: ldfld UnityEngine.EventSystems.EventSystem Commons.Input.BaseInputController`1<World.Input.WorldInputController>::m_EventSystem
+IL_0018: callvirt System.Boolean UnityEngine.EventSystems.EventSystem::IsPointerOverGameObject()
+IL_001d: br IL_0023
+IL_0022: ldc.i4.0
+IL_0023: stfld System.Boolean World.Input.WorldInputController::_isOnUi
+IL_0028: ret
+METHOD System.Void World.Input.WorldInputController::OnLeftClickPerformedHandler(UnityEngine.InputSystem.InputAction/CallbackContext)
+IL_0000: ldarg.0
+IL_0001: ldfld System.Boolean World.Input.WorldInputController::_isOnUi
+IL_0006: brfalse IL_000c
+IL_000b: ret
+IL_000c: ldarg.0
+IL_000d: ldfld System.Action World.Input.WorldInputController::OnLeftClickPerformed
+IL_0012: dup
+IL_0013: brtrue IL_001a
+IL_0018: pop
+IL_0019: ret
+IL_001a: callvirt System.Void System.Action::Invoke()
+IL_001f: ret
+METHOD System.Void World.Input.WorldInputController::OnRightClickPerformedHandler(UnityEngine.InputSystem.InputAction/CallbackContext)
+IL_0000: ldarg.0
+IL_0001: ldfld System.Boolean World.Input.WorldInputController::_isOnUi
+IL_0006: brfalse IL_000c
+IL_000b: ret
+IL_000c: ldarg.0
+IL_000d: ldfld System.Action World.Input.WorldInputController::OnRightClickPerformed
+IL_0012: dup
+IL_0013: brtrue IL_001a
+IL_0018: pop
+IL_0019: ret
+IL_001a: callvirt System.Void System.Action::Invoke()
+IL_001f: ret
+METHOD System.Void World.Input.WorldInputController::PushEscHandler(System.Func`1<System.Boolean>)
+IL_0000: ldarg.0
+IL_0001: ldfld System.Collections.Generic.Stack`1<System.Func`1<System.Boolean>> World.Input.WorldInputController::_escHandlers
+IL_0006: ldarg.1
+IL_0007: callvirt System.Void System.Collections.Generic.Stack`1<System.Func`1<System.Boolean>>::Push(!0)
+IL_000c: ret
+METHOD System.Void World.Input.WorldInputController::PopEscHandler(System.Func`1<System.Boolean>)
+IL_0000: ldarg.0
+IL_0001: ldfld System.Collections.Generic.Stack`1<System.Func`1<System.Boolean>> World.Input.WorldInputController::_escHandlers
+IL_0006: callvirt System.Int32 System.Collections.Generic.Stack`1<System.Func`1<System.Boolean>>::get_Count()
+IL_000b: ldc.i4.0
+IL_000c: ble IL_0034
+IL_0011: ldarg.0
+IL_0012: ldfld System.Collections.Generic.Stack`1<System.Func`1<System.Boolean>> World.Input.WorldInputController::_escHandlers
+IL_0017: callvirt !0 System.Collections.Generic.Stack`1<System.Func`1<System.Boolean>>::Peek()
+IL_001c: ldarg.1
+IL_001d: call System.Boolean System.Delegate::op_Equality(System.Delegate,System.Delegate)
+IL_0022: brfalse IL_0034
+IL_0027: ldarg.0
+IL_0028: ldfld System.Collections.Generic.Stack`1<System.Func`1<System.Boolean>> World.Input.WorldInputController::_escHandlers
+IL_002d: callvirt !0 System.Collections.Generic.Stack`1<System.Func`1<System.Boolean>>::Pop()
+IL_0032: pop
+IL_0033: ret
+IL_0034: newobj System.Void System.Collections.Generic.Stack`1<System.Func`1<System.Boolean>>::.ctor()
+IL_0039: stloc.0
+IL_003a: br IL_005e
+IL_003f: ldarg.0
+IL_0040: ldfld System.Collections.Generic.Stack`1<System.Func`1<System.Boolean>> World.Input.WorldInputController::_escHandlers
+IL_0045: callvirt !0 System.Collections.Generic.Stack`1<System.Func`1<System.Boolean>>::Pop()
+IL_004a: stloc.1
+IL_004b: ldloc.1
+IL_004c: ldarg.1
+IL_004d: call System.Boolean System.Delegate::op_Equality(System.Delegate,System.Delegate)
+IL_0052: brtrue IL_0085
+IL_0057: ldloc.0
+IL_0058: ldloc.1
+IL_0059: callvirt System.Void System.Collections.Generic.Stack`1<System.Func`1<System.Boolean>>::Push(!0)
+IL_005e: ldarg.0
+IL_005f: ldfld System.Collections.Generic.Stack`1<System.Func`1<System.Boolean>> World.Input.WorldInputController::_escHandlers
+IL_0064: callvirt System.Int32 System.Collections.Generic.Stack`1<System.Func`1<System.Boolean>>::get_Count()
+IL_0069: ldc.i4.0
+IL_006a: bgt IL_003f
+IL_006f: br IL_0085
+IL_0074: ldarg.0
+IL_0075: ldfld System.Collections.Generic.Stack`1<System.Func`1<System.Boolean>> World.Input.WorldInputController::_escHandlers
+IL_007a: ldloc.0
+IL_007b: callvirt !0 System.Collections.Generic.Stack`1<System.Func`1<System.Boolean>>::Pop()
+IL_0080: callvirt System.Void System.Collections.Generic.Stack`1<System.Func`1<System.Boolean>>::Push(!0)
+IL_0085: ldloc.0
+IL_0086: callvirt System.Int32 System.Collections.Generic.Stack`1<System.Func`1<System.Boolean>>::get_Count()
+IL_008b: ldc.i4.0
+IL_008c: bgt IL_0074
+IL_0091: ret
+METHOD System.Void World.Input.WorldInputController::OnEscPerformedHandler(UnityEngine.InputSystem.InputAction/CallbackContext)
+IL_0000: call !0 Foundations.MonoBehaviourSingleton`1<World.WorldSceneRoot>::get_instance()
+IL_0005: ldfld System.Boolean World.WorldSceneRoot::ban_esc
+IL_000a: brfalse IL_0010
+IL_000f: ret
+IL_0010: ldarg.0
+IL_0011: ldfld System.Collections.Generic.Stack`1<System.Func`1<System.Boolean>> World.Input.WorldInputController::_escHandlers
+IL_0016: callvirt System.Int32 System.Collections.Generic.Stack`1<System.Func`1<System.Boolean>>::get_Count()
+IL_001b: ldc.i4.0
+IL_001c: ble IL_0037
+IL_0021: ldarg.0
+IL_0022: ldfld System.Collections.Generic.Stack`1<System.Func`1<System.Boolean>> World.Input.WorldInputController::_escHandlers
+IL_0027: callvirt !0 System.Collections.Generic.Stack`1<System.Func`1<System.Boolean>>::Peek()
+IL_002c: callvirt !0 System.Func`1<System.Boolean>::Invoke()
+IL_0031: brfalse IL_0037
+IL_0036: ret
+IL_0037: ldarg.0
+IL_0038: ldfld System.Action World.Input.WorldInputController::OnEscPerformed
+IL_003d: dup
+IL_003e: brtrue IL_0045
+IL_0043: pop
+IL_0044: ret
+IL_0045: callvirt System.Void System.Action::Invoke()
+IL_004a: ret
+METHOD System.Void World.Input.WorldInputController::OnAltStarted(UnityEngine.InputSystem.InputAction/CallbackContext)
+IL_0000: ldarg.0
+IL_0001: call System.Void World.Input.WorldInputController::HandleAltBegin()
+IL_0006: ret
+METHOD System.Void World.Input.WorldInputController::OnAltCanceled(UnityEngine.InputSystem.InputAction/CallbackContext)
+IL_0000: ldarg.0
+IL_0001: call System.Void World.Input.WorldInputController::HandleAltEnd()
+IL_0006: ret
+METHOD System.Void World.Input.WorldInputController::HandleAltBegin()
+IL_0000: ldarg.0
+IL_0001: call System.Collections.Generic.List`1<UnityEngine.EventSystems.RaycastResult> World.Input.WorldInputController::RaycastAltUi()
+IL_0006: callvirt System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<UnityEngine.EventSystems.RaycastResult>::GetEnumerator()
+IL_000b: stloc.0
+IL_000c: br IL_003f
+IL_0011: ldloca.s V_0
+IL_0013: call !0 System.Collections.Generic.List`1/Enumerator<UnityEngine.EventSystems.RaycastResult>::get_Current()
+IL_0018: stloc.1
+IL_0019: ldloca.s V_1
+IL_001b: call UnityEngine.GameObject UnityEngine.EventSystems.RaycastResult::get_gameObject()
+IL_0020: ldloca.s V_2
+IL_0022: callvirt System.Boolean UnityEngine.GameObject::TryGetComponent<World.Devices.DeviceUiViews.IAltUi>(!!0&)
+IL_0027: brfalse IL_003f
+IL_002c: ldloc.2
+IL_002d: callvirt System.Void World.Devices.DeviceUiViews.IAltUi::Begin()
+IL_0032: ldarg.0
+IL_0033: ldfld System.Collections.Generic.HashSet`1<World.Devices.DeviceUiViews.IAltUi> World.Input.WorldInputController::_pressingAlt
+IL_0038: ldloc.2
+IL_0039: callvirt System.Boolean System.Collections.Generic.HashSet`1<World.Devices.DeviceUiViews.IAltUi>::Add(!0)
+IL_003e: pop
+IL_003f: ldloca.s V_0
+IL_0041: call System.Boolean System.Collections.Generic.List`1/Enumerator<UnityEngine.EventSystems.RaycastResult>::MoveNext()
+IL_0046: brtrue IL_0011
+IL_004b: leave IL_005e
+IL_0050: ldloca.s V_0
+IL_0052: constrained. System.Collections.Generic.List`1/Enumerator<UnityEngine.EventSystems.RaycastResult>
+IL_0058: callvirt System.Void System.IDisposable::Dispose()
+IL_005d: endfinally
+IL_005e: ret
+METHOD System.Void World.Input.WorldInputController::HandleAltEnd()
+IL_0000: ldarg.0
+IL_0001: call System.Collections.Generic.List`1<UnityEngine.EventSystems.RaycastResult> World.Input.WorldInputController::RaycastAltUi()
+IL_0006: callvirt System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<UnityEngine.EventSystems.RaycastResult>::GetEnumerator()
+IL_000b: stloc.0
+IL_000c: br IL_003f
+IL_0011: ldloca.s V_0
+IL_0013: call !0 System.Collections.Generic.List`1/Enumerator<UnityEngine.EventSystems.RaycastResult>::get_Current()
+IL_0018: stloc.1
+IL_0019: ldloca.s V_1
+IL_001b: call UnityEngine.GameObject UnityEngine.EventSystems.RaycastResult::get_gameObject()
+IL_0020: ldloca.s V_2
+IL_0022: callvirt System.Boolean UnityEngine.GameObject::TryGetComponent<World.Devices.DeviceUiViews.IAltUi>(!!0&)
+IL_0027: brfalse IL_003f
+IL_002c: ldloc.2
+IL_002d: callvirt System.Void World.Devices.DeviceUiViews.IAltUi::End()
+IL_0032: ldarg.0
+IL_0033: ldfld System.Collections.Generic.HashSet`1<World.Devices.DeviceUiViews.IAltUi> World.Input.WorldInputController::_pressingAlt
+IL_0038: ldloc.2
+IL_0039: callvirt System.Boolean System.Collections.Generic.HashSet`1<World.Devices.DeviceUiViews.IAltUi>::Remove(!0)
+IL_003e: pop
+IL_003f: ldloca.s V_0
+IL_0041: call System.Boolean System.Collections.Generic.List`1/Enumerator<UnityEngine.EventSystems.RaycastResult>::MoveNext()
+IL_0046: brtrue IL_0011
+IL_004b: leave IL_005e
+IL_0050: ldloca.s V_0
+IL_0052: constrained. System.Collections.Generic.List`1/Enumerator<UnityEngine.EventSystems.RaycastResult>
+IL_0058: callvirt System.Void System.IDisposable::Dispose()
+IL_005d: endfinally
+IL_005e: ldarg.0
+IL_005f: ldfld System.Collections.Generic.HashSet`1<World.Devices.DeviceUiViews.IAltUi> World.Input.WorldInputController::_pressingAlt
+IL_0064: callvirt System.Collections.Generic.HashSet`1/Enumerator<!0> System.Collections.Generic.HashSet`1<World.Devices.DeviceUiViews.IAltUi>::GetEnumerator()
+IL_0069: stloc.3
+IL_006a: br IL_007b
+IL_006f: ldloca.s V_3
+IL_0071: call !0 System.Collections.Generic.HashSet`1/Enumerator<World.Devices.DeviceUiViews.IAltUi>::get_Current()
+IL_0076: callvirt System.Void World.Devices.DeviceUiViews.IAltUi::End()
+IL_007b: ldloca.s V_3
+IL_007d: call System.Boolean System.Collections.Generic.HashSet`1/Enumerator<World.Devices.DeviceUiViews.IAltUi>::MoveNext()
+IL_0082: brtrue IL_006f
+IL_0087: leave IL_009a
+IL_008c: ldloca.s V_3
+IL_008e: constrained. System.Collections.Generic.HashSet`1/Enumerator<World.Devices.DeviceUiViews.IAltUi>
+IL_0094: callvirt System.Void System.IDisposable::Dispose()
+IL_0099: endfinally
+IL_009a: ldarg.0
+IL_009b: ldfld System.Collections.Generic.HashSet`1<World.Devices.DeviceUiViews.IAltUi> World.Input.WorldInputController::_pressingAlt
+IL_00a0: callvirt System.Void System.Collections.Generic.HashSet`1<World.Devices.DeviceUiViews.IAltUi>::Clear()
+IL_00a5: ret
+METHOD System.Collections.Generic.List`1<UnityEngine.EventSystems.RaycastResult> World.Input.WorldInputController::RaycastAltUi()
+IL_0000: newobj System.Void System.Collections.Generic.List`1<UnityEngine.EventSystems.RaycastResult>::.ctor()
+IL_0005: stloc.0
+IL_0006: call UnityEngine.EventSystems.EventSystem UnityEngine.EventSystems.EventSystem::get_current()
+IL_000b: newobj System.Void UnityEngine.EventSystems.PointerEventData::.ctor(UnityEngine.EventSystems.EventSystem)
+IL_0010: dup
+IL_0011: ldarg.0
+IL_0012: call UnityEngine.Vector2 Commons.Input.BaseInputController`1<World.Input.WorldInputController>::GetScreenMousePosition()
+IL_0017: callvirt System.Void UnityEngine.EventSystems.PointerEventData::set_position(UnityEngine.Vector2)
+IL_001c: stloc.1
+IL_001d: ldarg.0
+IL_001e: ldfld UnityEngine.EventSystems.EventSystem Commons.Input.BaseInputController`1<World.Input.WorldInputController>::m_EventSystem
+IL_0023: ldloc.1
+IL_0024: ldloc.0
+IL_0025: callvirt System.Void UnityEngine.EventSystems.EventSystem::RaycastAll(UnityEngine.EventSystems.PointerEventData,System.Collections.Generic.List`1<UnityEngine.EventSystems.RaycastResult>)
+IL_002a: ldloc.0
+IL_002b: ldsfld System.Comparison`1<UnityEngine.EventSystems.RaycastResult> World.Input.WorldInputController/<>c::<>9__33_0
+IL_0030: dup
+IL_0031: brtrue IL_004d
+IL_0036: pop
+IL_0037: ldsfld World.Input.WorldInputController/<>c World.Input.WorldInputController/<>c::<>9
+IL_003c: ldftn System.Int32 World.Input.WorldInputController/<>c::<RaycastAltUi>b__33_0(UnityEngine.EventSystems.RaycastResult,UnityEngine.EventSystems.RaycastResult)
+IL_0042: newobj System.Void System.Comparison`1<UnityEngine.EventSystems.RaycastResult>::.ctor(System.Object,System.IntPtr)
+IL_0047: dup
+IL_0048: stsfld System.Comparison`1<UnityEngine.EventSystems.RaycastResult> World.Input.WorldInputController/<>c::<>9__33_0
+IL_004d: callvirt System.Void System.Collections.Generic.List`1<UnityEngine.EventSystems.RaycastResult>::Sort(System.Comparison`1<!0>)
+IL_0052: ldloc.0
+IL_0053: ret
+METHOD System.Void World.Input.WorldInputController::OnDestroy()
+IL_0000: ldarg.0
+IL_0001: ldfld UnityEngine.InputSystem.InputAction World.Input.WorldInputController::_leftClickAction
+IL_0006: brfalse IL_002d
+IL_000b: ldarg.0
+IL_000c: ldfld UnityEngine.InputSystem.InputAction World.Input.WorldInputController::_leftClickAction
+IL_0011: ldarg.0
+IL_0012: ldftn System.Void World.Input.WorldInputController::OnLeftClickPerformedHandler(UnityEngine.InputSystem.InputAction/CallbackContext)
+IL_0018: newobj System.Void System.Action`1<UnityEngine.InputSystem.InputAction/CallbackContext>::.ctor(System.Object,System.IntPtr)
+IL_001d: callvirt System.Void UnityEngine.InputSystem.InputAction::remove_performed(System.Action`1<UnityEngine.InputSystem.InputAction/CallbackContext>)
+IL_0022: ldarg.0
+IL_0023: ldfld UnityEngine.InputSystem.InputAction World.Input.WorldInputController::_leftClickAction
+IL_0028: callvirt System.Void UnityEngine.InputSystem.InputAction::Disable()
+IL_002d: ldarg.0
+IL_002e: ldfld UnityEngine.InputSystem.InputAction World.Input.WorldInputController::_rightClickAction
+IL_0033: brfalse IL_005a
+IL_0038: ldarg.0
+IL_0039: ldfld UnityEngine.InputSystem.InputAction World.Input.WorldInputController::_rightClickAction
+IL_003e: ldarg.0
+IL_003f: ldftn System.Void World.Input.WorldInputController::OnRightClickPerformedHandler(UnityEngine.InputSystem.InputAction/CallbackContext)
+IL_0045: newobj System.Void System.Action`1<UnityEngine.InputSystem.InputAction/CallbackContext>::.ctor(System.Object,System.IntPtr)
+IL_004a: callvirt System.Void UnityEngine.InputSystem.InputAction::remove_performed(System.Action`1<UnityEngine.InputSystem.InputAction/CallbackContext>)
+IL_004f: ldarg.0
+IL_0050: ldfld UnityEngine.InputSystem.InputAction World.Input.WorldInputController::_rightClickAction
+IL_0055: callvirt System.Void UnityEngine.InputSystem.InputAction::Disable()
+IL_005a: ldarg.0
+IL_005b: ldfld UnityEngine.InputSystem.InputAction World.Input.WorldInputController::_escAction
+IL_0060: brfalse IL_0087
+IL_0065: ldarg.0
+IL_0066: ldfld UnityEngine.InputSystem.InputAction World.Input.WorldInputController::_escAction
+IL_006b: ldarg.0
+IL_006c: ldftn System.Void World.Input.WorldInputController::OnEscPerformedHandler(UnityEngine.InputSystem.InputAction/CallbackContext)
+IL_0072: newobj System.Void System.Action`1<UnityEngine.InputSystem.InputAction/CallbackContext>::.ctor(System.Object,System.IntPtr)
+IL_0077: callvirt System.Void UnityEngine.InputSystem.InputAction::remove_performed(System.Action`1<UnityEngine.InputSystem.InputAction/CallbackContext>)
+IL_007c: ldarg.0
+IL_007d: ldfld UnityEngine.InputSystem.InputAction World.Input.WorldInputController::_escAction
+IL_0082: callvirt System.Void UnityEngine.InputSystem.InputAction::Disable()
+IL_0087: ldarg.0
+IL_0088: ldfld UnityEngine.InputSystem.InputAction World.Input.WorldInputController::_altAction
+IL_008d: brfalse IL_00cb
+IL_0092: ldarg.0
+IL_0093: ldfld UnityEngine.InputSystem.InputAction World.Input.WorldInputController::_altAction
+IL_0098: ldarg.0
+IL_0099: ldftn System.Void World.Input.WorldInputController::OnAltStarted(UnityEngine.InputSystem.InputAction/CallbackContext)
+IL_009f: newobj System.Void System.Action`1<UnityEngine.InputSystem.InputAction/CallbackContext>::.ctor(System.Object,System.IntPtr)
+IL_00a4: callvirt System.Void UnityEngine.InputSystem.InputAction::remove_started(System.Action`1<UnityEngine.InputSystem.InputAction/CallbackContext>)
+IL_00a9: ldarg.0
+IL_00aa: ldfld UnityEngine.InputSystem.InputAction World.Input.WorldInputController::_altAction
+IL_00af: ldarg.0
+IL_00b0: ldftn System.Void World.Input.WorldInputController::OnAltCanceled(UnityEngine.InputSystem.InputAction/CallbackContext)
+IL_00b6: newobj System.Void System.Action`1<UnityEngine.InputSystem.InputAction/CallbackContext>::.ctor(System.Object,System.IntPtr)
+IL_00bb: callvirt System.Void UnityEngine.InputSystem.InputAction::remove_canceled(System.Action`1<UnityEngine.InputSystem.InputAction/CallbackContext>)
+IL_00c0: ldarg.0
+IL_00c1: ldfld UnityEngine.InputSystem.InputAction World.Input.WorldInputController::_altAction
+IL_00c6: callvirt System.Void UnityEngine.InputSystem.InputAction::Disable()
+IL_00cb: ret
+METHOD System.Void World.Input.WorldInputController::.ctor()
+IL_0000: ldarg.0
+IL_0001: newobj System.Void System.Collections.Generic.Stack`1<System.Func`1<System.Boolean>>::.ctor()
+IL_0006: stfld System.Collections.Generic.Stack`1<System.Func`1<System.Boolean>> World.Input.WorldInputController::_escHandlers
+IL_000b: ldarg.0
+IL_000c: newobj System.Void System.Collections.Generic.HashSet`1<World.Devices.DeviceUiViews.IAltUi>::.ctor()
+IL_0011: stfld System.Collections.Generic.HashSet`1<World.Devices.DeviceUiViews.IAltUi> World.Input.WorldInputController::_pressingAlt
+IL_0016: ldarg.0
+IL_0017: call System.Void Commons.Input.BaseInputController`1<World.Input.WorldInputController>::.ctor()
+IL_001c: ret
+TYPE World.Input.WorldInputController/<>c : System.Object
+FIELD World.Input.WorldInputController/<>c World.Input.WorldInputController/<>c::<>9
+FIELD System.Comparison`1<UnityEngine.EventSystems.RaycastResult> World.Input.WorldInputController/<>c::<>9__33_0
+METHOD System.Void World.Input.WorldInputController/<>c::.cctor()
+IL_0000: newobj System.Void World.Input.WorldInputController/<>c::.ctor()
+IL_0005: stsfld World.Input.WorldInputController/<>c World.Input.WorldInputController/<>c::<>9
+IL_000a: ret
+METHOD System.Void World.Input.WorldInputController/<>c::.ctor()
+IL_0000: ldarg.0
+IL_0001: call System.Void System.Object::.ctor()
+IL_0006: ret
+METHOD System.Int32 World.Input.WorldInputController/<>c::<RaycastAltUi>b__33_0(UnityEngine.EventSystems.RaycastResult,UnityEngine.EventSystems.RaycastResult)
+IL_0000: ldarga.s a
+IL_0002: ldflda System.Int32 UnityEngine.EventSystems.RaycastResult::sortingOrder
+IL_0007: ldarg.2
+IL_0008: ldfld System.Int32 UnityEngine.EventSystems.RaycastResult::sortingOrder
+IL_000d: call System.Int32 System.Int32::CompareTo(System.Int32)
+IL_0012: stloc.0
+IL_0013: ldloc.0
+IL_0014: brfalse IL_001b
+IL_0019: ldloc.0
+IL_001a: ret
+IL_001b: ldarga.s a
+IL_001d: ldflda System.Int32 UnityEngine.EventSystems.RaycastResult::depth
+IL_0022: ldarg.2
+IL_0023: ldfld System.Int32 UnityEngine.EventSystems.RaycastResult::depth
+IL_0028: call System.Int32 System.Int32::CompareTo(System.Int32)
+IL_002d: ret

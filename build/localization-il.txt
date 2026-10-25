@@ -1,0 +1,179 @@
+TYPE Commons.Localization_Utility : System.Object
+FIELD System.Collections.Generic.Dictionary`2<System.String,System.String> Commons.Localization_Utility::word2sprite
+FIELD System.String Commons.Localization_Utility::tag_pattern
+FIELD System.String Commons.Localization_Utility::key_pattern
+FIELD System.String Commons.Localization_Utility::combined_pattern
+FIELD System.Text.RegularExpressions.Regex Commons.Localization_Utility::regex
+METHOD System.String Commons.Localization_Utility::get_localization(System.String)
+IL_0000: ldarg.0
+IL_0001: ldloca.s V_0
+IL_0003: call System.Boolean AutoCodes.table_l10ns::TryGetValue(System.String,AutoCodes.table_l10n&)
+IL_0008: pop
+IL_0009: ldloc.0
+IL_000a: brfalse.s IL_0034
+IL_000c: ldstr "language"
+IL_0011: ldstr "CN"
+IL_0016: call System.String UnityEngine.PlayerPrefs::GetString(System.String,System.String)
+IL_001b: stloc.1
+IL_001c: ldloc.0
+IL_001d: callvirt System.Type System.Object::GetType()
+IL_0022: ldloc.1
+IL_0023: callvirt System.Reflection.FieldInfo System.Type::GetField(System.String)
+IL_0028: ldloc.0
+IL_0029: callvirt System.Object System.Reflection.FieldInfo::GetValue(System.Object)
+IL_002e: castclass System.String
+IL_0033: ret
+IL_0034: ldarg.0
+IL_0035: ret
+METHOD System.String Commons.Localization_Utility::get_localization_dialog(System.String)
+IL_0000: ldarg.0
+IL_0001: ldloca.s V_0
+IL_0003: call System.Boolean AutoCodes.dialog_l10ns::TryGetValue(System.String,AutoCodes.dialog_l10n&)
+IL_0008: pop
+IL_0009: ldloc.0
+IL_000a: brfalse.s IL_0034
+IL_000c: ldstr "language"
+IL_0011: ldstr "CN"
+IL_0016: call System.String UnityEngine.PlayerPrefs::GetString(System.String,System.String)
+IL_001b: stloc.1
+IL_001c: ldloc.0
+IL_001d: callvirt System.Type System.Object::GetType()
+IL_0022: ldloc.1
+IL_0023: callvirt System.Reflection.FieldInfo System.Type::GetField(System.String)
+IL_0028: ldloc.0
+IL_0029: callvirt System.Object System.Reflection.FieldInfo::GetValue(System.Object)
+IL_002e: castclass System.String
+IL_0033: ret
+IL_0034: ldarg.0
+IL_0035: ret
+METHOD System.String Commons.Localization_Utility::get_art_sprite(System.String)
+IL_0000: ldarg.0
+IL_0001: call System.Boolean System.String::IsNullOrEmpty(System.String)
+IL_0006: brfalse.s IL_000a
+IL_0008: ldarg.0
+IL_0009: ret
+IL_000a: ldsfld System.Text.RegularExpressions.Regex Commons.Localization_Utility::regex
+IL_000f: ldarg.0
+IL_0010: ldsfld System.Text.RegularExpressions.MatchEvaluator Commons.Localization_Utility/<>c::<>9__7_0
+IL_0015: dup
+IL_0016: brtrue.s IL_002f
+IL_0018: pop
+IL_0019: ldsfld Commons.Localization_Utility/<>c Commons.Localization_Utility/<>c::<>9
+IL_001e: ldftn System.String Commons.Localization_Utility/<>c::<get_art_sprite>b__7_0(System.Text.RegularExpressions.Match)
+IL_0024: newobj System.Void System.Text.RegularExpressions.MatchEvaluator::.ctor(System.Object,System.IntPtr)
+IL_0029: dup
+IL_002a: stsfld System.Text.RegularExpressions.MatchEvaluator Commons.Localization_Utility/<>c::<>9__7_0
+IL_002f: callvirt System.String System.Text.RegularExpressions.Regex::Replace(System.String,System.Text.RegularExpressions.MatchEvaluator)
+IL_0034: ret
+METHOD System.Void Commons.Localization_Utility::.cctor()
+IL_0000: newobj System.Void System.Collections.Generic.Dictionary`2<System.String,System.String>::.ctor()
+IL_0005: dup
+IL_0006: ldstr "0"
+IL_000b: ldstr "<sprite name="nmb_normal_0" tint=1>"
+IL_0010: callvirt System.Void System.Collections.Generic.Dictionary`2<System.String,System.String>::Add(!0,!1)
+IL_0015: dup
+IL_0016: ldstr "1"
+IL_001b: ldstr "<sprite name="nmb_normal_1" tint=1>"
+IL_0020: callvirt System.Void System.Collections.Generic.Dictionary`2<System.String,System.String>::Add(!0,!1)
+IL_0025: dup
+IL_0026: ldstr "2"
+IL_002b: ldstr "<sprite name="nmb_normal_2" tint=1>"
+IL_0030: callvirt System.Void System.Collections.Generic.Dictionary`2<System.String,System.String>::Add(!0,!1)
+IL_0035: dup
+IL_0036: ldstr "3"
+IL_003b: ldstr "<sprite name="nmb_normal_3" tint=1>"
+IL_0040: callvirt System.Void System.Collections.Generic.Dictionary`2<System.String,System.String>::Add(!0,!1)
+IL_0045: dup
+IL_0046: ldstr "4"
+IL_004b: ldstr "<sprite name="nmb_normal_4" tint=1>"
+IL_0050: callvirt System.Void System.Collections.Generic.Dictionary`2<System.String,System.String>::Add(!0,!1)
+IL_0055: dup
+IL_0056: ldstr "5"
+IL_005b: ldstr "<sprite name="nmb_normal_5" tint=1>"
+IL_0060: callvirt System.Void System.Collections.Generic.Dictionary`2<System.String,System.String>::Add(!0,!1)
+IL_0065: dup
+IL_0066: ldstr "6"
+IL_006b: ldstr "<sprite name="nmb_normal_6" tint=1>"
+IL_0070: callvirt System.Void System.Collections.Generic.Dictionary`2<System.String,System.String>::Add(!0,!1)
+IL_0075: dup
+IL_0076: ldstr "7"
+IL_007b: ldstr "<sprite name="nmb_normal_7" tint=1>"
+IL_0080: callvirt System.Void System.Collections.Generic.Dictionary`2<System.String,System.String>::Add(!0,!1)
+IL_0085: dup
+IL_0086: ldstr "8"
+IL_008b: ldstr "<sprite name="nmb_normal_8" tint=1>"
+IL_0090: callvirt System.Void System.Collections.Generic.Dictionary`2<System.String,System.String>::Add(!0,!1)
+IL_0095: dup
+IL_0096: ldstr "9"
+IL_009b: ldstr "<sprite name="nmb_normal_9" tint=1>"
+IL_00a0: callvirt System.Void System.Collections.Generic.Dictionary`2<System.String,System.String>::Add(!0,!1)
+IL_00a5: dup
+IL_00a6: ldstr "-"
+IL_00ab: ldstr "<sprite name="nmb_normal_10" tint=1>"
+IL_00b0: callvirt System.Void System.Collections.Generic.Dictionary`2<System.String,System.String>::Add(!0,!1)
+IL_00b5: dup
+IL_00b6: ldstr "+"
+IL_00bb: ldstr "<sprite name="nmb_normal_11" tint=1>"
+IL_00c0: callvirt System.Void System.Collections.Generic.Dictionary`2<System.String,System.String>::Add(!0,!1)
+IL_00c5: dup
+IL_00c6: ldstr "%"
+IL_00cb: ldstr "<sprite name="nmb_normal_12" tint=1>"
+IL_00d0: callvirt System.Void System.Collections.Generic.Dictionary`2<System.String,System.String>::Add(!0,!1)
+IL_00d5: dup
+IL_00d6: ldstr "/"
+IL_00db: ldstr "<sprite name="nmb_normal_13" tint=1>"
+IL_00e0: callvirt System.Void System.Collections.Generic.Dictionary`2<System.String,System.String>::Add(!0,!1)
+IL_00e5: stsfld System.Collections.Generic.Dictionary`2<System.String,System.String> Commons.Localization_Utility::word2sprite
+IL_00ea: ldstr "|"
+IL_00ef: ldsfld System.Collections.Generic.Dictionary`2<System.String,System.String> Commons.Localization_Utility::word2sprite
+IL_00f4: callvirt System.Collections.Generic.Dictionary`2/KeyCollection<!0,!1> System.Collections.Generic.Dictionary`2<System.String,System.String>::get_Keys()
+IL_00f9: ldsfld Commons.Localization_Utility/<>c Commons.Localization_Utility/<>c::<>9
+IL_00fe: ldftn System.Int32 Commons.Localization_Utility/<>c::<.cctor>b__8_0(System.String)
+IL_0104: newobj System.Void System.Func`2<System.String,System.Int32>::.ctor(System.Object,System.IntPtr)
+IL_0109: call System.Linq.IOrderedEnumerable`1<!!0> System.Linq.Enumerable::OrderByDescending<System.String,System.Int32>(System.Collections.Generic.IEnumerable`1<!!0>,System.Func`2<!!0,!!1>)
+IL_010e: ldnull
+IL_010f: ldftn System.String System.Text.RegularExpressions.Regex::Escape(System.String)
+IL_0115: newobj System.Void System.Func`2<System.String,System.String>::.ctor(System.Object,System.IntPtr)
+IL_011a: call System.Collections.Generic.IEnumerable`1<!!1> System.Linq.Enumerable::Select<System.String,System.String>(System.Collections.Generic.IEnumerable`1<!!0>,System.Func`2<!!0,!!1>)
+IL_011f: call System.String System.String::Join(System.String,System.Collections.Generic.IEnumerable`1<System.String>)
+IL_0124: stsfld System.String Commons.Localization_Utility::key_pattern
+IL_0129: ldstr "(<[^>]+>)|("
+IL_012e: ldsfld System.String Commons.Localization_Utility::key_pattern
+IL_0133: ldstr ")"
+IL_0138: call System.String System.String::Concat(System.String,System.String,System.String)
+IL_013d: stsfld System.String Commons.Localization_Utility::combined_pattern
+IL_0142: ldsfld System.String Commons.Localization_Utility::combined_pattern
+IL_0147: ldc.i4.8
+IL_0148: newobj System.Void System.Text.RegularExpressions.Regex::.ctor(System.String,System.Text.RegularExpressions.RegexOptions)
+IL_014d: stsfld System.Text.RegularExpressions.Regex Commons.Localization_Utility::regex
+IL_0152: ret
+TYPE Commons.Localization_Utility/<>c : System.Object
+FIELD Commons.Localization_Utility/<>c Commons.Localization_Utility/<>c::<>9
+FIELD System.Text.RegularExpressions.MatchEvaluator Commons.Localization_Utility/<>c::<>9__7_0
+METHOD System.Void Commons.Localization_Utility/<>c::.cctor()
+IL_0000: newobj System.Void Commons.Localization_Utility/<>c::.ctor()
+IL_0005: stsfld Commons.Localization_Utility/<>c Commons.Localization_Utility/<>c::<>9
+IL_000a: ret
+METHOD System.Void Commons.Localization_Utility/<>c::.ctor()
+IL_0000: ldarg.0
+IL_0001: call System.Void System.Object::.ctor()
+IL_0006: ret
+METHOD System.String Commons.Localization_Utility/<>c::<get_art_sprite>b__7_0(System.Text.RegularExpressions.Match)
+IL_0000: ldarg.1
+IL_0001: callvirt System.Text.RegularExpressions.GroupCollection System.Text.RegularExpressions.Match::get_Groups()
+IL_0006: ldc.i4.1
+IL_0007: callvirt System.Text.RegularExpressions.Group System.Text.RegularExpressions.GroupCollection::get_Item(System.Int32)
+IL_000c: callvirt System.Boolean System.Text.RegularExpressions.Group::get_Success()
+IL_0011: brfalse.s IL_001a
+IL_0013: ldarg.1
+IL_0014: callvirt System.String System.Text.RegularExpressions.Capture::get_Value()
+IL_0019: ret
+IL_001a: ldsfld System.Collections.Generic.Dictionary`2<System.String,System.String> Commons.Localization_Utility::word2sprite
+IL_001f: ldarg.1
+IL_0020: callvirt System.String System.Text.RegularExpressions.Capture::get_Value()
+IL_0025: callvirt !1 System.Collections.Generic.Dictionary`2<System.String,System.String>::get_Item(!0)
+IL_002a: ret
+METHOD System.Int32 Commons.Localization_Utility/<>c::<.cctor>b__8_0(System.String)
+IL_0000: ldarg.1
+IL_0001: callvirt System.Int32 System.String::get_Length()
+IL_0006: ret

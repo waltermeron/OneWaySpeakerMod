@@ -1,0 +1,567 @@
+TYPE World.Devices.DevicePD : Foundations.Producer
+FIELD UnityEngine.Transform World.Devices.DevicePD::ui_content
+FIELD World.Devices.DeviceMgr World.Devices.DevicePD::mgr
+FIELD World.Devices.DeviceMgrView World.Devices.DevicePD::dview
+METHOD Foundations.IMgr World.Devices.DevicePD::get_imgr()
+IL_0000: ldarg.0
+IL_0001: ldfld World.Devices.DeviceMgr World.Devices.DevicePD::mgr
+IL_0006: ret
+METHOD System.Void World.Devices.DevicePD::init(System.Int32)
+IL_0000: call !0 Foundations.Singleton`1<World.Saves.Save_DS>::get_instance()
+IL_0005: ldfld System.Boolean World.Saves.Save_DS::need_load_device
+IL_000a: brfalse IL_001b
+IL_000f: ldarg.0
+IL_0010: ldarg.1
+IL_0011: call System.Void World.Devices.DevicePD::use_current_data(System.Int32)
+IL_0016: br IL_0022
+IL_001b: ldarg.0
+IL_001c: ldarg.1
+IL_001d: call System.Void World.Devices.DevicePD::use_default_data(System.Int32)
+IL_0022: ldarg.0
+IL_0023: ldfld World.Devices.DeviceMgr World.Devices.DevicePD::mgr
+IL_0028: ldarg.0
+IL_0029: ldfld World.Devices.DeviceMgrView World.Devices.DevicePD::dview
+IL_002e: callvirt System.Void Foundations.MVVM.Model`2<World.Devices.DeviceMgr,World.Devices.IDeviceMgrView>::add_view(!1)
+IL_0033: ldarg.0
+IL_0034: ldfld World.Devices.DeviceMgr World.Devices.DevicePD::mgr
+IL_0039: callvirt System.Void World.Devices.DeviceMgr::Init()
+IL_003e: ldarg.0
+IL_003f: call System.Void World.Devices.DevicePD::SortUi()
+IL_0044: ret
+METHOD System.Void World.Devices.DevicePD::use_current_data(System.Int32)
+IL_0000: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_0005: pop
+IL_0006: ldarg.0
+IL_0007: ldstr "DeviceMgr"
+IL_000c: ldarg.1
+IL_000d: call !!0[] System.Array::Empty<System.Object>()
+IL_0012: newobj System.Void World.Devices.DeviceMgr::.ctor(System.String,System.Int32,System.Object[])
+IL_0017: stfld World.Devices.DeviceMgr World.Devices.DevicePD::mgr
+IL_001c: ldarg.0
+IL_001d: ldfld World.Devices.DeviceMgr World.Devices.DevicePD::mgr
+IL_0022: ldarg.0
+IL_0023: stfld World.Devices.DevicePD World.Devices.DeviceMgr::pd
+IL_0028: call !0 Foundations.Singleton`1<Foundations.Mission>::get_instance()
+IL_002d: ldstr "CaravanMgr"
+IL_0032: ldloca.s V_0
+IL_0034: callvirt System.Boolean Foundations.Mission::try_get_mgr<World.Caravans.CaravanMgr>(System.String,!!0&)
+IL_0039: pop
+IL_003a: ldloc.0
+IL_003b: ldfld World.Caravans.Caravan World.Caravans.CaravanMgr::cell
+IL_0040: ldfld AutoCodes.caravan_body World.Caravans.Caravan::_desc
+IL_0045: ldfld System.Collections.Generic.Dictionary`2<System.String,System.ValueTuple`2<System.Int32,System.Int32>> AutoCodes.caravan_body::device_slots
+IL_004a: callvirt System.Collections.Generic.Dictionary`2/Enumerator<!0,!1> System.Collections.Generic.Dictionary`2<System.String,System.ValueTuple`2<System.Int32,System.Int32>>::GetEnumerator()
+IL_004f: stloc.3
+IL_0050: br IL_00ed
+IL_0055: ldloca.s V_3
+IL_0057: call System.Collections.Generic.KeyValuePair`2<!0,!1> System.Collections.Generic.Dictionary`2/Enumerator<System.String,System.ValueTuple`2<System.Int32,System.Int32>>::get_Current()
+IL_005c: stloc.s V_4
+IL_005e: ldloca.s V_4
+IL_0060: call !1 System.Collections.Generic.KeyValuePair`2<System.String,System.ValueTuple`2<System.Int32,System.Int32>>::get_Value()
+IL_0065: stloc.s V_6
+IL_0067: ldloca.s V_6
+IL_0069: ldflda !1 System.ValueTuple`2<System.Int32,System.Int32>::Item2
+IL_006e: call System.String System.Int32::ToString()
+IL_0073: ldloca.s V_5
+IL_0075: call System.Boolean AutoCodes.device_alls::TryGetValue(System.String,AutoCodes.device_all&)
+IL_007a: brfalse IL_00c2
+IL_007f: ldloc.s V_5
+IL_0081: ldfld System.String AutoCodes.device_all::behavior_script
+IL_0086: call World.Devices.Device World.Devices.DeviceMgr::create_device(System.String)
+IL_008b: ldloc.s V_5
+IL_008d: callvirt System.Void World.Devices.Device::InitData(AutoCodes.device_all)
+IL_0092: ldarg.0
+IL_0093: ldfld World.Devices.DeviceMgr World.Devices.DevicePD::mgr
+IL_0098: ldloca.s V_4
+IL_009a: call !0 System.Collections.Generic.KeyValuePair`2<System.String,System.ValueTuple`2<System.Int32,System.Int32>>::get_Key()
+IL_009f: dup
+IL_00a0: brtrue IL_00ab
+IL_00a5: pop
+IL_00a6: ldstr ""
+IL_00ab: ldnull
+IL_00ac: ldloca.s V_4
+IL_00ae: call !1 System.Collections.Generic.KeyValuePair`2<System.String,System.ValueTuple`2<System.Int32,System.Int32>>::get_Value()
+IL_00b3: ldfld !0 System.ValueTuple`2<System.Int32,System.Int32>::Item1
+IL_00b8: callvirt System.Void World.Devices.DeviceMgr::AddDevice(System.String,World.Devices.Device,System.Int32)
+IL_00bd: br IL_00ed
+IL_00c2: ldarg.0
+IL_00c3: ldfld World.Devices.DeviceMgr World.Devices.DevicePD::mgr
+IL_00c8: ldloca.s V_4
+IL_00ca: call !0 System.Collections.Generic.KeyValuePair`2<System.String,System.ValueTuple`2<System.Int32,System.Int32>>::get_Key()
+IL_00cf: dup
+IL_00d0: brtrue IL_00db
+IL_00d5: pop
+IL_00d6: ldstr ""
+IL_00db: ldnull
+IL_00dc: ldloca.s V_4
+IL_00de: call !1 System.Collections.Generic.KeyValuePair`2<System.String,System.ValueTuple`2<System.Int32,System.Int32>>::get_Value()
+IL_00e3: ldfld !0 System.ValueTuple`2<System.Int32,System.Int32>::Item1
+IL_00e8: callvirt System.Void World.Devices.DeviceMgr::AddDevice(System.String,World.Devices.Device,System.Int32)
+IL_00ed: ldloca.s V_3
+IL_00ef: call System.Boolean System.Collections.Generic.Dictionary`2/Enumerator<System.String,System.ValueTuple`2<System.Int32,System.Int32>>::MoveNext()
+IL_00f4: brtrue IL_0055
+IL_00f9: leave IL_010c
+IL_00fe: ldloca.s V_3
+IL_0100: constrained. System.Collections.Generic.Dictionary`2/Enumerator<System.String,System.ValueTuple`2<System.Int32,System.Int32>>
+IL_0106: callvirt System.Void System.IDisposable::Dispose()
+IL_010b: endfinally
+IL_010c: call !0 Foundations.Singleton`1<World.Saves.Save_DS>::get_instance()
+IL_0111: dup
+IL_0112: ldfld System.Collections.Generic.Dictionary`2<System.String,World.Saves.device_data> World.Saves.Save_DS::device_datas
+IL_0117: stloc.1
+IL_0118: ldfld System.Collections.Generic.Dictionary`2<System.String,System.Collections.Generic.List`1<System.String>> World.Saves.Save_DS::device_upgrade_datas
+IL_011d: stloc.2
+IL_011e: ldloc.1
+IL_011f: callvirt System.Collections.Generic.Dictionary`2/Enumerator<!0,!1> System.Collections.Generic.Dictionary`2<System.String,World.Saves.device_data>::GetEnumerator()
+IL_0124: stloc.s V_7
+IL_0126: br IL_0318
+IL_012b: ldloca.s V_7
+IL_012d: call System.Collections.Generic.KeyValuePair`2<!0,!1> System.Collections.Generic.Dictionary`2/Enumerator<System.String,World.Saves.device_data>::get_Current()
+IL_0132: stloc.s V_10
+IL_0134: ldloca.s V_10
+IL_0136: ldloca.s V_11
+IL_0138: ldloca.s V_12
+IL_013a: call System.Void System.Collections.Generic.KeyValuePair`2<System.String,World.Saves.device_data>::Deconstruct(!0&,!1&)
+IL_013f: ldloc.s V_11
+IL_0141: stloc.s V_8
+IL_0143: ldloc.s V_12
+IL_0145: stloc.s V_9
+IL_0147: ldloc.s V_9
+IL_0149: ldfld System.String World.Saves.device_data::device_id
+IL_014e: ldloc.s V_9
+IL_0150: ldfld System.String World.Saves.device_data::device_current_hp
+IL_0155: stloc.s V_13
+IL_0157: callvirt System.String System.Object::ToString()
+IL_015c: ldloca.s V_14
+IL_015e: call System.Boolean AutoCodes.device_alls::TryGetValue(System.String,AutoCodes.device_all&)
+IL_0163: pop
+IL_0164: ldarg.0
+IL_0165: ldfld World.Devices.DeviceMgr World.Devices.DevicePD::mgr
+IL_016a: ldloc.s V_14
+IL_016c: ldfld System.String AutoCodes.device_all::behavior_script
+IL_0171: callvirt World.Devices.Device World.Devices.DeviceMgr::GetDevice(System.String)
+IL_0176: stloc.s V_15
+IL_0178: ldloc.s V_15
+IL_017a: ldloc.s V_14
+IL_017c: callvirt System.Void World.Devices.Device::InitData(AutoCodes.device_all)
+IL_0181: ldloc.s V_15
+IL_0183: ldloc.s V_13
+IL_0185: call System.Int32 System.Int32::Parse(System.String)
+IL_018a: stfld System.Int32 World.Devices.Device::current_hp
+IL_018f: ldloc.s V_15
+IL_0191: ldloc.s V_9
+IL_0193: ldfld System.Int32 World.Saves.device_data::device_max_hp
+IL_0198: stfld System.Int32 World.Devices.Device::max_hp
+IL_019d: ldloc.s V_15
+IL_019f: ldloc.s V_15
+IL_01a1: ldfld System.Int32 World.Devices.Device::current_hp
+IL_01a6: ldc.i4.0
+IL_01a7: cgt
+IL_01a9: stfld System.Boolean World.Devices.Device::is_validate
+IL_01ae: ldloc.s V_15
+IL_01b0: ldloc.s V_8
+IL_01b2: call World.Devices.Device World.Helpers.Device_Slot_Helper::InstallDevice(World.Devices.Device,System.String)
+IL_01b7: pop
+IL_01b8: ldloc.2
+IL_01b9: ldloc.s V_8
+IL_01bb: ldloca.s V_16
+IL_01bd: callvirt System.Boolean System.Collections.Generic.Dictionary`2<System.String,System.Collections.Generic.List`1<System.String>>::TryGetValue(!0,!1&)
+IL_01c2: brfalse IL_0276
+IL_01c7: ldloc.s V_16
+IL_01c9: callvirt System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<System.String>::GetEnumerator()
+IL_01ce: stloc.s V_17
+IL_01d0: br IL_0257
+IL_01d5: newobj System.Void World.Devices.DevicePD/<>c__DisplayClass6_0::.ctor()
+IL_01da: stloc.s V_18
+IL_01dc: ldloc.s V_18
+IL_01de: ldloca.s V_17
+IL_01e0: call !0 System.Collections.Generic.List`1/Enumerator<System.String>::get_Current()
+IL_01e5: stfld System.String World.Devices.DevicePD/<>c__DisplayClass6_0::upgrade_key
+IL_01ea: ldloc.s V_15
+IL_01ec: ldfld System.Collections.Generic.List`1<World.Devices.DeviceUpgrades.DeviceUpgrade> World.Devices.Device::upgrades
+IL_01f1: ldloc.s V_18
+IL_01f3: ldfld System.Func`2<World.Devices.DeviceUpgrades.DeviceUpgrade,System.Boolean> World.Devices.DevicePD/<>c__DisplayClass6_0::<>9__0
+IL_01f8: dup
+IL_01f9: brtrue IL_0218
+IL_01fe: pop
+IL_01ff: ldloc.s V_18
+IL_0201: ldloc.s V_18
+IL_0203: ldftn System.Boolean World.Devices.DevicePD/<>c__DisplayClass6_0::<use_current_data>b__0(World.Devices.DeviceUpgrades.DeviceUpgrade)
+IL_0209: newobj System.Void System.Func`2<World.Devices.DeviceUpgrades.DeviceUpgrade,System.Boolean>::.ctor(System.Object,System.IntPtr)
+IL_020e: dup
+IL_020f: stloc.s V_20
+IL_0211: stfld System.Func`2<World.Devices.DeviceUpgrades.DeviceUpgrade,System.Boolean> World.Devices.DevicePD/<>c__DisplayClass6_0::<>9__0
+IL_0216: ldloc.s V_20
+IL_0218: call System.Collections.Generic.IEnumerable`1<!!0> System.Linq.Enumerable::Where<World.Devices.DeviceUpgrades.DeviceUpgrade>(System.Collections.Generic.IEnumerable`1<!!0>,System.Func`2<!!0,System.Boolean>)
+IL_021d: callvirt System.Collections.Generic.IEnumerator`1<!0> System.Collections.Generic.IEnumerable`1<World.Devices.DeviceUpgrades.DeviceUpgrade>::GetEnumerator()
+IL_0222: stloc.s V_19
+IL_0224: br IL_0237
+IL_0229: ldloc.s V_19
+IL_022b: callvirt !0 System.Collections.Generic.IEnumerator`1<World.Devices.DeviceUpgrades.DeviceUpgrade>::get_Current()
+IL_0230: ldloc.s V_15
+IL_0232: callvirt System.Void World.Devices.DeviceUpgrades.DeviceUpgrade::ApplyUpgrade(World.Devices.Device)
+IL_0237: ldloc.s V_19
+IL_0239: callvirt System.Boolean System.Collections.IEnumerator::MoveNext()
+IL_023e: brtrue IL_0229
+IL_0243: leave IL_0257
+IL_0248: ldloc.s V_19
+IL_024a: brfalse IL_0256
+IL_024f: ldloc.s V_19
+IL_0251: callvirt System.Void System.IDisposable::Dispose()
+IL_0256: endfinally
+IL_0257: ldloca.s V_17
+IL_0259: call System.Boolean System.Collections.Generic.List`1/Enumerator<System.String>::MoveNext()
+IL_025e: brtrue IL_01d5
+IL_0263: leave IL_0276
+IL_0268: ldloca.s V_17
+IL_026a: constrained. System.Collections.Generic.List`1/Enumerator<System.String>
+IL_0270: callvirt System.Void System.IDisposable::Dispose()
+IL_0275: endfinally
+IL_0276: ldloc.s V_9
+IL_0278: ldfld System.Collections.Generic.List`1<System.ValueTuple`2<System.Int32,System.String>> World.Saves.device_data::cub_worker_data
+IL_027d: callvirt System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<System.ValueTuple`2<System.Int32,System.String>>::GetEnumerator()
+IL_0282: stloc.s V_21
+IL_0284: br IL_02f9
+IL_0289: newobj System.Void World.Devices.DevicePD/<>c__DisplayClass6_1::.ctor()
+IL_028e: stloc.s V_22
+IL_0290: ldloca.s V_21
+IL_0292: call !0 System.Collections.Generic.List`1/Enumerator<System.ValueTuple`2<System.Int32,System.String>>::get_Current()
+IL_0297: stloc.s V_24
+IL_0299: ldloc.s V_24
+IL_029b: ldfld !0 System.ValueTuple`2<System.Int32,System.String>::Item1
+IL_02a0: stloc.s V_23
+IL_02a2: ldloc.s V_22
+IL_02a4: ldloc.s V_24
+IL_02a6: ldfld !1 System.ValueTuple`2<System.Int32,System.String>::Item2
+IL_02ab: stfld System.String World.Devices.DevicePD/<>c__DisplayClass6_1::worker_id
+IL_02b0: ldloc.s V_15
+IL_02b2: ldfld System.Collections.Generic.List`1<World.Cubicles.BasicCubicle> World.Devices.Device::cubicle_list
+IL_02b7: ldloc.s V_23
+IL_02b9: callvirt !0 System.Collections.Generic.List`1<World.Cubicles.BasicCubicle>::get_Item(System.Int32)
+IL_02be: call !0 Foundations.Singleton`1<Foundations.Mission>::get_instance()
+IL_02c3: ldstr "CharacterMgr"
+IL_02c8: ldloca.s V_25
+IL_02ca: callvirt System.Boolean Foundations.Mission::try_get_mgr<World.Characters.CharacterMgr>(System.String,!!0&)
+IL_02cf: pop
+IL_02d0: ldloc.s V_25
+IL_02d2: ldfld System.Collections.Generic.List`1<World.Characters.Character> World.Characters.CharacterMgr::characters
+IL_02d7: ldloc.s V_22
+IL_02d9: ldftn System.Boolean World.Devices.DevicePD/<>c__DisplayClass6_1::<use_current_data>b__1(World.Characters.Character)
+IL_02df: newobj System.Void System.Predicate`1<World.Characters.Character>::.ctor(System.Object,System.IntPtr)
+IL_02e4: callvirt !0 System.Collections.Generic.List`1<World.Characters.Character>::Find(System.Predicate`1<!0>)
+IL_02e9: stloc.s V_26
+IL_02eb: ldloc.s V_25
+IL_02ed: ldloc.s V_26
+IL_02ef: stfld World.Characters.Character World.Characters.CharacterMgr::select_character
+IL_02f4: call System.Void World.Helpers.Cubicle_Helper::SetCubicle(World.Cubicles.BasicCubicle)
+IL_02f9: ldloca.s V_21
+IL_02fb: call System.Boolean System.Collections.Generic.List`1/Enumerator<System.ValueTuple`2<System.Int32,System.String>>::MoveNext()
+IL_0300: brtrue IL_0289
+IL_0305: leave IL_0318
+IL_030a: ldloca.s V_21
+IL_030c: constrained. System.Collections.Generic.List`1/Enumerator<System.ValueTuple`2<System.Int32,System.String>>
+IL_0312: callvirt System.Void System.IDisposable::Dispose()
+IL_0317: endfinally
+IL_0318: ldloca.s V_7
+IL_031a: call System.Boolean System.Collections.Generic.Dictionary`2/Enumerator<System.String,World.Saves.device_data>::MoveNext()
+IL_031f: brtrue IL_012b
+IL_0324: leave IL_0337
+IL_0329: ldloca.s V_7
+IL_032b: constrained. System.Collections.Generic.Dictionary`2/Enumerator<System.String,World.Saves.device_data>
+IL_0331: callvirt System.Void System.IDisposable::Dispose()
+IL_0336: endfinally
+IL_0337: ret
+METHOD System.Void World.Devices.DevicePD::use_default_data(System.Int32)
+IL_0000: call !0 Foundations.Singleton`1<World.WorldContext>::get_instance()
+IL_0005: pop
+IL_0006: ldarg.0
+IL_0007: ldstr "DeviceMgr"
+IL_000c: ldarg.1
+IL_000d: call !!0[] System.Array::Empty<System.Object>()
+IL_0012: newobj System.Void World.Devices.DeviceMgr::.ctor(System.String,System.Int32,System.Object[])
+IL_0017: stfld World.Devices.DeviceMgr World.Devices.DevicePD::mgr
+IL_001c: ldarg.0
+IL_001d: ldfld World.Devices.DeviceMgr World.Devices.DevicePD::mgr
+IL_0022: ldarg.0
+IL_0023: stfld World.Devices.DevicePD World.Devices.DeviceMgr::pd
+IL_0028: call !0 Foundations.Singleton`1<Foundations.Mission>::get_instance()
+IL_002d: ldstr "CaravanMgr"
+IL_0032: ldloca.s V_0
+IL_0034: callvirt System.Boolean Foundations.Mission::try_get_mgr<World.Caravans.CaravanMgr>(System.String,!!0&)
+IL_0039: pop
+IL_003a: ldloc.0
+IL_003b: ldfld World.Caravans.Caravan World.Caravans.CaravanMgr::cell
+IL_0040: ldfld AutoCodes.caravan_body World.Caravans.Caravan::_desc
+IL_0045: ldfld System.Collections.Generic.Dictionary`2<System.String,System.ValueTuple`2<System.Int32,System.Int32>> AutoCodes.caravan_body::device_slots
+IL_004a: callvirt System.Collections.Generic.Dictionary`2/Enumerator<!0,!1> System.Collections.Generic.Dictionary`2<System.String,System.ValueTuple`2<System.Int32,System.Int32>>::GetEnumerator()
+IL_004f: stloc.1
+IL_0050: br IL_010c
+IL_0055: ldloca.s V_1
+IL_0057: call System.Collections.Generic.KeyValuePair`2<!0,!1> System.Collections.Generic.Dictionary`2/Enumerator<System.String,System.ValueTuple`2<System.Int32,System.Int32>>::get_Current()
+IL_005c: stloc.2
+IL_005d: ldloca.s V_2
+IL_005f: call !1 System.Collections.Generic.KeyValuePair`2<System.String,System.ValueTuple`2<System.Int32,System.Int32>>::get_Value()
+IL_0064: stloc.s V_4
+IL_0066: ldloca.s V_4
+IL_0068: ldflda !1 System.ValueTuple`2<System.Int32,System.Int32>::Item2
+IL_006d: call System.String System.Int32::ToString()
+IL_0072: ldloca.s V_3
+IL_0074: call System.Boolean AutoCodes.device_alls::TryGetValue(System.String,AutoCodes.device_all&)
+IL_0079: brfalse IL_00e1
+IL_007e: ldloc.3
+IL_007f: ldfld System.String AutoCodes.device_all::behavior_script
+IL_0084: call World.Devices.Device World.Devices.DeviceMgr::create_device(System.String)
+IL_0089: ldloc.3
+IL_008a: callvirt System.Void World.Devices.Device::InitData(AutoCodes.device_all)
+IL_008f: ldarg.0
+IL_0090: ldfld World.Devices.DeviceMgr World.Devices.DevicePD::mgr
+IL_0095: ldloca.s V_2
+IL_0097: call !0 System.Collections.Generic.KeyValuePair`2<System.String,System.ValueTuple`2<System.Int32,System.Int32>>::get_Key()
+IL_009c: dup
+IL_009d: brtrue IL_00a8
+IL_00a2: pop
+IL_00a3: ldstr ""
+IL_00a8: ldnull
+IL_00a9: ldloca.s V_2
+IL_00ab: call !1 System.Collections.Generic.KeyValuePair`2<System.String,System.ValueTuple`2<System.Int32,System.Int32>>::get_Value()
+IL_00b0: ldfld !0 System.ValueTuple`2<System.Int32,System.Int32>::Item1
+IL_00b5: callvirt System.Void World.Devices.DeviceMgr::AddDevice(System.String,World.Devices.Device,System.Int32)
+IL_00ba: ldloca.s V_2
+IL_00bc: call !1 System.Collections.Generic.KeyValuePair`2<System.String,System.ValueTuple`2<System.Int32,System.Int32>>::get_Value()
+IL_00c1: stloc.s V_4
+IL_00c3: ldloca.s V_4
+IL_00c5: ldflda !1 System.ValueTuple`2<System.Int32,System.Int32>::Item2
+IL_00ca: call System.String System.Int32::ToString()
+IL_00cf: ldloca.s V_2
+IL_00d1: call !0 System.Collections.Generic.KeyValuePair`2<System.String,System.ValueTuple`2<System.Int32,System.Int32>>::get_Key()
+IL_00d6: call World.Devices.Device World.Helpers.Device_Slot_Helper::InstallDevice(System.String,System.String)
+IL_00db: pop
+IL_00dc: br IL_010c
+IL_00e1: ldarg.0
+IL_00e2: ldfld World.Devices.DeviceMgr World.Devices.DevicePD::mgr
+IL_00e7: ldloca.s V_2
+IL_00e9: call !0 System.Collections.Generic.KeyValuePair`2<System.String,System.ValueTuple`2<System.Int32,System.Int32>>::get_Key()
+IL_00ee: dup
+IL_00ef: brtrue IL_00fa
+IL_00f4: pop
+IL_00f5: ldstr ""
+IL_00fa: ldnull
+IL_00fb: ldloca.s V_2
+IL_00fd: call !1 System.Collections.Generic.KeyValuePair`2<System.String,System.ValueTuple`2<System.Int32,System.Int32>>::get_Value()
+IL_0102: ldfld !0 System.ValueTuple`2<System.Int32,System.Int32>::Item1
+IL_0107: callvirt System.Void World.Devices.DeviceMgr::AddDevice(System.String,World.Devices.Device,System.Int32)
+IL_010c: ldloca.s V_1
+IL_010e: call System.Boolean System.Collections.Generic.Dictionary`2/Enumerator<System.String,System.ValueTuple`2<System.Int32,System.Int32>>::MoveNext()
+IL_0113: brtrue IL_0055
+IL_0118: leave IL_012b
+IL_011d: ldloca.s V_1
+IL_011f: constrained. System.Collections.Generic.Dictionary`2/Enumerator<System.String,System.ValueTuple`2<System.Int32,System.Int32>>
+IL_0125: callvirt System.Void System.IDisposable::Dispose()
+IL_012a: endfinally
+IL_012b: ldsfld Commons.Config Commons.Config::current
+IL_0130: ldfld System.Boolean Commons.Config::is_load_devices
+IL_0135: pop
+IL_0136: ret
+METHOD System.Void World.Devices.DevicePD::SortUi()
+IL_0000: ldarg.0
+IL_0001: ldfld UnityEngine.Transform World.Devices.DevicePD::ui_content
+IL_0006: ldnull
+IL_0007: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_000c: brfalse IL_01de
+IL_0011: ldarg.0
+IL_0012: ldfld UnityEngine.Transform World.Devices.DevicePD::ui_content
+IL_0017: callvirt System.Int32 UnityEngine.Transform::get_childCount()
+IL_001c: brtrue IL_0022
+IL_0021: ret
+IL_0022: ldloca.s V_0
+IL_0024: ldc.r4 -1280
+IL_0029: ldarg.0
+IL_002a: ldfld UnityEngine.Transform World.Devices.DevicePD::ui_content
+IL_002f: ldc.i4.0
+IL_0030: callvirt UnityEngine.Transform UnityEngine.Transform::GetChild(System.Int32)
+IL_0035: callvirt !!0 UnityEngine.Component::GetComponent<UnityEngine.RectTransform>()
+IL_003a: callvirt UnityEngine.Rect UnityEngine.RectTransform::get_rect()
+IL_003f: stloc.1
+IL_0040: ldloca.s V_1
+IL_0042: call System.Single UnityEngine.Rect::get_width()
+IL_0047: ldc.r4 2
+IL_004c: div
+IL_004d: add
+IL_004e: ldc.r4 0
+IL_0053: call System.Void UnityEngine.Vector2::.ctor(System.Single,System.Single)
+IL_0058: ldarg.0
+IL_0059: ldfld UnityEngine.Transform World.Devices.DevicePD::ui_content
+IL_005e: callvirt System.Int32 UnityEngine.Transform::get_childCount()
+IL_0063: ldc.i4.1
+IL_0064: bne.un IL_00a9
+IL_0069: ldarg.0
+IL_006a: ldfld UnityEngine.Transform World.Devices.DevicePD::ui_content
+IL_006f: ldc.i4.0
+IL_0070: callvirt UnityEngine.Transform UnityEngine.Transform::GetChild(System.Int32)
+IL_0075: callvirt !!0 UnityEngine.Component::GetComponent<UnityEngine.RectTransform>()
+IL_007a: stloc.2
+IL_007b: ldloca.s V_0
+IL_007d: ldloc.0
+IL_007e: ldfld System.Single UnityEngine.Vector2::x
+IL_0083: ldc.r4 0
+IL_0088: ldloc.2
+IL_0089: callvirt UnityEngine.Rect UnityEngine.RectTransform::get_rect()
+IL_008e: stloc.1
+IL_008f: ldloca.s V_1
+IL_0091: call System.Single UnityEngine.Rect::get_height()
+IL_0096: ldc.r4 2
+IL_009b: div
+IL_009c: add
+IL_009d: call System.Void UnityEngine.Vector2::.ctor(System.Single,System.Single)
+IL_00a2: ldloc.2
+IL_00a3: ldloc.0
+IL_00a4: callvirt System.Void UnityEngine.RectTransform::set_anchoredPosition(UnityEngine.Vector2)
+IL_00a9: ldc.i4.0
+IL_00aa: stloc.3
+IL_00ab: br IL_0175
+IL_00b0: ldarg.0
+IL_00b1: ldfld UnityEngine.Transform World.Devices.DevicePD::ui_content
+IL_00b6: ldloc.3
+IL_00b7: callvirt UnityEngine.Transform UnityEngine.Transform::GetChild(System.Int32)
+IL_00bc: callvirt !!0 UnityEngine.Component::GetComponent<UnityEngine.RectTransform>()
+IL_00c1: call System.Void UnityEngine.UI.LayoutRebuilder::ForceRebuildLayoutImmediate(UnityEngine.RectTransform)
+IL_00c6: ldarg.0
+IL_00c7: ldfld UnityEngine.Transform World.Devices.DevicePD::ui_content
+IL_00cc: ldloc.3
+IL_00cd: ldc.i4.1
+IL_00ce: add
+IL_00cf: callvirt UnityEngine.Transform UnityEngine.Transform::GetChild(System.Int32)
+IL_00d4: callvirt !!0 UnityEngine.Component::GetComponent<UnityEngine.RectTransform>()
+IL_00d9: call System.Void UnityEngine.UI.LayoutRebuilder::ForceRebuildLayoutImmediate(UnityEngine.RectTransform)
+IL_00de: ldarg.0
+IL_00df: ldfld UnityEngine.Transform World.Devices.DevicePD::ui_content
+IL_00e4: ldloc.3
+IL_00e5: callvirt UnityEngine.Transform UnityEngine.Transform::GetChild(System.Int32)
+IL_00ea: callvirt !!0 UnityEngine.Component::GetComponent<UnityEngine.RectTransform>()
+IL_00ef: stloc.s V_4
+IL_00f1: ldloca.s V_0
+IL_00f3: ldloc.0
+IL_00f4: ldfld System.Single UnityEngine.Vector2::x
+IL_00f9: ldc.r4 0
+IL_00fe: ldloc.s V_4
+IL_0100: callvirt UnityEngine.Rect UnityEngine.RectTransform::get_rect()
+IL_0105: stloc.1
+IL_0106: ldloca.s V_1
+IL_0108: call System.Single UnityEngine.Rect::get_height()
+IL_010d: ldc.r4 2
+IL_0112: div
+IL_0113: add
+IL_0114: call System.Void UnityEngine.Vector2::.ctor(System.Single,System.Single)
+IL_0119: ldloc.s V_4
+IL_011b: ldloc.0
+IL_011c: callvirt System.Void UnityEngine.RectTransform::set_anchoredPosition(UnityEngine.Vector2)
+IL_0121: ldloca.s V_0
+IL_0123: ldloc.0
+IL_0124: ldfld System.Single UnityEngine.Vector2::x
+IL_0129: ldloc.s V_4
+IL_012b: callvirt UnityEngine.Rect UnityEngine.RectTransform::get_rect()
+IL_0130: stloc.1
+IL_0131: ldloca.s V_1
+IL_0133: call System.Single UnityEngine.Rect::get_width()
+IL_0138: ldc.r4 2
+IL_013d: div
+IL_013e: add
+IL_013f: ldarg.0
+IL_0140: ldfld UnityEngine.Transform World.Devices.DevicePD::ui_content
+IL_0145: ldloc.3
+IL_0146: ldc.i4.1
+IL_0147: add
+IL_0148: callvirt UnityEngine.Transform UnityEngine.Transform::GetChild(System.Int32)
+IL_014d: callvirt !!0 UnityEngine.Component::GetComponent<UnityEngine.RectTransform>()
+IL_0152: callvirt UnityEngine.Rect UnityEngine.RectTransform::get_rect()
+IL_0157: stloc.1
+IL_0158: ldloca.s V_1
+IL_015a: call System.Single UnityEngine.Rect::get_width()
+IL_015f: ldc.r4 2
+IL_0164: div
+IL_0165: add
+IL_0166: ldloc.0
+IL_0167: ldfld System.Single UnityEngine.Vector2::y
+IL_016c: call System.Void UnityEngine.Vector2::.ctor(System.Single,System.Single)
+IL_0171: ldloc.3
+IL_0172: ldc.i4.1
+IL_0173: add
+IL_0174: stloc.3
+IL_0175: ldloc.3
+IL_0176: ldarg.0
+IL_0177: ldfld UnityEngine.Transform World.Devices.DevicePD::ui_content
+IL_017c: callvirt System.Int32 UnityEngine.Transform::get_childCount()
+IL_0181: ldc.i4.1
+IL_0182: sub
+IL_0183: blt IL_00b0
+IL_0188: ldarg.0
+IL_0189: ldfld UnityEngine.Transform World.Devices.DevicePD::ui_content
+IL_018e: callvirt System.Int32 UnityEngine.Transform::get_childCount()
+IL_0193: ldc.i4.1
+IL_0194: blt IL_01de
+IL_0199: ldarg.0
+IL_019a: ldfld UnityEngine.Transform World.Devices.DevicePD::ui_content
+IL_019f: ldarg.0
+IL_01a0: ldfld UnityEngine.Transform World.Devices.DevicePD::ui_content
+IL_01a5: callvirt System.Int32 UnityEngine.Transform::get_childCount()
+IL_01aa: ldc.i4.1
+IL_01ab: sub
+IL_01ac: callvirt UnityEngine.Transform UnityEngine.Transform::GetChild(System.Int32)
+IL_01b1: callvirt !!0 UnityEngine.Component::GetComponent<UnityEngine.RectTransform>()
+IL_01b6: call System.Void UnityEngine.UI.LayoutRebuilder::ForceRebuildLayoutImmediate(UnityEngine.RectTransform)
+IL_01bb: ldarg.0
+IL_01bc: ldfld UnityEngine.Transform World.Devices.DevicePD::ui_content
+IL_01c1: ldarg.0
+IL_01c2: ldfld UnityEngine.Transform World.Devices.DevicePD::ui_content
+IL_01c7: callvirt System.Int32 UnityEngine.Transform::get_childCount()
+IL_01cc: ldc.i4.1
+IL_01cd: sub
+IL_01ce: callvirt UnityEngine.Transform UnityEngine.Transform::GetChild(System.Int32)
+IL_01d3: callvirt !!0 UnityEngine.Component::GetComponent<UnityEngine.RectTransform>()
+IL_01d8: ldloc.0
+IL_01d9: callvirt System.Void UnityEngine.RectTransform::set_anchoredPosition(UnityEngine.Vector2)
+IL_01de: ret
+METHOD System.Void World.Devices.DevicePD::call()
+IL_0000: ret
+METHOD System.Void World.Devices.DevicePD::.ctor()
+IL_0000: ldarg.0
+IL_0001: call System.Void Foundations.Producer::.ctor()
+IL_0006: ret
+TYPE World.Devices.DevicePD/<>c__DisplayClass6_0 : System.Object
+FIELD System.String World.Devices.DevicePD/<>c__DisplayClass6_0::upgrade_key
+FIELD System.Func`2<World.Devices.DeviceUpgrades.DeviceUpgrade,System.Boolean> World.Devices.DevicePD/<>c__DisplayClass6_0::<>9__0
+METHOD System.Void World.Devices.DevicePD/<>c__DisplayClass6_0::.ctor()
+IL_0000: ldarg.0
+IL_0001: call System.Void System.Object::.ctor()
+IL_0006: ret
+METHOD System.Boolean World.Devices.DevicePD/<>c__DisplayClass6_0::<use_current_data>b__0(World.Devices.DeviceUpgrades.DeviceUpgrade)
+IL_0000: ldstr "{0},{1}"
+IL_0005: ldarg.1
+IL_0006: ldfld AutoCodes.device_upgrade World.Devices.DeviceUpgrades.DeviceUpgrade::desc
+IL_000b: ldfld System.UInt32 AutoCodes.device_upgrade::id
+IL_0010: box System.UInt32
+IL_0015: ldarg.1
+IL_0016: ldfld AutoCodes.device_upgrade World.Devices.DeviceUpgrades.DeviceUpgrade::desc
+IL_001b: ldfld System.UInt32 AutoCodes.device_upgrade::sub_id
+IL_0020: box System.UInt32
+IL_0025: call System.String System.String::Format(System.String,System.Object,System.Object)
+IL_002a: ldarg.0
+IL_002b: ldfld System.String World.Devices.DevicePD/<>c__DisplayClass6_0::upgrade_key
+IL_0030: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_0035: ret
+TYPE World.Devices.DevicePD/<>c__DisplayClass6_1 : System.Object
+FIELD System.String World.Devices.DevicePD/<>c__DisplayClass6_1::worker_id
+METHOD System.Void World.Devices.DevicePD/<>c__DisplayClass6_1::.ctor()
+IL_0000: ldarg.0
+IL_0001: call System.Void System.Object::.ctor()
+IL_0006: ret
+METHOD System.Boolean World.Devices.DevicePD/<>c__DisplayClass6_1::<use_current_data>b__1(World.Characters.Character)
+IL_0000: ldarg.1
+IL_0001: ldfld AutoCodes.role World.Characters.Character::desc
+IL_0006: ldflda System.UInt32 AutoCodes.role::id
+IL_000b: call System.String System.UInt32::ToString()
+IL_0010: ldarg.0
+IL_0011: ldfld System.String World.Devices.DevicePD/<>c__DisplayClass6_1::worker_id
+IL_0016: callvirt System.String System.Object::ToString()
+IL_001b: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_0020: ret

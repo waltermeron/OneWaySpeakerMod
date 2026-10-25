@@ -1,0 +1,44 @@
+Mono path[0] = 'E:/Steam/steamapps/common/再再启程 One Way Tickets/One Way Tickets_Data/Managed'
+Mono config path = 'E:/Steam/steamapps/common/再再启程 One Way Tickets/MonoBleedingEdge/etc'
+[Physics::Module] Initialized MultithreadedJobDispatcher with 19 workers.
+Initialize engine version: 2022.3.17f1c1 (a01dafa986ec)
+[Subsystems] Discovering subsystems at path E:/Steam/steamapps/common/再再启程 One Way Tickets/One Way Tickets_Data/UnitySubsystems
+GfxDevice: creating device client; threaded=1; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 4060 Laptop GPU (ID=0x28e0)
+    Vendor:   NVIDIA
+    VRAM:     7957 MB
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.224 seconds
+- Finished resetting the current domain, in  0.002 seconds
+<RI> Initializing input.
+New input system (experimental) initialized
+Using Windows.Gaming.Input
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 13.868700 ms
+[Letterbox] bootstrap (BeforeSceneLoad)
+[Steam] 未检测到运行中的 Steam 客户端，成就系统本次不可用（不影响单机流程）。
+[Analytics] 埋点已关闭（Config.enable_analytics = false），不启动数据采集
+[Letterbox] scene=Main screen=1920x1080 view=(x:0.00, y:0.00, width:1.00, height:1.00) active=False
+Did not save cached content catalog because Application.persistentDataPath is an empty path.
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 20.342900 ms
+Unloading 32 unused Assets to reduce memory usage. Loaded Objects now: 4122.
+Total: 3.623000 ms (FindLiveObjects: 0.237800 ms CreateObjectMapping: 0.108000 ms MarkObjects: 2.927600 ms  DeleteObjects: 0.349100 ms)
+
+[Letterbox] scene=LoadingScene screen=1920x1080 view=(x:0.00, y:0.00, width:1.00, height:1.00) active=False
+场景加载成功！
+Unloading 6 Unused Serialized files (Serialized files now loaded: 1)
+UnloadTime: 6.916800 ms
+Unloading 16 unused Assets to reduce memory usage. Loaded Objects now: 4938.
+Total: 3.292300 ms (FindLiveObjects: 0.178000 ms CreateObjectMapping: 0.109000 ms MarkObjects: 2.969500 ms  DeleteObjects: 0.035400 ms)
+
+[OneWayDps] Loaded v1.1.2 | B站：-_小西瓜_- | uid:153345791. F1 views; F2 range; F3 visibility; F4 reset; F5 compact; F6 auxiliary sources; F7 history.
+E:\Steam\steamapps\common\再再启程 One Way Tickets\SaveData\save_00.dat
+[Letterbox] scene=InitScene screen=1920x1080 view=(x:0.00, y:0.00, width:1.00, height:1.00) active=False
+PlayerPrefsException: Could not store preference value
+  at UnityEngine.PlayerPrefs.SetInt (System.String key, System.Int32 value) [0x00019] in <0a59c12fa0fd438e884d97ceb2065cf4>:0 
+  at Commons.PlayerPrefs_Init.Start () [0x0000d] in <0e5ca5e931f94c16b2843588c810015d>:0 
+

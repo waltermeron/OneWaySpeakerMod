@@ -1,0 +1,1724 @@
+TYPE Commons.AudioSystem : Foundations.MonoBehaviourSingleton`1<Commons.AudioSystem>
+FIELD UnityEngine.AudioSource Commons.AudioSystem::weatherSource
+FIELD UnityEngine.AudioSource Commons.AudioSystem::oldWeatherSource
+FIELD System.Single Commons.AudioSystem::weatherTransitionCoefficient
+FIELD UnityEngine.AudioSource[] Commons.AudioSystem::UiSources
+FIELD UnityEngine.AudioSource[] Commons.AudioSystem::EnvSources
+FIELD UnityEngine.AudioSource[] Commons.AudioSystem::BattleSources
+FIELD UnityEngine.AudioSource Commons.AudioSystem::sourceScene
+FIELD UnityEngine.AudioSource Commons.AudioSystem::sourceBattle
+FIELD UnityEngine.AudioSource Commons.AudioSystem::sourceEngine
+FIELD System.Single Commons.AudioSystem::bgm_volume
+FIELD System.Single Commons.AudioSystem::volume_bgm_track_0
+FIELD System.Single Commons.AudioSystem::volume_bgm_track_1
+FIELD System.Int32 Commons.AudioSystem::ui_oneShotIndex
+FIELD System.Int32 Commons.AudioSystem::envir_oneShotIndex
+FIELD System.Int32 Commons.AudioSystem::battle_oneShotIndex
+FIELD System.Collections.Generic.List`1<System.ValueTuple`2<System.String,System.Single>> Commons.AudioSystem::oneshot_dic
+FIELD System.Single Commons.AudioSystem::car_speed
+METHOD System.Void Commons.AudioSystem::on_init()
+IL_0000: ldarg.0
+IL_0001: call System.Void Foundations.MonoBehaviourSingleton`1<Commons.AudioSystem>::on_init()
+IL_0006: ldarg.0
+IL_0007: call UnityEngine.GameObject UnityEngine.Component::get_gameObject()
+IL_000c: call System.Void UnityEngine.Object::DontDestroyOnLoad(UnityEngine.Object)
+IL_0011: ret
+METHOD System.Collections.IEnumerator Commons.AudioSystem::FadePlay(UnityEngine.AudioSource,UnityEngine.AudioSource,UnityEngine.AudioClip,System.Boolean)
+IL_0000: ldc.i4.0
+IL_0001: newobj System.Void Commons.AudioSystem/<FadePlay>d__18::.ctor(System.Int32)
+IL_0006: dup
+IL_0007: ldarg.0
+IL_0008: stfld Commons.AudioSystem Commons.AudioSystem/<FadePlay>d__18::<>4__this
+IL_000d: dup
+IL_000e: ldarg.1
+IL_000f: stfld UnityEngine.AudioSource Commons.AudioSystem/<FadePlay>d__18::targetSource
+IL_0014: dup
+IL_0015: ldarg.2
+IL_0016: stfld UnityEngine.AudioSource Commons.AudioSystem/<FadePlay>d__18::otherSource
+IL_001b: dup
+IL_001c: ldarg.3
+IL_001d: stfld UnityEngine.AudioClip Commons.AudioSystem/<FadePlay>d__18::clip
+IL_0022: dup
+IL_0023: ldarg.s is_loop
+IL_0025: stfld System.Boolean Commons.AudioSystem/<FadePlay>d__18::is_loop
+IL_002a: ret
+METHOD System.Void Commons.AudioSystem::FadeSceneBgm(System.Single,System.Single)
+IL_0000: ldarg.2
+IL_0001: ldc.r4 0
+IL_0006: bgt.un.s IL_001a
+IL_0008: ldarg.0
+IL_0009: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceScene
+IL_000e: ldarg.1
+IL_000f: call System.Single UnityEngine.Mathf::Clamp01(System.Single)
+IL_0014: callvirt System.Void UnityEngine.AudioSource::set_volume(System.Single)
+IL_0019: ret
+IL_001a: ldarg.0
+IL_001b: ldstr "FadeVolume"
+IL_0020: call System.Void UnityEngine.MonoBehaviour::StopCoroutine(System.String)
+IL_0025: ldarg.0
+IL_0026: ldarg.0
+IL_0027: ldarg.0
+IL_0028: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceScene
+IL_002d: ldarg.1
+IL_002e: call System.Single UnityEngine.Mathf::Clamp01(System.Single)
+IL_0033: ldarg.2
+IL_0034: call System.Collections.IEnumerator Commons.AudioSystem::FadeVolume(UnityEngine.AudioSource,System.Single,System.Single)
+IL_0039: call UnityEngine.Coroutine UnityEngine.MonoBehaviour::StartCoroutine(System.Collections.IEnumerator)
+IL_003e: pop
+IL_003f: ret
+METHOD System.Collections.IEnumerator Commons.AudioSystem::FadeVolume(UnityEngine.AudioSource,System.Single,System.Single)
+IL_0000: ldc.i4.0
+IL_0001: newobj System.Void Commons.AudioSystem/<FadeVolume>d__20::.ctor(System.Int32)
+IL_0006: dup
+IL_0007: ldarg.0
+IL_0008: stfld Commons.AudioSystem Commons.AudioSystem/<FadeVolume>d__20::<>4__this
+IL_000d: dup
+IL_000e: ldarg.1
+IL_000f: stfld UnityEngine.AudioSource Commons.AudioSystem/<FadeVolume>d__20::source
+IL_0014: dup
+IL_0015: ldarg.2
+IL_0016: stfld System.Single Commons.AudioSystem/<FadeVolume>d__20::targetVolume
+IL_001b: dup
+IL_001c: ldarg.3
+IL_001d: stfld System.Single Commons.AudioSystem/<FadeVolume>d__20::duration
+IL_0022: ret
+METHOD System.Void Commons.AudioSystem::PlaySceneBGM(UnityEngine.AudioClip,System.Boolean)
+IL_0000: ldarg.1
+IL_0001: ldnull
+IL_0002: call System.Boolean UnityEngine.Object::op_Equality(UnityEngine.Object,UnityEngine.Object)
+IL_0007: brfalse.s IL_000a
+IL_0009: ret
+IL_000a: ldarg.0
+IL_000b: ldstr "PlayBattleBGMThenLoop"
+IL_0010: call System.Void UnityEngine.MonoBehaviour::StopCoroutine(System.String)
+IL_0015: ldarg.0
+IL_0016: ldarg.0
+IL_0017: ldarg.0
+IL_0018: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceScene
+IL_001d: ldarg.0
+IL_001e: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceBattle
+IL_0023: ldarg.1
+IL_0024: ldarg.2
+IL_0025: call System.Collections.IEnumerator Commons.AudioSystem::FadePlay(UnityEngine.AudioSource,UnityEngine.AudioSource,UnityEngine.AudioClip,System.Boolean)
+IL_002a: call UnityEngine.Coroutine UnityEngine.MonoBehaviour::StartCoroutine(System.Collections.IEnumerator)
+IL_002f: pop
+IL_0030: ret
+METHOD System.Void Commons.AudioSystem::PlayBattleBGM(UnityEngine.AudioClip,System.Boolean)
+IL_0000: ldarg.1
+IL_0001: ldnull
+IL_0002: call System.Boolean UnityEngine.Object::op_Equality(UnityEngine.Object,UnityEngine.Object)
+IL_0007: brfalse.s IL_000a
+IL_0009: ret
+IL_000a: ldarg.0
+IL_000b: ldarg.0
+IL_000c: ldarg.0
+IL_000d: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceBattle
+IL_0012: ldarg.0
+IL_0013: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceScene
+IL_0018: ldarg.1
+IL_0019: ldarg.2
+IL_001a: call System.Collections.IEnumerator Commons.AudioSystem::FadePlay(UnityEngine.AudioSource,UnityEngine.AudioSource,UnityEngine.AudioClip,System.Boolean)
+IL_001f: call UnityEngine.Coroutine UnityEngine.MonoBehaviour::StartCoroutine(System.Collections.IEnumerator)
+IL_0024: pop
+IL_0025: ret
+METHOD System.Void Commons.AudioSystem::PlayBattleBGM(UnityEngine.AudioClip,UnityEngine.AudioClip,System.Boolean)
+IL_0000: ldarg.1
+IL_0001: ldnull
+IL_0002: call System.Boolean UnityEngine.Object::op_Equality(UnityEngine.Object,UnityEngine.Object)
+IL_0007: brtrue.s IL_0012
+IL_0009: ldarg.2
+IL_000a: ldnull
+IL_000b: call System.Boolean UnityEngine.Object::op_Equality(UnityEngine.Object,UnityEngine.Object)
+IL_0010: brfalse.s IL_0013
+IL_0012: ret
+IL_0013: ldarg.0
+IL_0014: ldarg.0
+IL_0015: ldarg.0
+IL_0016: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceBattle
+IL_001b: ldarg.0
+IL_001c: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceScene
+IL_0021: ldarg.1
+IL_0022: ldc.i4.0
+IL_0023: call System.Collections.IEnumerator Commons.AudioSystem::FadePlay(UnityEngine.AudioSource,UnityEngine.AudioSource,UnityEngine.AudioClip,System.Boolean)
+IL_0028: call UnityEngine.Coroutine UnityEngine.MonoBehaviour::StartCoroutine(System.Collections.IEnumerator)
+IL_002d: pop
+IL_002e: ldarg.0
+IL_002f: ldarg.0
+IL_0030: ldarg.1
+IL_0031: ldarg.2
+IL_0032: ldarg.3
+IL_0033: call System.Collections.IEnumerator Commons.AudioSystem::PlayBattleBGMThenLoop(UnityEngine.AudioClip,UnityEngine.AudioClip,System.Boolean)
+IL_0038: call UnityEngine.Coroutine UnityEngine.MonoBehaviour::StartCoroutine(System.Collections.IEnumerator)
+IL_003d: pop
+IL_003e: ret
+METHOD System.Collections.IEnumerator Commons.AudioSystem::PlayBattleBGMThenLoop(UnityEngine.AudioClip,UnityEngine.AudioClip,System.Boolean)
+IL_0000: ldc.i4.0
+IL_0001: newobj System.Void Commons.AudioSystem/<PlayBattleBGMThenLoop>d__24::.ctor(System.Int32)
+IL_0006: dup
+IL_0007: ldarg.0
+IL_0008: stfld Commons.AudioSystem Commons.AudioSystem/<PlayBattleBGMThenLoop>d__24::<>4__this
+IL_000d: dup
+IL_000e: ldarg.1
+IL_000f: stfld UnityEngine.AudioClip Commons.AudioSystem/<PlayBattleBGMThenLoop>d__24::preClip
+IL_0014: dup
+IL_0015: ldarg.2
+IL_0016: stfld UnityEngine.AudioClip Commons.AudioSystem/<PlayBattleBGMThenLoop>d__24::loopClip
+IL_001b: dup
+IL_001c: ldarg.3
+IL_001d: stfld System.Boolean Commons.AudioSystem/<PlayBattleBGMThenLoop>d__24::is_loop
+IL_0022: ret
+METHOD UnityEngine.AudioSource[] Commons.AudioSystem::GetSourcesByType(Commons.SFXType)
+IL_0000: ldarg.1
+IL_0001: switch IL_0014,IL_001b,IL_0022
+IL_0012: br.s IL_0029
+IL_0014: ldarg.0
+IL_0015: ldfld UnityEngine.AudioSource[] Commons.AudioSystem::UiSources
+IL_001a: ret
+IL_001b: ldarg.0
+IL_001c: ldfld UnityEngine.AudioSource[] Commons.AudioSystem::EnvSources
+IL_0021: ret
+IL_0022: ldarg.0
+IL_0023: ldfld UnityEngine.AudioSource[] Commons.AudioSystem::BattleSources
+IL_0028: ret
+IL_0029: ldnull
+IL_002a: ret
+METHOD System.Void Commons.AudioSystem::PlayClipFromSources(UnityEngine.AudioSource[],UnityEngine.AudioClip,System.Boolean)
+IL_0000: ldc.i4.0
+IL_0001: stloc.0
+IL_0002: br.s IL_003a
+IL_0004: ldarg.1
+IL_0005: ldloc.0
+IL_0006: ldelem.ref
+IL_0007: callvirt System.Boolean UnityEngine.AudioSource::get_isPlaying()
+IL_000c: brtrue.s IL_0036
+IL_000e: ldarg.1
+IL_000f: ldloc.0
+IL_0010: ldelem.ref
+IL_0011: ldc.r4 1
+IL_0016: callvirt System.Void UnityEngine.AudioSource::set_pitch(System.Single)
+IL_001b: ldarg.1
+IL_001c: ldloc.0
+IL_001d: ldelem.ref
+IL_001e: ldarg.2
+IL_001f: callvirt System.Void UnityEngine.AudioSource::set_clip(UnityEngine.AudioClip)
+IL_0024: ldarg.1
+IL_0025: ldloc.0
+IL_0026: ldelem.ref
+IL_0027: callvirt System.Void UnityEngine.AudioSource::Play()
+IL_002c: ldarg.1
+IL_002d: ldloc.0
+IL_002e: ldelem.ref
+IL_002f: ldarg.3
+IL_0030: callvirt System.Void UnityEngine.AudioSource::set_loop(System.Boolean)
+IL_0035: ret
+IL_0036: ldloc.0
+IL_0037: ldc.i4.1
+IL_0038: add
+IL_0039: stloc.0
+IL_003a: ldloc.0
+IL_003b: ldarg.1
+IL_003c: ldlen
+IL_003d: conv.i4
+IL_003e: blt.s IL_0004
+IL_0040: ret
+METHOD System.Void Commons.AudioSystem::SetClipPitchFromSources(UnityEngine.AudioSource[],System.String,System.Single)
+IL_0000: ldc.i4.0
+IL_0001: stloc.0
+IL_0002: br.s IL_004b
+IL_0004: ldarg.1
+IL_0005: ldloc.0
+IL_0006: ldelem.ref
+IL_0007: callvirt System.Boolean UnityEngine.AudioSource::get_isPlaying()
+IL_000c: brfalse.s IL_0047
+IL_000e: ldarg.1
+IL_000f: ldloc.0
+IL_0010: ldelem.ref
+IL_0011: callvirt UnityEngine.AudioClip UnityEngine.AudioSource::get_clip()
+IL_0016: ldnull
+IL_0017: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_001c: brfalse.s IL_0047
+IL_001e: ldarg.1
+IL_001f: ldloc.0
+IL_0020: ldelem.ref
+IL_0021: callvirt UnityEngine.AudioClip UnityEngine.AudioSource::get_clip()
+IL_0026: callvirt System.String UnityEngine.Object::get_name()
+IL_002b: ldarg.0
+IL_002c: ldarg.2
+IL_002d: call UnityEngine.AudioClip Commons.AudioSystem::GetClip(System.String)
+IL_0032: callvirt System.String UnityEngine.Object::get_name()
+IL_0037: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_003c: brfalse.s IL_0047
+IL_003e: ldarg.1
+IL_003f: ldloc.0
+IL_0040: ldelem.ref
+IL_0041: ldarg.3
+IL_0042: callvirt System.Void UnityEngine.AudioSource::set_pitch(System.Single)
+IL_0047: ldloc.0
+IL_0048: ldc.i4.1
+IL_0049: add
+IL_004a: stloc.0
+IL_004b: ldloc.0
+IL_004c: ldarg.1
+IL_004d: ldlen
+IL_004e: conv.i4
+IL_004f: blt.s IL_0004
+IL_0051: ret
+METHOD System.Void Commons.AudioSystem::StopClipFromSources(UnityEngine.AudioSource[],System.String)
+IL_0000: ldc.i4.0
+IL_0001: stloc.0
+IL_0002: br.s IL_0066
+IL_0004: ldarg.1
+IL_0005: ldloc.0
+IL_0006: ldelem.ref
+IL_0007: callvirt System.Boolean UnityEngine.AudioSource::get_isPlaying()
+IL_000c: brfalse.s IL_0062
+IL_000e: ldarg.1
+IL_000f: ldloc.0
+IL_0010: ldelem.ref
+IL_0011: callvirt UnityEngine.AudioClip UnityEngine.AudioSource::get_clip()
+IL_0016: ldnull
+IL_0017: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_001c: brfalse.s IL_0062
+IL_001e: ldarg.0
+IL_001f: ldarg.2
+IL_0020: call UnityEngine.AudioClip Commons.AudioSystem::GetClip(System.String)
+IL_0025: ldnull
+IL_0026: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_002b: brfalse.s IL_0062
+IL_002d: ldarg.1
+IL_002e: ldloc.0
+IL_002f: ldelem.ref
+IL_0030: callvirt UnityEngine.AudioClip UnityEngine.AudioSource::get_clip()
+IL_0035: callvirt System.String UnityEngine.Object::get_name()
+IL_003a: ldarg.0
+IL_003b: ldarg.2
+IL_003c: call UnityEngine.AudioClip Commons.AudioSystem::GetClip(System.String)
+IL_0041: callvirt System.String UnityEngine.Object::get_name()
+IL_0046: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_004b: brfalse.s IL_0062
+IL_004d: ldarg.1
+IL_004e: ldloc.0
+IL_004f: ldelem.ref
+IL_0050: callvirt System.Void UnityEngine.AudioSource::Stop()
+IL_0055: ldarg.1
+IL_0056: ldloc.0
+IL_0057: ldelem.ref
+IL_0058: ldc.r4 1
+IL_005d: callvirt System.Void UnityEngine.AudioSource::set_pitch(System.Single)
+IL_0062: ldloc.0
+IL_0063: ldc.i4.1
+IL_0064: add
+IL_0065: stloc.0
+IL_0066: ldloc.0
+IL_0067: ldarg.1
+IL_0068: ldlen
+IL_0069: conv.i4
+IL_006a: blt.s IL_0004
+IL_006c: ret
+METHOD System.Void Commons.AudioSystem::PlayOneShotFromSources(UnityEngine.AudioSource[],UnityEngine.AudioClip,System.Int32&)
+IL_0000: ldarg.1
+IL_0001: ldarg.3
+IL_0002: ldind.i4
+IL_0003: ldelem.ref
+IL_0004: ldarg.2
+IL_0005: callvirt System.Void UnityEngine.AudioSource::PlayOneShot(UnityEngine.AudioClip)
+IL_000a: ldarg.3
+IL_000b: ldarg.3
+IL_000c: ldind.i4
+IL_000d: ldc.i4.1
+IL_000e: add
+IL_000f: ldarg.1
+IL_0010: ldlen
+IL_0011: conv.i4
+IL_0012: rem
+IL_0013: stind.i4
+IL_0014: ret
+METHOD System.Void Commons.AudioSystem::PlayClip(Commons.SFXType,UnityEngine.AudioClip,System.Boolean)
+IL_0000: ldarg.0
+IL_0001: ldarg.1
+IL_0002: call UnityEngine.AudioSource[] Commons.AudioSystem::GetSourcesByType(Commons.SFXType)
+IL_0007: stloc.0
+IL_0008: ldloc.0
+IL_0009: brfalse.s IL_0014
+IL_000b: ldarg.0
+IL_000c: ldloc.0
+IL_000d: ldarg.2
+IL_000e: ldarg.3
+IL_000f: call System.Void Commons.AudioSystem::PlayClipFromSources(UnityEngine.AudioSource[],UnityEngine.AudioClip,System.Boolean)
+IL_0014: ret
+METHOD System.Void Commons.AudioSystem::PlayEngine(UnityEngine.AudioClip,System.Boolean)
+IL_0000: ldarg.0
+IL_0001: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceEngine
+IL_0006: ldarg.1
+IL_0007: callvirt System.Void UnityEngine.AudioSource::set_clip(UnityEngine.AudioClip)
+IL_000c: ldarg.0
+IL_000d: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceEngine
+IL_0012: ldarg.2
+IL_0013: callvirt System.Void UnityEngine.AudioSource::set_loop(System.Boolean)
+IL_0018: ret
+METHOD System.Void Commons.AudioSystem::SetCarSpeed(System.Single)
+IL_0000: ldarg.0
+IL_0001: ldarg.1
+IL_0002: stfld System.Single Commons.AudioSystem::car_speed
+IL_0007: ret
+METHOD System.Void Commons.AudioSystem::PlayClip(Commons.SFXType,System.String,System.Boolean)
+IL_0000: ldarg.0
+IL_0001: ldarg.2
+IL_0002: call UnityEngine.AudioClip Commons.AudioSystem::GetClip(System.String)
+IL_0007: stloc.0
+IL_0008: ldarg.0
+IL_0009: ldarg.1
+IL_000a: ldloc.0
+IL_000b: ldarg.3
+IL_000c: call System.Void Commons.AudioSystem::PlayClip(Commons.SFXType,UnityEngine.AudioClip,System.Boolean)
+IL_0011: ret
+METHOD System.Void Commons.AudioSystem::SetClipPitch(Commons.SFXType,System.String,System.Single)
+IL_0000: ldarg.0
+IL_0001: ldarg.1
+IL_0002: call UnityEngine.AudioSource[] Commons.AudioSystem::GetSourcesByType(Commons.SFXType)
+IL_0007: stloc.0
+IL_0008: ldloc.0
+IL_0009: brfalse.s IL_0014
+IL_000b: ldarg.0
+IL_000c: ldloc.0
+IL_000d: ldarg.2
+IL_000e: ldarg.3
+IL_000f: call System.Void Commons.AudioSystem::SetClipPitchFromSources(UnityEngine.AudioSource[],System.String,System.Single)
+IL_0014: ret
+METHOD System.Void Commons.AudioSystem::StopClip(Commons.SFXType,System.String)
+IL_0000: ldarg.0
+IL_0001: ldarg.1
+IL_0002: call UnityEngine.AudioSource[] Commons.AudioSystem::GetSourcesByType(Commons.SFXType)
+IL_0007: stloc.0
+IL_0008: ldloc.0
+IL_0009: brfalse.s IL_0013
+IL_000b: ldarg.0
+IL_000c: ldloc.0
+IL_000d: ldarg.2
+IL_000e: call System.Void Commons.AudioSystem::StopClipFromSources(UnityEngine.AudioSource[],System.String)
+IL_0013: ret
+METHOD System.Void Commons.AudioSystem::PlayOneShot(Commons.SFXType,System.String)
+IL_0000: ldarg.2
+IL_0001: brtrue.s IL_0004
+IL_0003: ret
+IL_0004: ldarg.0
+IL_0005: ldarg.1
+IL_0006: ldarg.0
+IL_0007: ldarg.2
+IL_0008: call UnityEngine.AudioClip Commons.AudioSystem::GetClip(System.String)
+IL_000d: call System.Void Commons.AudioSystem::PlayOneShot(Commons.SFXType,UnityEngine.AudioClip)
+IL_0012: ret
+METHOD System.Void Commons.AudioSystem::PlayOneShot(Commons.SFXType,UnityEngine.AudioClip)
+IL_0000: newobj System.Void Commons.AudioSystem/<>c__DisplayClass37_0::.ctor()
+IL_0005: stloc.0
+IL_0006: ldloc.0
+IL_0007: ldarg.2
+IL_0008: stfld UnityEngine.AudioClip Commons.AudioSystem/<>c__DisplayClass37_0::clip
+IL_000d: ldloc.0
+IL_000e: ldfld UnityEngine.AudioClip Commons.AudioSystem/<>c__DisplayClass37_0::clip
+IL_0013: ldnull
+IL_0014: call System.Boolean UnityEngine.Object::op_Equality(UnityEngine.Object,UnityEngine.Object)
+IL_0019: brfalse.s IL_001c
+IL_001b: ret
+IL_001c: ldarg.0
+IL_001d: ldfld System.Collections.Generic.List`1<System.ValueTuple`2<System.String,System.Single>> Commons.AudioSystem::oneshot_dic
+IL_0022: ldloc.0
+IL_0023: ldftn System.Boolean Commons.AudioSystem/<>c__DisplayClass37_0::<PlayOneShot>b__0(System.ValueTuple`2<System.String,System.Single>)
+IL_0029: newobj System.Void System.Predicate`1<System.ValueTuple`2<System.String,System.Single>>::.ctor(System.Object,System.IntPtr)
+IL_002e: callvirt System.Collections.Generic.List`1<!0> System.Collections.Generic.List`1<System.ValueTuple`2<System.String,System.Single>>::FindAll(System.Predicate`1<!0>)
+IL_0033: dup
+IL_0034: callvirt System.Int32 System.Collections.Generic.List`1<System.ValueTuple`2<System.String,System.Single>>::get_Count()
+IL_0039: ldsfld Commons.Config Commons.Config::current
+IL_003e: ldfld System.Int32 Commons.Config::same_se_max_num
+IL_0043: clt
+IL_0045: stloc.1
+IL_0046: callvirt System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<System.ValueTuple`2<System.String,System.Single>>::GetEnumerator()
+IL_004b: stloc.2
+IL_004c: br.s IL_0078
+IL_004e: ldloca.s V_2
+IL_0050: call !0 System.Collections.Generic.List`1/Enumerator<System.ValueTuple`2<System.String,System.Single>>::get_Current()
+IL_0055: stloc.3
+IL_0056: ldloc.0
+IL_0057: ldfld UnityEngine.AudioClip Commons.AudioSystem/<>c__DisplayClass37_0::clip
+IL_005c: callvirt System.Single UnityEngine.AudioClip::get_length()
+IL_0061: ldloc.3
+IL_0062: ldfld !1 System.ValueTuple`2<System.String,System.Single>::Item2
+IL_0067: sub
+IL_0068: ldsfld Commons.Config Commons.Config::current
+IL_006d: ldfld System.Single Commons.Config::same_se_interval_sec_min
+IL_0072: bge.un.s IL_0078
+IL_0074: ldc.i4.0
+IL_0075: stloc.1
+IL_0076: leave.s IL_0091
+IL_0078: ldloca.s V_2
+IL_007a: call System.Boolean System.Collections.Generic.List`1/Enumerator<System.ValueTuple`2<System.String,System.Single>>::MoveNext()
+IL_007f: brtrue.s IL_004e
+IL_0081: leave.s IL_0091
+IL_0083: ldloca.s V_2
+IL_0085: constrained. System.Collections.Generic.List`1/Enumerator<System.ValueTuple`2<System.String,System.Single>>
+IL_008b: callvirt System.Void System.IDisposable::Dispose()
+IL_0090: endfinally
+IL_0091: ldloc.1
+IL_0092: brfalse IL_011b
+IL_0097: ldarg.0
+IL_0098: ldfld System.Collections.Generic.List`1<System.ValueTuple`2<System.String,System.Single>> Commons.AudioSystem::oneshot_dic
+IL_009d: ldloc.0
+IL_009e: ldfld UnityEngine.AudioClip Commons.AudioSystem/<>c__DisplayClass37_0::clip
+IL_00a3: callvirt System.String UnityEngine.Object::get_name()
+IL_00a8: ldloc.0
+IL_00a9: ldfld UnityEngine.AudioClip Commons.AudioSystem/<>c__DisplayClass37_0::clip
+IL_00ae: callvirt System.Single UnityEngine.AudioClip::get_length()
+IL_00b3: newobj System.Void System.ValueTuple`2<System.String,System.Single>::.ctor(!0,!1)
+IL_00b8: callvirt System.Void System.Collections.Generic.List`1<System.ValueTuple`2<System.String,System.Single>>::Add(!0)
+IL_00bd: ldarg.0
+IL_00be: ldarg.1
+IL_00bf: call UnityEngine.AudioSource[] Commons.AudioSystem::GetSourcesByType(Commons.SFXType)
+IL_00c4: stloc.s V_4
+IL_00c6: ldloc.s V_4
+IL_00c8: brfalse.s IL_011b
+IL_00ca: ldarg.1
+IL_00cb: switch IL_00dd,IL_00f2,IL_0107
+IL_00dc: ret
+IL_00dd: ldarg.0
+IL_00de: ldloc.s V_4
+IL_00e0: ldloc.0
+IL_00e1: ldfld UnityEngine.AudioClip Commons.AudioSystem/<>c__DisplayClass37_0::clip
+IL_00e6: ldarg.0
+IL_00e7: ldflda System.Int32 Commons.AudioSystem::ui_oneShotIndex
+IL_00ec: call System.Void Commons.AudioSystem::PlayOneShotFromSources(UnityEngine.AudioSource[],UnityEngine.AudioClip,System.Int32&)
+IL_00f1: ret
+IL_00f2: ldarg.0
+IL_00f3: ldloc.s V_4
+IL_00f5: ldloc.0
+IL_00f6: ldfld UnityEngine.AudioClip Commons.AudioSystem/<>c__DisplayClass37_0::clip
+IL_00fb: ldarg.0
+IL_00fc: ldflda System.Int32 Commons.AudioSystem::envir_oneShotIndex
+IL_0101: call System.Void Commons.AudioSystem::PlayOneShotFromSources(UnityEngine.AudioSource[],UnityEngine.AudioClip,System.Int32&)
+IL_0106: ret
+IL_0107: ldarg.0
+IL_0108: ldloc.s V_4
+IL_010a: ldloc.0
+IL_010b: ldfld UnityEngine.AudioClip Commons.AudioSystem/<>c__DisplayClass37_0::clip
+IL_0110: ldarg.0
+IL_0111: ldflda System.Int32 Commons.AudioSystem::battle_oneShotIndex
+IL_0116: call System.Void Commons.AudioSystem::PlayOneShotFromSources(UnityEngine.AudioSource[],UnityEngine.AudioClip,System.Int32&)
+IL_011b: ret
+METHOD UnityEngine.AudioClip Commons.AudioSystem::GetClip(System.String)
+IL_0000: ldarg.1
+IL_0001: brfalse.s IL_0010
+IL_0003: ldarg.1
+IL_0004: ldstr ""
+IL_0009: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_000e: brfalse.s IL_0012
+IL_0010: ldnull
+IL_0011: ret
+IL_0012: ldarg.1
+IL_0013: ldloca.s V_0
+IL_0015: call System.Boolean Addrs.Addressable_Utility::try_load_asset<UnityEngine.AudioClip>(System.String,!!0&)
+IL_001a: pop
+IL_001b: ldloc.0
+IL_001c: ldnull
+IL_001d: call System.Boolean UnityEngine.Object::op_Equality(UnityEngine.Object,UnityEngine.Object)
+IL_0022: brfalse.s IL_0034
+IL_0024: ldarg.1
+IL_0025: ldstr " 路径的音频为空"
+IL_002a: call System.String System.String::Concat(System.String,System.String)
+IL_002f: call System.Void UnityEngine.Debug::LogWarning(System.Object)
+IL_0034: ldloc.0
+IL_0035: ret
+METHOD System.Void Commons.AudioSystem::PlayWeatherSFX(System.String)
+IL_0000: ldarg.0
+IL_0001: ldfld UnityEngine.AudioSource Commons.AudioSystem::oldWeatherSource
+IL_0006: ldnull
+IL_0007: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_000c: brfalse.s IL_0039
+IL_000e: ldarg.0
+IL_000f: ldfld UnityEngine.AudioSource Commons.AudioSystem::oldWeatherSource
+IL_0014: callvirt System.Boolean UnityEngine.AudioSource::get_isPlaying()
+IL_0019: brfalse.s IL_0039
+IL_001b: ldarg.0
+IL_001c: ldfld UnityEngine.AudioSource Commons.AudioSystem::oldWeatherSource
+IL_0021: callvirt System.Void UnityEngine.AudioSource::Stop()
+IL_0026: ldarg.0
+IL_0027: ldfld UnityEngine.AudioSource Commons.AudioSystem::oldWeatherSource
+IL_002c: ldnull
+IL_002d: callvirt System.Void UnityEngine.AudioSource::set_clip(UnityEngine.AudioClip)
+IL_0032: ldarg.0
+IL_0033: ldnull
+IL_0034: stfld UnityEngine.AudioSource Commons.AudioSystem::oldWeatherSource
+IL_0039: ldarg.0
+IL_003a: ldarg.0
+IL_003b: ldfld UnityEngine.AudioSource Commons.AudioSystem::weatherSource
+IL_0040: stfld UnityEngine.AudioSource Commons.AudioSystem::oldWeatherSource
+IL_0045: ldarg.0
+IL_0046: ldfld UnityEngine.AudioSource Commons.AudioSystem::oldWeatherSource
+IL_004b: ldnull
+IL_004c: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_0051: brfalse.s IL_006d
+IL_0053: ldarg.0
+IL_0054: ldfld UnityEngine.AudioSource Commons.AudioSystem::oldWeatherSource
+IL_0059: callvirt UnityEngine.AudioClip UnityEngine.AudioSource::get_clip()
+IL_005e: ldnull
+IL_005f: call System.Boolean UnityEngine.Object::op_Equality(UnityEngine.Object,UnityEngine.Object)
+IL_0064: brfalse.s IL_006d
+IL_0066: ldarg.0
+IL_0067: ldnull
+IL_0068: stfld UnityEngine.AudioSource Commons.AudioSystem::oldWeatherSource
+IL_006d: ldarg.0
+IL_006e: ldarg.1
+IL_006f: call UnityEngine.AudioClip Commons.AudioSystem::GetClip(System.String)
+IL_0074: stloc.0
+IL_0075: ldloc.0
+IL_0076: ldnull
+IL_0077: call System.Boolean UnityEngine.Object::op_Equality(UnityEngine.Object,UnityEngine.Object)
+IL_007c: brfalse.s IL_009b
+IL_007e: ldarg.0
+IL_007f: ldnull
+IL_0080: stfld UnityEngine.AudioSource Commons.AudioSystem::weatherSource
+IL_0085: ldarg.0
+IL_0086: ldc.r4 0
+IL_008b: stfld System.Single Commons.AudioSystem::weatherTransitionCoefficient
+IL_0090: ldstr "PlayWeatherSFX: clip is null"
+IL_0095: call System.Void UnityEngine.Debug::LogWarning(System.Object)
+IL_009a: ret
+IL_009b: ldarg.0
+IL_009c: call UnityEngine.AudioSource Commons.AudioSystem::GetAvailableEnvSource()
+IL_00a1: stloc.1
+IL_00a2: ldloc.1
+IL_00a3: ldnull
+IL_00a4: call System.Boolean UnityEngine.Object::op_Equality(UnityEngine.Object,UnityEngine.Object)
+IL_00a9: brfalse.s IL_00b6
+IL_00ab: ldstr "PlayWeatherSFX: no available EnvSource"
+IL_00b0: call System.Void UnityEngine.Debug::LogWarning(System.Object)
+IL_00b5: ret
+IL_00b6: ldloc.1
+IL_00b7: ldloc.0
+IL_00b8: callvirt System.Void UnityEngine.AudioSource::set_clip(UnityEngine.AudioClip)
+IL_00bd: ldloc.1
+IL_00be: ldc.i4.1
+IL_00bf: callvirt System.Void UnityEngine.AudioSource::set_loop(System.Boolean)
+IL_00c4: ldloc.1
+IL_00c5: callvirt System.Void UnityEngine.AudioSource::Play()
+IL_00ca: ldloc.1
+IL_00cb: ldc.r4 0
+IL_00d0: callvirt System.Void UnityEngine.AudioSource::set_volume(System.Single)
+IL_00d5: ldarg.0
+IL_00d6: ldloc.1
+IL_00d7: stfld UnityEngine.AudioSource Commons.AudioSystem::weatherSource
+IL_00dc: ldarg.0
+IL_00dd: ldc.r4 0
+IL_00e2: stfld System.Single Commons.AudioSystem::weatherTransitionCoefficient
+IL_00e7: ret
+METHOD System.Void Commons.AudioSystem::StopWeatherSFX()
+IL_0000: ldarg.0
+IL_0001: ldfld UnityEngine.AudioSource Commons.AudioSystem::weatherSource
+IL_0006: ldnull
+IL_0007: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_000c: brfalse.s IL_0039
+IL_000e: ldarg.0
+IL_000f: ldfld UnityEngine.AudioSource Commons.AudioSystem::weatherSource
+IL_0014: callvirt System.Boolean UnityEngine.AudioSource::get_isPlaying()
+IL_0019: brfalse.s IL_0039
+IL_001b: ldarg.0
+IL_001c: ldarg.0
+IL_001d: ldfld UnityEngine.AudioSource Commons.AudioSystem::weatherSource
+IL_0022: stfld UnityEngine.AudioSource Commons.AudioSystem::oldWeatherSource
+IL_0027: ldarg.0
+IL_0028: ldnull
+IL_0029: stfld UnityEngine.AudioSource Commons.AudioSystem::weatherSource
+IL_002e: ldarg.0
+IL_002f: ldc.r4 1
+IL_0034: stfld System.Single Commons.AudioSystem::weatherTransitionCoefficient
+IL_0039: ret
+METHOD System.Void Commons.AudioSystem::UpdateWeatherTransition(System.Single)
+IL_0000: ldarg.0
+IL_0001: ldarg.1
+IL_0002: call System.Single UnityEngine.Mathf::Clamp01(System.Single)
+IL_0007: stfld System.Single Commons.AudioSystem::weatherTransitionCoefficient
+IL_000c: ret
+METHOD System.Single Commons.AudioSystem::get_WeatherTransitionCoefficient()
+IL_0000: ldarg.0
+IL_0001: ldfld System.Single Commons.AudioSystem::weatherTransitionCoefficient
+IL_0006: ret
+METHOD System.Boolean Commons.AudioSystem::get_IsWeatherSFXPlaying()
+IL_0000: ldarg.0
+IL_0001: ldfld UnityEngine.AudioSource Commons.AudioSystem::weatherSource
+IL_0006: ldnull
+IL_0007: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_000c: brfalse.s IL_001a
+IL_000e: ldarg.0
+IL_000f: ldfld UnityEngine.AudioSource Commons.AudioSystem::weatherSource
+IL_0014: callvirt System.Boolean UnityEngine.AudioSource::get_isPlaying()
+IL_0019: ret
+IL_001a: ldc.i4.0
+IL_001b: ret
+METHOD System.Void Commons.AudioSystem::ApplyWeatherSFXVolume()
+IL_0000: ldarg.0
+IL_0001: call System.Single Commons.AudioSystem::GetSEEnvironmentVolume()
+IL_0006: stloc.0
+IL_0007: ldarg.0
+IL_0008: ldfld UnityEngine.AudioSource Commons.AudioSystem::weatherSource
+IL_000d: ldnull
+IL_000e: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_0013: brfalse.s IL_0028
+IL_0015: ldarg.0
+IL_0016: ldfld UnityEngine.AudioSource Commons.AudioSystem::weatherSource
+IL_001b: ldarg.0
+IL_001c: ldfld System.Single Commons.AudioSystem::weatherTransitionCoefficient
+IL_0021: ldloc.0
+IL_0022: mul
+IL_0023: callvirt System.Void UnityEngine.AudioSource::set_volume(System.Single)
+IL_0028: ldarg.0
+IL_0029: ldfld UnityEngine.AudioSource Commons.AudioSystem::oldWeatherSource
+IL_002e: ldnull
+IL_002f: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_0034: brfalse.s IL_005c
+IL_0036: ldarg.0
+IL_0037: ldfld UnityEngine.AudioSource Commons.AudioSystem::oldWeatherSource
+IL_003c: callvirt System.Boolean UnityEngine.AudioSource::get_isPlaying()
+IL_0041: brfalse.s IL_005c
+IL_0043: ldarg.0
+IL_0044: ldfld UnityEngine.AudioSource Commons.AudioSystem::oldWeatherSource
+IL_0049: ldc.r4 1
+IL_004e: ldarg.0
+IL_004f: ldfld System.Single Commons.AudioSystem::weatherTransitionCoefficient
+IL_0054: sub
+IL_0055: ldloc.0
+IL_0056: mul
+IL_0057: callvirt System.Void UnityEngine.AudioSource::set_volume(System.Single)
+IL_005c: ldarg.0
+IL_005d: ldfld System.Single Commons.AudioSystem::weatherTransitionCoefficient
+IL_0062: ldc.r4 1
+IL_0067: blt.un.s IL_0095
+IL_0069: ldarg.0
+IL_006a: ldfld UnityEngine.AudioSource Commons.AudioSystem::oldWeatherSource
+IL_006f: ldnull
+IL_0070: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_0075: brfalse.s IL_0095
+IL_0077: ldarg.0
+IL_0078: ldfld UnityEngine.AudioSource Commons.AudioSystem::oldWeatherSource
+IL_007d: callvirt System.Void UnityEngine.AudioSource::Stop()
+IL_0082: ldarg.0
+IL_0083: ldfld UnityEngine.AudioSource Commons.AudioSystem::oldWeatherSource
+IL_0088: ldnull
+IL_0089: callvirt System.Void UnityEngine.AudioSource::set_clip(UnityEngine.AudioClip)
+IL_008e: ldarg.0
+IL_008f: ldnull
+IL_0090: stfld UnityEngine.AudioSource Commons.AudioSystem::oldWeatherSource
+IL_0095: ret
+METHOD System.Single Commons.AudioSystem::GetSEEnvironmentVolume()
+IL_0000: ldstr "settings_volume_master"
+IL_0005: ldc.i4.s 100
+IL_0007: call System.Int32 UnityEngine.PlayerPrefs::GetInt(System.String,System.Int32)
+IL_000c: ldstr "settings_volume_se_environment"
+IL_0011: ldc.i4.s 100
+IL_0013: call System.Int32 UnityEngine.PlayerPrefs::GetInt(System.String,System.Int32)
+IL_0018: stloc.0
+IL_0019: conv.r4
+IL_001a: ldc.r4 100
+IL_001f: div
+IL_0020: ldloc.0
+IL_0021: conv.r4
+IL_0022: mul
+IL_0023: ldc.r4 100
+IL_0028: div
+IL_0029: ret
+METHOD UnityEngine.AudioSource Commons.AudioSystem::GetAvailableEnvSource()
+IL_0000: ldarg.0
+IL_0001: ldfld UnityEngine.AudioSource[] Commons.AudioSystem::EnvSources
+IL_0006: brfalse.s IL_0011
+IL_0008: ldarg.0
+IL_0009: ldfld UnityEngine.AudioSource[] Commons.AudioSystem::EnvSources
+IL_000e: ldlen
+IL_000f: brtrue.s IL_001d
+IL_0011: ldstr "EnvSources is null or empty"
+IL_0016: call System.Void UnityEngine.Debug::LogWarning(System.Object)
+IL_001b: ldnull
+IL_001c: ret
+IL_001d: ldarg.0
+IL_001e: ldfld UnityEngine.AudioSource[] Commons.AudioSystem::EnvSources
+IL_0023: stloc.0
+IL_0024: ldc.i4.0
+IL_0025: stloc.1
+IL_0026: br.s IL_0048
+IL_0028: ldloc.0
+IL_0029: ldloc.1
+IL_002a: ldelem.ref
+IL_002b: stloc.2
+IL_002c: ldloc.2
+IL_002d: callvirt System.Boolean UnityEngine.AudioSource::get_isPlaying()
+IL_0032: brtrue.s IL_0044
+IL_0034: ldloc.2
+IL_0035: ldarg.0
+IL_0036: ldfld UnityEngine.AudioSource Commons.AudioSystem::oldWeatherSource
+IL_003b: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_0040: brfalse.s IL_0044
+IL_0042: ldloc.2
+IL_0043: ret
+IL_0044: ldloc.1
+IL_0045: ldc.i4.1
+IL_0046: add
+IL_0047: stloc.1
+IL_0048: ldloc.1
+IL_0049: ldloc.0
+IL_004a: ldlen
+IL_004b: conv.i4
+IL_004c: blt.s IL_0028
+IL_004e: ldarg.0
+IL_004f: ldfld UnityEngine.AudioSource[] Commons.AudioSystem::EnvSources
+IL_0054: ldc.i4.0
+IL_0055: ldelem.ref
+IL_0056: ret
+METHOD System.Void Commons.AudioSystem::Update()
+IL_0000: ldstr "settings_volume_master"
+IL_0005: call System.Int32 UnityEngine.PlayerPrefs::GetInt(System.String)
+IL_000a: stloc.0
+IL_000b: ldstr "settings_volume_bgm"
+IL_0010: call System.Int32 UnityEngine.PlayerPrefs::GetInt(System.String)
+IL_0015: stloc.1
+IL_0016: ldstr "settings_volume_se_ui"
+IL_001b: call System.Int32 UnityEngine.PlayerPrefs::GetInt(System.String)
+IL_0020: stloc.2
+IL_0021: ldstr "settings_volume_se_environment"
+IL_0026: call System.Int32 UnityEngine.PlayerPrefs::GetInt(System.String)
+IL_002b: stloc.3
+IL_002c: ldstr "settings_volume_se_battle"
+IL_0031: call System.Int32 UnityEngine.PlayerPrefs::GetInt(System.String)
+IL_0036: stloc.s V_4
+IL_0038: ldstr "settings_volume_master_isOn"
+IL_003d: ldc.i4.1
+IL_003e: call System.Int32 UnityEngine.PlayerPrefs::GetInt(System.String,System.Int32)
+IL_0043: brtrue.s IL_0047
+IL_0045: ldc.i4.0
+IL_0046: stloc.0
+IL_0047: ldstr "settings_volume_bgm_isOn"
+IL_004c: ldc.i4.1
+IL_004d: call System.Int32 UnityEngine.PlayerPrefs::GetInt(System.String,System.Int32)
+IL_0052: brtrue.s IL_0056
+IL_0054: ldc.i4.0
+IL_0055: stloc.1
+IL_0056: ldstr "settings_volume_se_ui_isOn"
+IL_005b: ldc.i4.1
+IL_005c: call System.Int32 UnityEngine.PlayerPrefs::GetInt(System.String,System.Int32)
+IL_0061: brtrue.s IL_0065
+IL_0063: ldc.i4.0
+IL_0064: stloc.2
+IL_0065: ldstr "settings_volume_se_environment_isOn"
+IL_006a: ldc.i4.1
+IL_006b: call System.Int32 UnityEngine.PlayerPrefs::GetInt(System.String,System.Int32)
+IL_0070: brtrue.s IL_0074
+IL_0072: ldc.i4.0
+IL_0073: stloc.3
+IL_0074: ldstr "settings_volume_se_battle_isOn"
+IL_0079: ldc.i4.1
+IL_007a: call System.Int32 UnityEngine.PlayerPrefs::GetInt(System.String,System.Int32)
+IL_007f: brtrue.s IL_0084
+IL_0081: ldc.i4.0
+IL_0082: stloc.s V_4
+IL_0084: ldarg.0
+IL_0085: ldloc.0
+IL_0086: conv.r4
+IL_0087: ldc.r4 100
+IL_008c: div
+IL_008d: ldloc.1
+IL_008e: conv.r4
+IL_008f: mul
+IL_0090: ldc.r4 100
+IL_0095: div
+IL_0096: stfld System.Single Commons.AudioSystem::bgm_volume
+IL_009b: ldarg.0
+IL_009c: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceBattle
+IL_00a1: ldarg.0
+IL_00a2: ldfld System.Single Commons.AudioSystem::bgm_volume
+IL_00a7: ldarg.0
+IL_00a8: ldfld System.Single Commons.AudioSystem::volume_bgm_track_0
+IL_00ad: mul
+IL_00ae: callvirt System.Void UnityEngine.AudioSource::set_volume(System.Single)
+IL_00b3: ldarg.0
+IL_00b4: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceScene
+IL_00b9: ldarg.0
+IL_00ba: ldfld System.Single Commons.AudioSystem::bgm_volume
+IL_00bf: ldarg.0
+IL_00c0: ldfld System.Single Commons.AudioSystem::volume_bgm_track_1
+IL_00c5: mul
+IL_00c6: callvirt System.Void UnityEngine.AudioSource::set_volume(System.Single)
+IL_00cb: ldloc.0
+IL_00cc: conv.r4
+IL_00cd: ldc.r4 100
+IL_00d2: div
+IL_00d3: ldloc.2
+IL_00d4: conv.r4
+IL_00d5: mul
+IL_00d6: ldc.r4 100
+IL_00db: div
+IL_00dc: stloc.s V_5
+IL_00de: ldloc.0
+IL_00df: conv.r4
+IL_00e0: ldc.r4 100
+IL_00e5: div
+IL_00e6: ldloc.3
+IL_00e7: conv.r4
+IL_00e8: mul
+IL_00e9: ldc.r4 100
+IL_00ee: div
+IL_00ef: stloc.s V_6
+IL_00f1: ldloc.0
+IL_00f2: conv.r4
+IL_00f3: ldc.r4 100
+IL_00f8: div
+IL_00f9: ldloc.s V_4
+IL_00fb: conv.r4
+IL_00fc: mul
+IL_00fd: ldc.r4 100
+IL_0102: div
+IL_0103: stloc.s V_7
+IL_0105: ldarg.0
+IL_0106: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceEngine
+IL_010b: ldarg.0
+IL_010c: ldfld System.Single Commons.AudioSystem::car_speed
+IL_0111: ldloc.s V_7
+IL_0113: div
+IL_0114: ldc.r4 0
+IL_0119: ldloc.s V_7
+IL_011b: call System.Single UnityEngine.Mathf::Clamp(System.Single,System.Single,System.Single)
+IL_0120: callvirt System.Void UnityEngine.AudioSource::set_volume(System.Single)
+IL_0125: ldarg.0
+IL_0126: ldfld UnityEngine.AudioSource[] Commons.AudioSystem::UiSources
+IL_012b: stloc.s V_8
+IL_012d: ldc.i4.0
+IL_012e: stloc.s V_9
+IL_0130: br.s IL_0144
+IL_0132: ldloc.s V_8
+IL_0134: ldloc.s V_9
+IL_0136: ldelem.ref
+IL_0137: ldloc.s V_5
+IL_0139: callvirt System.Void UnityEngine.AudioSource::set_volume(System.Single)
+IL_013e: ldloc.s V_9
+IL_0140: ldc.i4.1
+IL_0141: add
+IL_0142: stloc.s V_9
+IL_0144: ldloc.s V_9
+IL_0146: ldloc.s V_8
+IL_0148: ldlen
+IL_0149: conv.i4
+IL_014a: blt.s IL_0132
+IL_014c: ldarg.0
+IL_014d: ldfld UnityEngine.AudioSource[] Commons.AudioSystem::EnvSources
+IL_0152: stloc.s V_8
+IL_0154: ldc.i4.0
+IL_0155: stloc.s V_9
+IL_0157: br.s IL_016b
+IL_0159: ldloc.s V_8
+IL_015b: ldloc.s V_9
+IL_015d: ldelem.ref
+IL_015e: ldloc.s V_6
+IL_0160: callvirt System.Void UnityEngine.AudioSource::set_volume(System.Single)
+IL_0165: ldloc.s V_9
+IL_0167: ldc.i4.1
+IL_0168: add
+IL_0169: stloc.s V_9
+IL_016b: ldloc.s V_9
+IL_016d: ldloc.s V_8
+IL_016f: ldlen
+IL_0170: conv.i4
+IL_0171: blt.s IL_0159
+IL_0173: ldarg.0
+IL_0174: ldfld UnityEngine.AudioSource[] Commons.AudioSystem::BattleSources
+IL_0179: stloc.s V_8
+IL_017b: ldc.i4.0
+IL_017c: stloc.s V_9
+IL_017e: br.s IL_0192
+IL_0180: ldloc.s V_8
+IL_0182: ldloc.s V_9
+IL_0184: ldelem.ref
+IL_0185: ldloc.s V_7
+IL_0187: callvirt System.Void UnityEngine.AudioSource::set_volume(System.Single)
+IL_018c: ldloc.s V_9
+IL_018e: ldc.i4.1
+IL_018f: add
+IL_0190: stloc.s V_9
+IL_0192: ldloc.s V_9
+IL_0194: ldloc.s V_8
+IL_0196: ldlen
+IL_0197: conv.i4
+IL_0198: blt.s IL_0180
+IL_019a: ldarg.0
+IL_019b: ldfld System.Collections.Generic.List`1<System.ValueTuple`2<System.String,System.Single>> Commons.AudioSystem::oneshot_dic
+IL_01a0: callvirt System.Int32 System.Collections.Generic.List`1<System.ValueTuple`2<System.String,System.Single>>::get_Count()
+IL_01a5: ldc.i4.1
+IL_01a6: sub
+IL_01a7: stloc.s V_10
+IL_01a9: br.s IL_0205
+IL_01ab: ldarg.0
+IL_01ac: ldfld System.Collections.Generic.List`1<System.ValueTuple`2<System.String,System.Single>> Commons.AudioSystem::oneshot_dic
+IL_01b1: ldloc.s V_10
+IL_01b3: callvirt !0 System.Collections.Generic.List`1<System.ValueTuple`2<System.String,System.Single>>::get_Item(System.Int32)
+IL_01b8: dup
+IL_01b9: ldfld !0 System.ValueTuple`2<System.String,System.Single>::Item1
+IL_01be: stloc.s V_11
+IL_01c0: ldfld !1 System.ValueTuple`2<System.String,System.Single>::Item2
+IL_01c5: stloc.s V_12
+IL_01c7: ldloc.s V_12
+IL_01c9: call System.Single UnityEngine.Time::get_unscaledDeltaTime()
+IL_01ce: sub
+IL_01cf: stloc.s V_12
+IL_01d1: ldloc.s V_12
+IL_01d3: ldc.r4 0
+IL_01d8: bgt.un.s IL_01e9
+IL_01da: ldarg.0
+IL_01db: ldfld System.Collections.Generic.List`1<System.ValueTuple`2<System.String,System.Single>> Commons.AudioSystem::oneshot_dic
+IL_01e0: ldloc.s V_10
+IL_01e2: callvirt System.Void System.Collections.Generic.List`1<System.ValueTuple`2<System.String,System.Single>>::RemoveAt(System.Int32)
+IL_01e7: br.s IL_01ff
+IL_01e9: ldarg.0
+IL_01ea: ldfld System.Collections.Generic.List`1<System.ValueTuple`2<System.String,System.Single>> Commons.AudioSystem::oneshot_dic
+IL_01ef: ldloc.s V_10
+IL_01f1: ldloc.s V_11
+IL_01f3: ldloc.s V_12
+IL_01f5: newobj System.Void System.ValueTuple`2<System.String,System.Single>::.ctor(!0,!1)
+IL_01fa: callvirt System.Void System.Collections.Generic.List`1<System.ValueTuple`2<System.String,System.Single>>::set_Item(System.Int32,!0)
+IL_01ff: ldloc.s V_10
+IL_0201: ldc.i4.1
+IL_0202: sub
+IL_0203: stloc.s V_10
+IL_0205: ldloc.s V_10
+IL_0207: ldc.i4.0
+IL_0208: bge.s IL_01ab
+IL_020a: ldarg.0
+IL_020b: call System.Void Commons.AudioSystem::ApplyWeatherSFXVolume()
+IL_0210: ret
+METHOD System.Void Commons.AudioSystem::FadeOutAll(System.Single)
+IL_0000: ldarg.0
+IL_0001: ldarg.0
+IL_0002: ldarg.1
+IL_0003: call System.Collections.IEnumerator Commons.AudioSystem::FadeOutAllCoroutine(System.Single)
+IL_0008: call UnityEngine.Coroutine UnityEngine.MonoBehaviour::StartCoroutine(System.Collections.IEnumerator)
+IL_000d: pop
+IL_000e: ret
+METHOD System.Collections.IEnumerator Commons.AudioSystem::FadeOutAllCoroutine(System.Single)
+IL_0000: ldc.i4.0
+IL_0001: newobj System.Void Commons.AudioSystem/<FadeOutAllCoroutine>d__51::.ctor(System.Int32)
+IL_0006: dup
+IL_0007: ldarg.0
+IL_0008: stfld Commons.AudioSystem Commons.AudioSystem/<FadeOutAllCoroutine>d__51::<>4__this
+IL_000d: dup
+IL_000e: ldarg.1
+IL_000f: stfld System.Single Commons.AudioSystem/<FadeOutAllCoroutine>d__51::duration
+IL_0014: ret
+METHOD System.Void Commons.AudioSystem::StopBgm()
+IL_0000: ldarg.0
+IL_0001: ldsfld Commons.Config Commons.Config::current
+IL_0006: ldfld System.Single Commons.Config::bgm_switch_duration
+IL_000b: call System.Void Commons.AudioSystem::FadeOutAll(System.Single)
+IL_0010: ret
+METHOD System.Void Commons.AudioSystem::StopAllClip()
+IL_0000: ldarg.0
+IL_0001: ldarg.0
+IL_0002: ldfld UnityEngine.AudioSource[] Commons.AudioSystem::UiSources
+IL_0007: call System.Void Commons.AudioSystem::StopAllInGroup(UnityEngine.AudioSource[])
+IL_000c: ldarg.0
+IL_000d: ldarg.0
+IL_000e: ldfld UnityEngine.AudioSource[] Commons.AudioSystem::EnvSources
+IL_0013: call System.Void Commons.AudioSystem::StopAllInGroup(UnityEngine.AudioSource[])
+IL_0018: ldarg.0
+IL_0019: ldarg.0
+IL_001a: ldfld UnityEngine.AudioSource[] Commons.AudioSystem::BattleSources
+IL_001f: call System.Void Commons.AudioSystem::StopAllInGroup(UnityEngine.AudioSource[])
+IL_0024: ldarg.0
+IL_0025: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceEngine
+IL_002a: ldnull
+IL_002b: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_0030: brfalse.s IL_0049
+IL_0032: ldarg.0
+IL_0033: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceEngine
+IL_0038: callvirt System.Void UnityEngine.AudioSource::Stop()
+IL_003d: ldarg.0
+IL_003e: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceEngine
+IL_0043: ldnull
+IL_0044: callvirt System.Void UnityEngine.AudioSource::set_clip(UnityEngine.AudioClip)
+IL_0049: ldarg.0
+IL_004a: ldfld System.Collections.Generic.List`1<System.ValueTuple`2<System.String,System.Single>> Commons.AudioSystem::oneshot_dic
+IL_004f: callvirt System.Void System.Collections.Generic.List`1<System.ValueTuple`2<System.String,System.Single>>::Clear()
+IL_0054: ret
+METHOD System.Void Commons.AudioSystem::StopAllInGroup(UnityEngine.AudioSource[])
+IL_0000: ldarg.1
+IL_0001: brtrue.s IL_0004
+IL_0003: ret
+IL_0004: ldarg.1
+IL_0005: stloc.0
+IL_0006: ldc.i4.0
+IL_0007: stloc.1
+IL_0008: br.s IL_0030
+IL_000a: ldloc.0
+IL_000b: ldloc.1
+IL_000c: ldelem.ref
+IL_000d: stloc.2
+IL_000e: ldloc.2
+IL_000f: ldnull
+IL_0010: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_0015: brfalse.s IL_002c
+IL_0017: ldloc.2
+IL_0018: callvirt System.Boolean UnityEngine.AudioSource::get_isPlaying()
+IL_001d: brfalse.s IL_002c
+IL_001f: ldloc.2
+IL_0020: callvirt System.Void UnityEngine.AudioSource::Stop()
+IL_0025: ldloc.2
+IL_0026: ldnull
+IL_0027: callvirt System.Void UnityEngine.AudioSource::set_clip(UnityEngine.AudioClip)
+IL_002c: ldloc.1
+IL_002d: ldc.i4.1
+IL_002e: add
+IL_002f: stloc.1
+IL_0030: ldloc.1
+IL_0031: ldloc.0
+IL_0032: ldlen
+IL_0033: conv.i4
+IL_0034: blt.s IL_000a
+IL_0036: ret
+METHOD System.Void Commons.AudioSystem::.ctor()
+IL_0000: ldarg.0
+IL_0001: ldc.r4 1
+IL_0006: stfld System.Single Commons.AudioSystem::volume_bgm_track_0
+IL_000b: ldarg.0
+IL_000c: ldc.r4 1
+IL_0011: stfld System.Single Commons.AudioSystem::volume_bgm_track_1
+IL_0016: ldarg.0
+IL_0017: newobj System.Void System.Collections.Generic.List`1<System.ValueTuple`2<System.String,System.Single>>::.ctor()
+IL_001c: stfld System.Collections.Generic.List`1<System.ValueTuple`2<System.String,System.Single>> Commons.AudioSystem::oneshot_dic
+IL_0021: ldarg.0
+IL_0022: call System.Void Foundations.MonoBehaviourSingleton`1<Commons.AudioSystem>::.ctor()
+IL_0027: ret
+TYPE Commons.AudioSystem/<>c__DisplayClass37_0 : System.Object
+FIELD UnityEngine.AudioClip Commons.AudioSystem/<>c__DisplayClass37_0::clip
+METHOD System.Void Commons.AudioSystem/<>c__DisplayClass37_0::.ctor()
+IL_0000: ldarg.0
+IL_0001: call System.Void System.Object::.ctor()
+IL_0006: ret
+METHOD System.Boolean Commons.AudioSystem/<>c__DisplayClass37_0::<PlayOneShot>b__0(System.ValueTuple`2<System.String,System.Single>)
+IL_0000: ldarg.1
+IL_0001: ldfld !0 System.ValueTuple`2<System.String,System.Single>::Item1
+IL_0006: ldarg.0
+IL_0007: ldfld UnityEngine.AudioClip Commons.AudioSystem/<>c__DisplayClass37_0::clip
+IL_000c: callvirt System.String UnityEngine.Object::get_name()
+IL_0011: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_0016: ret
+TYPE Commons.AudioSystem/<FadeOutAllCoroutine>d__51 : System.Object
+FIELD System.Int32 Commons.AudioSystem/<FadeOutAllCoroutine>d__51::<>1__state
+FIELD System.Object Commons.AudioSystem/<FadeOutAllCoroutine>d__51::<>2__current
+FIELD Commons.AudioSystem Commons.AudioSystem/<FadeOutAllCoroutine>d__51::<>4__this
+FIELD System.Single Commons.AudioSystem/<FadeOutAllCoroutine>d__51::duration
+FIELD System.Collections.Generic.List`1<System.ValueTuple`2<UnityEngine.AudioSource,System.Single>> Commons.AudioSystem/<FadeOutAllCoroutine>d__51::<fadeTargets>5__2
+FIELD System.Single Commons.AudioSystem/<FadeOutAllCoroutine>d__51::<elapsed>5__3
+METHOD System.Void Commons.AudioSystem/<FadeOutAllCoroutine>d__51::.ctor(System.Int32)
+IL_0000: ldarg.0
+IL_0001: call System.Void System.Object::.ctor()
+IL_0006: ldarg.0
+IL_0007: ldarg.1
+IL_0008: stfld System.Int32 Commons.AudioSystem/<FadeOutAllCoroutine>d__51::<>1__state
+IL_000d: ret
+METHOD System.Void Commons.AudioSystem/<FadeOutAllCoroutine>d__51::System.IDisposable.Dispose()
+IL_0000: ret
+METHOD System.Boolean Commons.AudioSystem/<FadeOutAllCoroutine>d__51::MoveNext()
+IL_0000: ldarg.0
+IL_0001: ldfld System.Int32 Commons.AudioSystem/<FadeOutAllCoroutine>d__51::<>1__state
+IL_0006: stloc.0
+IL_0007: ldarg.0
+IL_0008: ldfld Commons.AudioSystem Commons.AudioSystem/<FadeOutAllCoroutine>d__51::<>4__this
+IL_000d: stloc.1
+IL_000e: ldloc.0
+IL_000f: brfalse.s IL_001a
+IL_0011: ldloc.0
+IL_0012: ldc.i4.1
+IL_0013: beq IL_0208
+IL_0018: ldc.i4.0
+IL_0019: ret
+IL_001a: ldarg.0
+IL_001b: ldc.i4.m1
+IL_001c: stfld System.Int32 Commons.AudioSystem/<FadeOutAllCoroutine>d__51::<>1__state
+IL_0021: ldarg.0
+IL_0022: newobj System.Void System.Collections.Generic.List`1<System.ValueTuple`2<UnityEngine.AudioSource,System.Single>>::.ctor()
+IL_0027: stfld System.Collections.Generic.List`1<System.ValueTuple`2<UnityEngine.AudioSource,System.Single>> Commons.AudioSystem/<FadeOutAllCoroutine>d__51::<fadeTargets>5__2
+IL_002c: ldloc.1
+IL_002d: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceBattle
+IL_0032: ldnull
+IL_0033: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_0038: brfalse.s IL_0068
+IL_003a: ldloc.1
+IL_003b: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceBattle
+IL_0040: callvirt System.Boolean UnityEngine.AudioSource::get_isPlaying()
+IL_0045: brfalse.s IL_0068
+IL_0047: ldarg.0
+IL_0048: ldfld System.Collections.Generic.List`1<System.ValueTuple`2<UnityEngine.AudioSource,System.Single>> Commons.AudioSystem/<FadeOutAllCoroutine>d__51::<fadeTargets>5__2
+IL_004d: ldloc.1
+IL_004e: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceBattle
+IL_0053: ldloc.1
+IL_0054: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceBattle
+IL_0059: callvirt System.Single UnityEngine.AudioSource::get_volume()
+IL_005e: newobj System.Void System.ValueTuple`2<UnityEngine.AudioSource,System.Single>::.ctor(!0,!1)
+IL_0063: callvirt System.Void System.Collections.Generic.List`1<System.ValueTuple`2<UnityEngine.AudioSource,System.Single>>::Add(!0)
+IL_0068: ldloc.1
+IL_0069: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceScene
+IL_006e: ldnull
+IL_006f: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_0074: brfalse.s IL_00a4
+IL_0076: ldloc.1
+IL_0077: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceScene
+IL_007c: callvirt System.Boolean UnityEngine.AudioSource::get_isPlaying()
+IL_0081: brfalse.s IL_00a4
+IL_0083: ldarg.0
+IL_0084: ldfld System.Collections.Generic.List`1<System.ValueTuple`2<UnityEngine.AudioSource,System.Single>> Commons.AudioSystem/<FadeOutAllCoroutine>d__51::<fadeTargets>5__2
+IL_0089: ldloc.1
+IL_008a: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceScene
+IL_008f: ldloc.1
+IL_0090: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceScene
+IL_0095: callvirt System.Single UnityEngine.AudioSource::get_volume()
+IL_009a: newobj System.Void System.ValueTuple`2<UnityEngine.AudioSource,System.Single>::.ctor(!0,!1)
+IL_009f: callvirt System.Void System.Collections.Generic.List`1<System.ValueTuple`2<UnityEngine.AudioSource,System.Single>>::Add(!0)
+IL_00a4: ldloc.1
+IL_00a5: ldfld UnityEngine.AudioSource[] Commons.AudioSystem::EnvSources
+IL_00aa: brfalse.s IL_00e8
+IL_00ac: ldloc.1
+IL_00ad: ldfld UnityEngine.AudioSource[] Commons.AudioSystem::EnvSources
+IL_00b2: stloc.2
+IL_00b3: ldc.i4.0
+IL_00b4: stloc.3
+IL_00b5: br.s IL_00e2
+IL_00b7: ldloc.2
+IL_00b8: ldloc.3
+IL_00b9: ldelem.ref
+IL_00ba: stloc.s V_4
+IL_00bc: ldloc.s V_4
+IL_00be: callvirt System.Boolean UnityEngine.AudioSource::get_isPlaying()
+IL_00c3: brfalse.s IL_00de
+IL_00c5: ldarg.0
+IL_00c6: ldfld System.Collections.Generic.List`1<System.ValueTuple`2<UnityEngine.AudioSource,System.Single>> Commons.AudioSystem/<FadeOutAllCoroutine>d__51::<fadeTargets>5__2
+IL_00cb: ldloc.s V_4
+IL_00cd: ldloc.s V_4
+IL_00cf: callvirt System.Single UnityEngine.AudioSource::get_volume()
+IL_00d4: newobj System.Void System.ValueTuple`2<UnityEngine.AudioSource,System.Single>::.ctor(!0,!1)
+IL_00d9: callvirt System.Void System.Collections.Generic.List`1<System.ValueTuple`2<UnityEngine.AudioSource,System.Single>>::Add(!0)
+IL_00de: ldloc.3
+IL_00df: ldc.i4.1
+IL_00e0: add
+IL_00e1: stloc.3
+IL_00e2: ldloc.3
+IL_00e3: ldloc.2
+IL_00e4: ldlen
+IL_00e5: conv.i4
+IL_00e6: blt.s IL_00b7
+IL_00e8: ldloc.1
+IL_00e9: ldfld UnityEngine.AudioSource[] Commons.AudioSystem::BattleSources
+IL_00ee: brfalse.s IL_012c
+IL_00f0: ldloc.1
+IL_00f1: ldfld UnityEngine.AudioSource[] Commons.AudioSystem::BattleSources
+IL_00f6: stloc.2
+IL_00f7: ldc.i4.0
+IL_00f8: stloc.3
+IL_00f9: br.s IL_0126
+IL_00fb: ldloc.2
+IL_00fc: ldloc.3
+IL_00fd: ldelem.ref
+IL_00fe: stloc.s V_5
+IL_0100: ldloc.s V_5
+IL_0102: callvirt System.Boolean UnityEngine.AudioSource::get_isPlaying()
+IL_0107: brfalse.s IL_0122
+IL_0109: ldarg.0
+IL_010a: ldfld System.Collections.Generic.List`1<System.ValueTuple`2<UnityEngine.AudioSource,System.Single>> Commons.AudioSystem/<FadeOutAllCoroutine>d__51::<fadeTargets>5__2
+IL_010f: ldloc.s V_5
+IL_0111: ldloc.s V_5
+IL_0113: callvirt System.Single UnityEngine.AudioSource::get_volume()
+IL_0118: newobj System.Void System.ValueTuple`2<UnityEngine.AudioSource,System.Single>::.ctor(!0,!1)
+IL_011d: callvirt System.Void System.Collections.Generic.List`1<System.ValueTuple`2<UnityEngine.AudioSource,System.Single>>::Add(!0)
+IL_0122: ldloc.3
+IL_0123: ldc.i4.1
+IL_0124: add
+IL_0125: stloc.3
+IL_0126: ldloc.3
+IL_0127: ldloc.2
+IL_0128: ldlen
+IL_0129: conv.i4
+IL_012a: blt.s IL_00fb
+IL_012c: ldloc.1
+IL_012d: ldfld UnityEngine.AudioSource Commons.AudioSystem::weatherSource
+IL_0132: ldnull
+IL_0133: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_0138: brfalse.s IL_0168
+IL_013a: ldloc.1
+IL_013b: ldfld UnityEngine.AudioSource Commons.AudioSystem::weatherSource
+IL_0140: callvirt System.Boolean UnityEngine.AudioSource::get_isPlaying()
+IL_0145: brfalse.s IL_0168
+IL_0147: ldarg.0
+IL_0148: ldfld System.Collections.Generic.List`1<System.ValueTuple`2<UnityEngine.AudioSource,System.Single>> Commons.AudioSystem/<FadeOutAllCoroutine>d__51::<fadeTargets>5__2
+IL_014d: ldloc.1
+IL_014e: ldfld UnityEngine.AudioSource Commons.AudioSystem::weatherSource
+IL_0153: ldloc.1
+IL_0154: ldfld UnityEngine.AudioSource Commons.AudioSystem::weatherSource
+IL_0159: callvirt System.Single UnityEngine.AudioSource::get_volume()
+IL_015e: newobj System.Void System.ValueTuple`2<UnityEngine.AudioSource,System.Single>::.ctor(!0,!1)
+IL_0163: callvirt System.Void System.Collections.Generic.List`1<System.ValueTuple`2<UnityEngine.AudioSource,System.Single>>::Add(!0)
+IL_0168: ldarg.0
+IL_0169: ldc.r4 0
+IL_016e: stfld System.Single Commons.AudioSystem/<FadeOutAllCoroutine>d__51::<elapsed>5__3
+IL_0173: br IL_020f
+IL_0178: ldarg.0
+IL_0179: ldarg.0
+IL_017a: ldfld System.Single Commons.AudioSystem/<FadeOutAllCoroutine>d__51::<elapsed>5__3
+IL_017f: call System.Single UnityEngine.Time::get_deltaTime()
+IL_0184: add
+IL_0185: stfld System.Single Commons.AudioSystem/<FadeOutAllCoroutine>d__51::<elapsed>5__3
+IL_018a: ldarg.0
+IL_018b: ldfld System.Single Commons.AudioSystem/<FadeOutAllCoroutine>d__51::<elapsed>5__3
+IL_0190: ldarg.0
+IL_0191: ldfld System.Single Commons.AudioSystem/<FadeOutAllCoroutine>d__51::duration
+IL_0196: div
+IL_0197: call System.Single UnityEngine.Mathf::Clamp01(System.Single)
+IL_019c: stloc.s V_6
+IL_019e: ldarg.0
+IL_019f: ldfld System.Collections.Generic.List`1<System.ValueTuple`2<UnityEngine.AudioSource,System.Single>> Commons.AudioSystem/<FadeOutAllCoroutine>d__51::<fadeTargets>5__2
+IL_01a4: callvirt System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<System.ValueTuple`2<UnityEngine.AudioSource,System.Single>>::GetEnumerator()
+IL_01a9: stloc.s V_7
+IL_01ab: br.s IL_01df
+IL_01ad: ldloca.s V_7
+IL_01af: call !0 System.Collections.Generic.List`1/Enumerator<System.ValueTuple`2<UnityEngine.AudioSource,System.Single>>::get_Current()
+IL_01b4: dup
+IL_01b5: ldfld !0 System.ValueTuple`2<UnityEngine.AudioSource,System.Single>::Item1
+IL_01ba: stloc.s V_8
+IL_01bc: ldfld !1 System.ValueTuple`2<UnityEngine.AudioSource,System.Single>::Item2
+IL_01c1: stloc.s V_9
+IL_01c3: ldloc.s V_8
+IL_01c5: ldnull
+IL_01c6: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_01cb: brfalse.s IL_01df
+IL_01cd: ldloc.s V_8
+IL_01cf: ldloc.s V_9
+IL_01d1: ldc.r4 1
+IL_01d6: ldloc.s V_6
+IL_01d8: sub
+IL_01d9: mul
+IL_01da: callvirt System.Void UnityEngine.AudioSource::set_volume(System.Single)
+IL_01df: ldloca.s V_7
+IL_01e1: call System.Boolean System.Collections.Generic.List`1/Enumerator<System.ValueTuple`2<UnityEngine.AudioSource,System.Single>>::MoveNext()
+IL_01e6: brtrue.s IL_01ad
+IL_01e8: leave.s IL_01f8
+IL_01ea: ldloca.s V_7
+IL_01ec: constrained. System.Collections.Generic.List`1/Enumerator<System.ValueTuple`2<UnityEngine.AudioSource,System.Single>>
+IL_01f2: callvirt System.Void System.IDisposable::Dispose()
+IL_01f7: endfinally
+IL_01f8: ldarg.0
+IL_01f9: ldnull
+IL_01fa: stfld System.Object Commons.AudioSystem/<FadeOutAllCoroutine>d__51::<>2__current
+IL_01ff: ldarg.0
+IL_0200: ldc.i4.1
+IL_0201: stfld System.Int32 Commons.AudioSystem/<FadeOutAllCoroutine>d__51::<>1__state
+IL_0206: ldc.i4.1
+IL_0207: ret
+IL_0208: ldarg.0
+IL_0209: ldc.i4.m1
+IL_020a: stfld System.Int32 Commons.AudioSystem/<FadeOutAllCoroutine>d__51::<>1__state
+IL_020f: ldarg.0
+IL_0210: ldfld System.Single Commons.AudioSystem/<FadeOutAllCoroutine>d__51::<elapsed>5__3
+IL_0215: ldarg.0
+IL_0216: ldfld System.Single Commons.AudioSystem/<FadeOutAllCoroutine>d__51::duration
+IL_021b: blt IL_0178
+IL_0220: ldarg.0
+IL_0221: ldfld System.Collections.Generic.List`1<System.ValueTuple`2<UnityEngine.AudioSource,System.Single>> Commons.AudioSystem/<FadeOutAllCoroutine>d__51::<fadeTargets>5__2
+IL_0226: callvirt System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<System.ValueTuple`2<UnityEngine.AudioSource,System.Single>>::GetEnumerator()
+IL_022b: stloc.s V_7
+IL_022d: br.s IL_025a
+IL_022f: ldloca.s V_7
+IL_0231: call !0 System.Collections.Generic.List`1/Enumerator<System.ValueTuple`2<UnityEngine.AudioSource,System.Single>>::get_Current()
+IL_0236: ldfld !0 System.ValueTuple`2<UnityEngine.AudioSource,System.Single>::Item1
+IL_023b: stloc.s V_10
+IL_023d: ldloc.s V_10
+IL_023f: ldnull
+IL_0240: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_0245: brfalse.s IL_025a
+IL_0247: ldloc.s V_10
+IL_0249: callvirt System.Void UnityEngine.AudioSource::Stop()
+IL_024e: ldloc.s V_10
+IL_0250: ldc.r4 0
+IL_0255: callvirt System.Void UnityEngine.AudioSource::set_volume(System.Single)
+IL_025a: ldloca.s V_7
+IL_025c: call System.Boolean System.Collections.Generic.List`1/Enumerator<System.ValueTuple`2<UnityEngine.AudioSource,System.Single>>::MoveNext()
+IL_0261: brtrue.s IL_022f
+IL_0263: leave.s IL_0273
+IL_0265: ldloca.s V_7
+IL_0267: constrained. System.Collections.Generic.List`1/Enumerator<System.ValueTuple`2<UnityEngine.AudioSource,System.Single>>
+IL_026d: callvirt System.Void System.IDisposable::Dispose()
+IL_0272: endfinally
+IL_0273: ldc.i4.0
+IL_0274: ret
+METHOD System.Object Commons.AudioSystem/<FadeOutAllCoroutine>d__51::System.Collections.Generic.IEnumerator<System.Object>.get_Current()
+IL_0000: ldarg.0
+IL_0001: ldfld System.Object Commons.AudioSystem/<FadeOutAllCoroutine>d__51::<>2__current
+IL_0006: ret
+METHOD System.Void Commons.AudioSystem/<FadeOutAllCoroutine>d__51::System.Collections.IEnumerator.Reset()
+IL_0000: newobj System.Void System.NotSupportedException::.ctor()
+IL_0005: throw
+METHOD System.Object Commons.AudioSystem/<FadeOutAllCoroutine>d__51::System.Collections.IEnumerator.get_Current()
+IL_0000: ldarg.0
+IL_0001: ldfld System.Object Commons.AudioSystem/<FadeOutAllCoroutine>d__51::<>2__current
+IL_0006: ret
+TYPE Commons.AudioSystem/<FadePlay>d__18 : System.Object
+FIELD System.Int32 Commons.AudioSystem/<FadePlay>d__18::<>1__state
+FIELD System.Object Commons.AudioSystem/<FadePlay>d__18::<>2__current
+FIELD UnityEngine.AudioSource Commons.AudioSystem/<FadePlay>d__18::targetSource
+FIELD UnityEngine.AudioClip Commons.AudioSystem/<FadePlay>d__18::clip
+FIELD Commons.AudioSystem Commons.AudioSystem/<FadePlay>d__18::<>4__this
+FIELD System.Boolean Commons.AudioSystem/<FadePlay>d__18::is_loop
+FIELD UnityEngine.AudioSource Commons.AudioSystem/<FadePlay>d__18::otherSource
+METHOD System.Void Commons.AudioSystem/<FadePlay>d__18::.ctor(System.Int32)
+IL_0000: ldarg.0
+IL_0001: call System.Void System.Object::.ctor()
+IL_0006: ldarg.0
+IL_0007: ldarg.1
+IL_0008: stfld System.Int32 Commons.AudioSystem/<FadePlay>d__18::<>1__state
+IL_000d: ret
+METHOD System.Void Commons.AudioSystem/<FadePlay>d__18::System.IDisposable.Dispose()
+IL_0000: ret
+METHOD System.Boolean Commons.AudioSystem/<FadePlay>d__18::MoveNext()
+IL_0000: ldarg.0
+IL_0001: ldfld System.Int32 Commons.AudioSystem/<FadePlay>d__18::<>1__state
+IL_0006: stloc.0
+IL_0007: ldarg.0
+IL_0008: ldfld Commons.AudioSystem Commons.AudioSystem/<FadePlay>d__18::<>4__this
+IL_000d: stloc.1
+IL_000e: ldloc.0
+IL_000f: brfalse.s IL_001a
+IL_0011: ldloc.0
+IL_0012: ldc.i4.1
+IL_0013: beq IL_010c
+IL_0018: ldc.i4.0
+IL_0019: ret
+IL_001a: ldarg.0
+IL_001b: ldc.i4.m1
+IL_001c: stfld System.Int32 Commons.AudioSystem/<FadePlay>d__18::<>1__state
+IL_0021: ldsfld Commons.Config Commons.Config::current
+IL_0026: ldfld System.Single Commons.Config::bgm_switch_duration
+IL_002b: stloc.2
+IL_002c: ldarg.0
+IL_002d: ldfld UnityEngine.AudioSource Commons.AudioSystem/<FadePlay>d__18::targetSource
+IL_0032: callvirt UnityEngine.AudioClip UnityEngine.AudioSource::get_clip()
+IL_0037: ldarg.0
+IL_0038: ldfld UnityEngine.AudioClip Commons.AudioSystem/<FadePlay>d__18::clip
+IL_003d: call System.Boolean UnityEngine.Object::op_Equality(UnityEngine.Object,UnityEngine.Object)
+IL_0042: brfalse.s IL_0053
+IL_0044: ldarg.0
+IL_0045: ldfld UnityEngine.AudioSource Commons.AudioSystem/<FadePlay>d__18::targetSource
+IL_004a: callvirt System.Boolean UnityEngine.AudioSource::get_isPlaying()
+IL_004f: brfalse.s IL_0053
+IL_0051: ldc.i4.0
+IL_0052: ret
+IL_0053: ldarg.0
+IL_0054: ldfld UnityEngine.AudioSource Commons.AudioSystem/<FadePlay>d__18::targetSource
+IL_0059: ldarg.0
+IL_005a: ldfld UnityEngine.AudioClip Commons.AudioSystem/<FadePlay>d__18::clip
+IL_005f: callvirt System.Void UnityEngine.AudioSource::set_clip(UnityEngine.AudioClip)
+IL_0064: ldarg.0
+IL_0065: ldfld UnityEngine.AudioSource Commons.AudioSystem/<FadePlay>d__18::targetSource
+IL_006a: ldloc.1
+IL_006b: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceBattle
+IL_0070: call System.Boolean UnityEngine.Object::op_Equality(UnityEngine.Object,UnityEngine.Object)
+IL_0075: brfalse.s IL_0084
+IL_0077: ldloc.1
+IL_0078: ldc.r4 0
+IL_007d: stfld System.Single Commons.AudioSystem::volume_bgm_track_0
+IL_0082: br.s IL_00a2
+IL_0084: ldarg.0
+IL_0085: ldfld UnityEngine.AudioSource Commons.AudioSystem/<FadePlay>d__18::targetSource
+IL_008a: ldloc.1
+IL_008b: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceScene
+IL_0090: call System.Boolean UnityEngine.Object::op_Equality(UnityEngine.Object,UnityEngine.Object)
+IL_0095: brfalse.s IL_00a2
+IL_0097: ldloc.1
+IL_0098: ldc.r4 0
+IL_009d: stfld System.Single Commons.AudioSystem::volume_bgm_track_1
+IL_00a2: ldarg.0
+IL_00a3: ldfld UnityEngine.AudioSource Commons.AudioSystem/<FadePlay>d__18::targetSource
+IL_00a8: callvirt System.Void UnityEngine.AudioSource::Play()
+IL_00ad: ldarg.0
+IL_00ae: ldfld UnityEngine.AudioSource Commons.AudioSystem/<FadePlay>d__18::targetSource
+IL_00b3: ldarg.0
+IL_00b4: ldfld System.Boolean Commons.AudioSystem/<FadePlay>d__18::is_loop
+IL_00b9: callvirt System.Void UnityEngine.AudioSource::set_loop(System.Boolean)
+IL_00be: ldarg.0
+IL_00bf: ldfld UnityEngine.AudioSource Commons.AudioSystem/<FadePlay>d__18::otherSource
+IL_00c4: ldnull
+IL_00c5: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)
+IL_00ca: brfalse.s IL_00e5
+IL_00cc: ldloc.1
+IL_00cd: ldloc.1
+IL_00ce: ldarg.0
+IL_00cf: ldfld UnityEngine.AudioSource Commons.AudioSystem/<FadePlay>d__18::otherSource
+IL_00d4: ldc.r4 0
+IL_00d9: ldloc.2
+IL_00da: call System.Collections.IEnumerator Commons.AudioSystem::FadeVolume(UnityEngine.AudioSource,System.Single,System.Single)
+IL_00df: call UnityEngine.Coroutine UnityEngine.MonoBehaviour::StartCoroutine(System.Collections.IEnumerator)
+IL_00e4: pop
+IL_00e5: ldarg.0
+IL_00e6: ldloc.1
+IL_00e7: ldloc.1
+IL_00e8: ldarg.0
+IL_00e9: ldfld UnityEngine.AudioSource Commons.AudioSystem/<FadePlay>d__18::targetSource
+IL_00ee: ldc.r4 1
+IL_00f3: ldloc.2
+IL_00f4: call System.Collections.IEnumerator Commons.AudioSystem::FadeVolume(UnityEngine.AudioSource,System.Single,System.Single)
+IL_00f9: call UnityEngine.Coroutine UnityEngine.MonoBehaviour::StartCoroutine(System.Collections.IEnumerator)
+IL_00fe: stfld System.Object Commons.AudioSystem/<FadePlay>d__18::<>2__current
+IL_0103: ldarg.0
+IL_0104: ldc.i4.1
+IL_0105: stfld System.Int32 Commons.AudioSystem/<FadePlay>d__18::<>1__state
+IL_010a: ldc.i4.1
+IL_010b: ret
+IL_010c: ldarg.0
+IL_010d: ldc.i4.m1
+IL_010e: stfld System.Int32 Commons.AudioSystem/<FadePlay>d__18::<>1__state
+IL_0113: ldc.i4.0
+IL_0114: ret
+METHOD System.Object Commons.AudioSystem/<FadePlay>d__18::System.Collections.Generic.IEnumerator<System.Object>.get_Current()
+IL_0000: ldarg.0
+IL_0001: ldfld System.Object Commons.AudioSystem/<FadePlay>d__18::<>2__current
+IL_0006: ret
+METHOD System.Void Commons.AudioSystem/<FadePlay>d__18::System.Collections.IEnumerator.Reset()
+IL_0000: newobj System.Void System.NotSupportedException::.ctor()
+IL_0005: throw
+METHOD System.Object Commons.AudioSystem/<FadePlay>d__18::System.Collections.IEnumerator.get_Current()
+IL_0000: ldarg.0
+IL_0001: ldfld System.Object Commons.AudioSystem/<FadePlay>d__18::<>2__current
+IL_0006: ret
+TYPE Commons.AudioSystem/<FadeVolume>d__20 : System.Object
+FIELD System.Int32 Commons.AudioSystem/<FadeVolume>d__20::<>1__state
+FIELD System.Object Commons.AudioSystem/<FadeVolume>d__20::<>2__current
+FIELD UnityEngine.AudioSource Commons.AudioSystem/<FadeVolume>d__20::source
+FIELD Commons.AudioSystem Commons.AudioSystem/<FadeVolume>d__20::<>4__this
+FIELD System.Single Commons.AudioSystem/<FadeVolume>d__20::targetVolume
+FIELD System.Single Commons.AudioSystem/<FadeVolume>d__20::duration
+FIELD System.Single Commons.AudioSystem/<FadeVolume>d__20::<elapsed>5__2
+METHOD System.Void Commons.AudioSystem/<FadeVolume>d__20::.ctor(System.Int32)
+IL_0000: ldarg.0
+IL_0001: call System.Void System.Object::.ctor()
+IL_0006: ldarg.0
+IL_0007: ldarg.1
+IL_0008: stfld System.Int32 Commons.AudioSystem/<FadeVolume>d__20::<>1__state
+IL_000d: ret
+METHOD System.Void Commons.AudioSystem/<FadeVolume>d__20::System.IDisposable.Dispose()
+IL_0000: ret
+METHOD System.Boolean Commons.AudioSystem/<FadeVolume>d__20::MoveNext()
+IL_0000: ldarg.0
+IL_0001: ldfld System.Int32 Commons.AudioSystem/<FadeVolume>d__20::<>1__state
+IL_0006: stloc.0
+IL_0007: ldarg.0
+IL_0008: ldfld Commons.AudioSystem Commons.AudioSystem/<FadeVolume>d__20::<>4__this
+IL_000d: stloc.1
+IL_000e: ldloc.0
+IL_000f: switch IL_0022,IL_0092,IL_0132
+IL_0020: ldc.i4.0
+IL_0021: ret
+IL_0022: ldarg.0
+IL_0023: ldc.i4.m1
+IL_0024: stfld System.Int32 Commons.AudioSystem/<FadeVolume>d__20::<>1__state
+IL_0029: ldarg.0
+IL_002a: ldc.r4 0
+IL_002f: stfld System.Single Commons.AudioSystem/<FadeVolume>d__20::<elapsed>5__2
+IL_0034: ldarg.0
+IL_0035: ldfld UnityEngine.AudioSource Commons.AudioSystem/<FadeVolume>d__20::source
+IL_003a: ldloc.1
+IL_003b: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceBattle
+IL_0040: call System.Boolean UnityEngine.Object::op_Equality(UnityEngine.Object,UnityEngine.Object)
+IL_0045: brfalse IL_00d4
+IL_004a: br.s IL_0099
+IL_004c: ldloc.1
+IL_004d: ldloc.1
+IL_004e: ldfld System.Single Commons.AudioSystem::volume_bgm_track_0
+IL_0053: ldarg.0
+IL_0054: ldfld System.Single Commons.AudioSystem/<FadeVolume>d__20::targetVolume
+IL_0059: ldarg.0
+IL_005a: ldfld System.Single Commons.AudioSystem/<FadeVolume>d__20::<elapsed>5__2
+IL_005f: ldarg.0
+IL_0060: ldfld System.Single Commons.AudioSystem/<FadeVolume>d__20::duration
+IL_0065: div
+IL_0066: call System.Single UnityEngine.Mathf::Lerp(System.Single,System.Single,System.Single)
+IL_006b: stfld System.Single Commons.AudioSystem::volume_bgm_track_0
+IL_0070: ldarg.0
+IL_0071: ldarg.0
+IL_0072: ldfld System.Single Commons.AudioSystem/<FadeVolume>d__20::<elapsed>5__2
+IL_0077: call System.Single UnityEngine.Time::get_deltaTime()
+IL_007c: add
+IL_007d: stfld System.Single Commons.AudioSystem/<FadeVolume>d__20::<elapsed>5__2
+IL_0082: ldarg.0
+IL_0083: ldnull
+IL_0084: stfld System.Object Commons.AudioSystem/<FadeVolume>d__20::<>2__current
+IL_0089: ldarg.0
+IL_008a: ldc.i4.1
+IL_008b: stfld System.Int32 Commons.AudioSystem/<FadeVolume>d__20::<>1__state
+IL_0090: ldc.i4.1
+IL_0091: ret
+IL_0092: ldarg.0
+IL_0093: ldc.i4.m1
+IL_0094: stfld System.Int32 Commons.AudioSystem/<FadeVolume>d__20::<>1__state
+IL_0099: ldarg.0
+IL_009a: ldfld System.Single Commons.AudioSystem/<FadeVolume>d__20::<elapsed>5__2
+IL_009f: ldarg.0
+IL_00a0: ldfld System.Single Commons.AudioSystem/<FadeVolume>d__20::duration
+IL_00a5: blt.s IL_004c
+IL_00a7: ldloc.1
+IL_00a8: ldarg.0
+IL_00a9: ldfld System.Single Commons.AudioSystem/<FadeVolume>d__20::targetVolume
+IL_00ae: stfld System.Single Commons.AudioSystem::volume_bgm_track_0
+IL_00b3: ldloc.1
+IL_00b4: ldfld System.Single Commons.AudioSystem::volume_bgm_track_0
+IL_00b9: ldc.r4 0
+IL_00be: bne.un IL_016c
+IL_00c3: ldloc.1
+IL_00c4: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceBattle
+IL_00c9: ldnull
+IL_00ca: callvirt System.Void UnityEngine.AudioSource::set_clip(UnityEngine.AudioClip)
+IL_00cf: br IL_016c
+IL_00d4: ldarg.0
+IL_00d5: ldfld UnityEngine.AudioSource Commons.AudioSystem/<FadeVolume>d__20::source
+IL_00da: ldloc.1
+IL_00db: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceScene
+IL_00e0: call System.Boolean UnityEngine.Object::op_Equality(UnityEngine.Object,UnityEngine.Object)
+IL_00e5: brfalse IL_016c
+IL_00ea: br.s IL_0139
+IL_00ec: ldloc.1
+IL_00ed: ldloc.1
+IL_00ee: ldfld System.Single Commons.AudioSystem::volume_bgm_track_1
+IL_00f3: ldarg.0
+IL_00f4: ldfld System.Single Commons.AudioSystem/<FadeVolume>d__20::targetVolume
+IL_00f9: ldarg.0
+IL_00fa: ldfld System.Single Commons.AudioSystem/<FadeVolume>d__20::<elapsed>5__2
+IL_00ff: ldarg.0
+IL_0100: ldfld System.Single Commons.AudioSystem/<FadeVolume>d__20::duration
+IL_0105: div
+IL_0106: call System.Single UnityEngine.Mathf::Lerp(System.Single,System.Single,System.Single)
+IL_010b: stfld System.Single Commons.AudioSystem::volume_bgm_track_1
+IL_0110: ldarg.0
+IL_0111: ldarg.0
+IL_0112: ldfld System.Single Commons.AudioSystem/<FadeVolume>d__20::<elapsed>5__2
+IL_0117: call System.Single UnityEngine.Time::get_deltaTime()
+IL_011c: add
+IL_011d: stfld System.Single Commons.AudioSystem/<FadeVolume>d__20::<elapsed>5__2
+IL_0122: ldarg.0
+IL_0123: ldnull
+IL_0124: stfld System.Object Commons.AudioSystem/<FadeVolume>d__20::<>2__current
+IL_0129: ldarg.0
+IL_012a: ldc.i4.2
+IL_012b: stfld System.Int32 Commons.AudioSystem/<FadeVolume>d__20::<>1__state
+IL_0130: ldc.i4.1
+IL_0131: ret
+IL_0132: ldarg.0
+IL_0133: ldc.i4.m1
+IL_0134: stfld System.Int32 Commons.AudioSystem/<FadeVolume>d__20::<>1__state
+IL_0139: ldarg.0
+IL_013a: ldfld System.Single Commons.AudioSystem/<FadeVolume>d__20::<elapsed>5__2
+IL_013f: ldarg.0
+IL_0140: ldfld System.Single Commons.AudioSystem/<FadeVolume>d__20::duration
+IL_0145: blt.s IL_00ec
+IL_0147: ldloc.1
+IL_0148: ldarg.0
+IL_0149: ldfld System.Single Commons.AudioSystem/<FadeVolume>d__20::targetVolume
+IL_014e: stfld System.Single Commons.AudioSystem::volume_bgm_track_1
+IL_0153: ldloc.1
+IL_0154: ldfld System.Single Commons.AudioSystem::volume_bgm_track_1
+IL_0159: ldc.r4 0
+IL_015e: bne.un.s IL_016c
+IL_0160: ldloc.1
+IL_0161: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceScene
+IL_0166: ldnull
+IL_0167: callvirt System.Void UnityEngine.AudioSource::set_clip(UnityEngine.AudioClip)
+IL_016c: ldc.i4.0
+IL_016d: ret
+METHOD System.Object Commons.AudioSystem/<FadeVolume>d__20::System.Collections.Generic.IEnumerator<System.Object>.get_Current()
+IL_0000: ldarg.0
+IL_0001: ldfld System.Object Commons.AudioSystem/<FadeVolume>d__20::<>2__current
+IL_0006: ret
+METHOD System.Void Commons.AudioSystem/<FadeVolume>d__20::System.Collections.IEnumerator.Reset()
+IL_0000: newobj System.Void System.NotSupportedException::.ctor()
+IL_0005: throw
+METHOD System.Object Commons.AudioSystem/<FadeVolume>d__20::System.Collections.IEnumerator.get_Current()
+IL_0000: ldarg.0
+IL_0001: ldfld System.Object Commons.AudioSystem/<FadeVolume>d__20::<>2__current
+IL_0006: ret
+TYPE Commons.AudioSystem/<PlayBattleBGMThenLoop>d__24 : System.Object
+FIELD System.Int32 Commons.AudioSystem/<PlayBattleBGMThenLoop>d__24::<>1__state
+FIELD System.Object Commons.AudioSystem/<PlayBattleBGMThenLoop>d__24::<>2__current
+FIELD Commons.AudioSystem Commons.AudioSystem/<PlayBattleBGMThenLoop>d__24::<>4__this
+FIELD UnityEngine.AudioClip Commons.AudioSystem/<PlayBattleBGMThenLoop>d__24::preClip
+FIELD UnityEngine.AudioClip Commons.AudioSystem/<PlayBattleBGMThenLoop>d__24::loopClip
+FIELD System.Boolean Commons.AudioSystem/<PlayBattleBGMThenLoop>d__24::is_loop
+METHOD System.Void Commons.AudioSystem/<PlayBattleBGMThenLoop>d__24::.ctor(System.Int32)
+IL_0000: ldarg.0
+IL_0001: call System.Void System.Object::.ctor()
+IL_0006: ldarg.0
+IL_0007: ldarg.1
+IL_0008: stfld System.Int32 Commons.AudioSystem/<PlayBattleBGMThenLoop>d__24::<>1__state
+IL_000d: ret
+METHOD System.Void Commons.AudioSystem/<PlayBattleBGMThenLoop>d__24::System.IDisposable.Dispose()
+IL_0000: ret
+METHOD System.Boolean Commons.AudioSystem/<PlayBattleBGMThenLoop>d__24::MoveNext()
+IL_0000: ldarg.0
+IL_0001: ldfld System.Int32 Commons.AudioSystem/<PlayBattleBGMThenLoop>d__24::<>1__state
+IL_0006: stloc.0
+IL_0007: ldarg.0
+IL_0008: ldfld Commons.AudioSystem Commons.AudioSystem/<PlayBattleBGMThenLoop>d__24::<>4__this
+IL_000d: stloc.1
+IL_000e: ldloc.0
+IL_000f: brfalse.s IL_0017
+IL_0011: ldloc.0
+IL_0012: ldc.i4.1
+IL_0013: beq.s IL_0030
+IL_0015: ldc.i4.0
+IL_0016: ret
+IL_0017: ldarg.0
+IL_0018: ldc.i4.m1
+IL_0019: stfld System.Int32 Commons.AudioSystem/<PlayBattleBGMThenLoop>d__24::<>1__state
+IL_001e: br.s IL_0037
+IL_0020: ldarg.0
+IL_0021: ldnull
+IL_0022: stfld System.Object Commons.AudioSystem/<PlayBattleBGMThenLoop>d__24::<>2__current
+IL_0027: ldarg.0
+IL_0028: ldc.i4.1
+IL_0029: stfld System.Int32 Commons.AudioSystem/<PlayBattleBGMThenLoop>d__24::<>1__state
+IL_002e: ldc.i4.1
+IL_002f: ret
+IL_0030: ldarg.0
+IL_0031: ldc.i4.m1
+IL_0032: stfld System.Int32 Commons.AudioSystem/<PlayBattleBGMThenLoop>d__24::<>1__state
+IL_0037: ldloc.1
+IL_0038: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceBattle
+IL_003d: callvirt System.Boolean UnityEngine.AudioSource::get_isPlaying()
+IL_0042: brfalse.s IL_005c
+IL_0044: ldloc.1
+IL_0045: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceBattle
+IL_004a: callvirt UnityEngine.AudioClip UnityEngine.AudioSource::get_clip()
+IL_004f: ldarg.0
+IL_0050: ldfld UnityEngine.AudioClip Commons.AudioSystem/<PlayBattleBGMThenLoop>d__24::preClip
+IL_0055: call System.Boolean UnityEngine.Object::op_Equality(UnityEngine.Object,UnityEngine.Object)
+IL_005a: brtrue.s IL_0020
+IL_005c: ldloc.1
+IL_005d: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceBattle
+IL_0062: ldarg.0
+IL_0063: ldfld UnityEngine.AudioClip Commons.AudioSystem/<PlayBattleBGMThenLoop>d__24::loopClip
+IL_0068: callvirt System.Void UnityEngine.AudioSource::set_clip(UnityEngine.AudioClip)
+IL_006d: ldloc.1
+IL_006e: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceBattle
+IL_0073: ldarg.0
+IL_0074: ldfld System.Boolean Commons.AudioSystem/<PlayBattleBGMThenLoop>d__24::is_loop
+IL_0079: callvirt System.Void UnityEngine.AudioSource::set_loop(System.Boolean)
+IL_007e: ldloc.1
+IL_007f: ldfld UnityEngine.AudioSource Commons.AudioSystem::sourceBattle
+IL_0084: callvirt System.Void UnityEngine.AudioSource::Play()
+IL_0089: ldc.i4.0
+IL_008a: ret
+METHOD System.Object Commons.AudioSystem/<PlayBattleBGMThenLoop>d__24::System.Collections.Generic.IEnumerator<System.Object>.get_Current()
+IL_0000: ldarg.0
+IL_0001: ldfld System.Object Commons.AudioSystem/<PlayBattleBGMThenLoop>d__24::<>2__current
+IL_0006: ret
+METHOD System.Void Commons.AudioSystem/<PlayBattleBGMThenLoop>d__24::System.Collections.IEnumerator.Reset()
+IL_0000: newobj System.Void System.NotSupportedException::.ctor()
+IL_0005: throw
+METHOD System.Object Commons.AudioSystem/<PlayBattleBGMThenLoop>d__24::System.Collections.IEnumerator.get_Current()
+IL_0000: ldarg.0
+IL_0001: ldfld System.Object Commons.AudioSystem/<PlayBattleBGMThenLoop>d__24::<>2__current
+IL_0006: ret
