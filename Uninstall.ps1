@@ -1,15 +1,32 @@
-$ErrorActionPreference='Stop'
+﻿$ErrorActionPreference='Stop'
+. (Join-Path $PSScriptRoot 'Paths.ps1')
 $root=Split-Path $PSScriptRoot -Parent
-$managed=Join-Path $root 'One Way Tickets_Data/Managed'
-if(Get-Process -Name 'One Way Tickets' -ErrorAction SilentlyContinue){throw 'Close the game before uninstalling.'}
-$manifest=Join-Path $PSScriptRoot 'installed.json'
-if(!(Test-Path $manifest)){throw 'No installed manifest.'}
-$state=Get-Content $manifest -Raw|ConvertFrom-Json
-foreach($f in $state.files.PSObject.Properties){
- if((Get-FileHash -LiteralPath (Join-Path $managed $f.Name)).Hash -ne $f.Value.after){throw ('File changed after installation; refusing overwrite: '+$f.Name)}
- if((Get-FileHash -LiteralPath (Join-Path $PSScriptRoot ('backup/'+$f.Name))).Hash -ne $f.Value.before){throw ('Backup hash mismatch: '+$f.Name)}
+$game=Get-SpeakerGamePaths $root
+Assert-SpeakerGameClosed $game
+$manifest=Join-Path $PSScriptRoot 'standalone-installed.json'
+if(!(Test-Path -LiteralPath $manifest)){throw 'No standalone speaker install record. No files changed.'}
+$state=Get-Content -LiteralPath $manifest -Raw|ConvertFrom-Json
+if($state.loadingMode -ne 'bepinex-plugin' -or $state.pluginPath -ne 'BepInEx/plugins/OneWaySpeaker/OneWaySpeaker.Plugin.dll'){throw 'Unknown speaker install record. No files changed.'}
+$owned=@('BepInEx/plugins/OneWaySpeaker/OneWaySpeaker.Plugin.dll','BepInEx/patchers/OneWaySpeaker.Bootstrap.dll')
+foreach($relative in $owned){
+    $path=Join-Path $root $relative;$key=$relative.Replace('/','\')
+    if((Test-Path -LiteralPath $path) -and (Get-FileHash -LiteralPath $path).Hash -ne $state.files.$key){throw ('Speaker file changed after installation. No files removed: '+$relative)}
 }
-foreach($f in $state.files.PSObject.Properties){Copy-Item -LiteralPath (Join-Path $PSScriptRoot ('backup/'+$f.Name)) -Destination (Join-Path $managed $f.Name) -Force}
-Remove-Item -LiteralPath (Join-Path $managed 'OneWaySpeaker.dll') -Force
-Move-Item -LiteralPath $manifest -Destination (Join-Path $PSScriptRoot 'last-install.json') -Force
-Write-Output 'Speaker Mod removed. Previous DPS Mod restored. Saves unchanged.'
+$backup=Join-Path $PSScriptRoot ('backup/standalone-uninstall-'+[Guid]::NewGuid().ToString('N'))
+New-Item -ItemType Directory -Path $backup -Force|Out-Null
+Copy-Item -LiteralPath $manifest -Destination (Join-Path $backup 'standalone-installed.json')
+$present=@()
+foreach($relative in $owned){
+    $path=Join-Path $root $relative
+    if(Test-Path -LiteralPath $path){Copy-Item -LiteralPath $path -Destination (Join-Path $backup ([IO.Path]::GetFileName($path)));$present+=$relative}
+}
+try{
+    foreach($relative in $present){Remove-Item -LiteralPath (Join-Path $root $relative) -Force}
+    $state.enabled=$false
+    $state|ConvertTo-Json -Depth 8|Set-Content -LiteralPath $manifest -Encoding UTF8
+}catch{
+    foreach($relative in $present){Copy-Item -LiteralPath (Join-Path $backup ([IO.Path]::GetFileName($relative))) -Destination (Join-Path $root $relative) -Force}
+    Copy-Item -LiteralPath (Join-Path $backup 'standalone-installed.json') -Destination $manifest -Force
+    throw
+}
+Write-Output 'Standalone speaker disabled. Shared BepInEx, DPS, other plugins, assets and all personal data preserved.'

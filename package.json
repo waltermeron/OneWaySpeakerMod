@@ -1,0 +1,15 @@
+﻿{
+    "version":  "1.4.0",
+    "testedGameVersion":  "0.8.0.3",
+    "loader":  "BepInEx 5.4.23.6 x64",
+    "testedSteamBuild":  "26211032",
+    "pluginSha256":  "55664A5C53FBF583F04C8E54ED7F2DE5D57197DE68FFE374DC65701CFBF0B6F9",
+    "includesGameAssemblies":  false,
+    "includesMusic":  true,
+    "includesPersonalData":  false,
+    "loadingMode":  "bepinex-plugin",
+    "distribution":  "standalone-speaker",
+    "includesSpeakerAssets":  true,
+    "includesDps":  false,
+    "requiresDps":  false
+}
