@@ -1,10 +1,11 @@
-﻿param([Parameter(Mandatory=$true)][string]$Archive,[switch]$WithDps,[int]$TimeoutSeconds=120)
+﻿param([Parameter(Mandatory=$true)][string]$Archive,[switch]$WithDps,[int]$TimeoutSeconds=120,[switch]$KeepFixture,[switch]$PrepareOnly,[switch]$BatchMode)
 $ErrorActionPreference='Stop'
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 $speakerRoot=Split-Path $PSScriptRoot -Parent;$root=Split-Path $speakerRoot -Parent
 $id=[Guid]::NewGuid().ToString('N');$mode=if($WithDps){'with-dps'}else{'no-dps'}
 $fixture=Join-Path $speakerRoot ('build/runtime-standalone-'+$id)
 $log=Join-Path $speakerRoot ('build/unity-standalone-'+$mode+'-'+$id+'.log')
+$loaderLog=[IO.Path]::ChangeExtension($log,'loader.log')
 $links=@('MonoBleedingEdge','One Way Tickets_Data/StreamingAssets','One Way Tickets_Data/Plugins','One Way Tickets_Data/Resources')
 $unityProcess=$null
 try{
@@ -36,17 +37,31 @@ try{
     $global:LASTEXITCODE=0
     & (Join-Path $fixture 'SpeakerMod/Install.ps1')
     if($LASTEXITCODE -ne 0){throw 'Standalone Unity fixture installation failed'}
-    $unityProcess=Start-Process -FilePath (Join-Path $fixture 'One Way Tickets.exe') -WorkingDirectory $fixture -WindowStyle Hidden -ArgumentList @('--speaker-self-test','-batchmode','-logFile',('"'+$log+'"')) -PassThru
+    if($PrepareOnly){Write-Output ('Prepared isolated fixture: '+$fixture);return}
+    # Default to the actual Application entrypoint and normal game startup. This
+    # exercises destruction of the pre-scene loader object and runtime recovery.
+    # Batch/GameObject mode is an explicit secondary diagnostic option only.
+    if($BatchMode){
+        $fixtureConfig=Join-Path $fixture 'BepInEx/config/BepInEx.cfg'
+        New-Item -ItemType Directory -Path (Split-Path $fixtureConfig -Parent) -Force|Out-Null
+        "[Preloader.Entrypoint]`r`nAssembly = UnityEngine.CoreModule.dll`r`nType = GameObject`r`nMethod = .cctor`r`n"|Set-Content -LiteralPath $fixtureConfig -Encoding UTF8
+    }
+    $unityArguments=@('--speaker-self-test','-logFile',('"'+$log+'"'))
+    if($BatchMode){$unityArguments+='-batchmode'}
+    $unityProcess=Start-Process -FilePath (Join-Path $fixture 'One Way Tickets.exe') -WorkingDirectory $fixture -WindowStyle Hidden -ArgumentList $unityArguments -PassThru
     Write-Output ('Unity isolated test '+$mode+' pid='+$unityProcess.Id+' log='+$log)
     $deadline=[DateTime]::UtcNow.AddSeconds($TimeoutSeconds)
     while(!$unityProcess.WaitForExit(1000)){if([DateTime]::UtcNow -gt $deadline){throw 'Standalone Unity fixture timed out'}}
     $exitCode=$unityProcess.ExitCode
     $text=Get-Content -LiteralPath $log -Raw
-    if($exitCode -ne 0 -or $text -notmatch '\[OneWaySpeaker TEST\] ALL PASSED'){throw ('Standalone Unity self-test failed ('+$exitCode+'). See '+$log)}
+    $bepLog=Join-Path $fixture 'BepInEx/LogOutput.log'
+    if(Test-Path -LiteralPath $bepLog){Copy-Item -LiteralPath $bepLog -Destination $loaderLog -Force;$text+="`n"+(Get-Content -LiteralPath $loaderLog -Raw)}
+    if($exitCode -ne 0 -or $text -notmatch '\[OneWaySpeaker TEST\] ALL PASSED' -or $text -notmatch 'Speaker v1\.5\.1 standalone enabled' -or $text -match 'ExecutionEngineException|Speaker disabled:'){throw ('Standalone Unity self-test failed ('+$exitCode+'). See '+$log+' and '+$loaderLog)}
     if($WithDps){
-        if($text -notmatch 'DPS v1\.2\.0 enabled' -or $text -notmatch 'Optional speaker=False'){throw ('DPS did not load independently without its legacy speaker layer. See '+$log)}
-    }elseif($text -match 'OneWayDps Preloader|DPS v1\.2\.0 enabled'){throw 'DPS unexpectedly loaded in the standalone-only fixture'}
+        if($text -notmatch 'DPS v\d+\.\d+\.\d+ enabled' -or $text -notmatch 'Optional speaker=False'){throw ('DPS did not load independently without its legacy speaker layer. See '+$log)}
+    }elseif($text -match 'OneWayDps Preloader|DPS v\d+\.\d+\.\d+ enabled'){throw 'DPS unexpectedly loaded in the standalone-only fixture'}
     Write-Output ('PASS Unity standalone '+$mode+': ALL PASSED; exit='+$exitCode+'; '+$log)
+    Write-Output ('Loader log: '+$loaderLog)
 }finally{
     if($unityProcess){
         $unityProcess.Refresh()
@@ -60,7 +75,9 @@ try{
     }
     $base=[IO.Path]::GetFullPath((Join-Path $speakerRoot 'build')).TrimEnd('\')+'\';$absolute=[IO.Path]::GetFullPath($fixture)
     if(!$absolute.StartsWith($base,[StringComparison]::OrdinalIgnoreCase) -or [IO.Path]::GetFileName($absolute) -notmatch '^runtime-standalone-[0-9a-f]{32}$'){throw 'Unsafe Unity fixture cleanup path'}
-    if(Test-Path -LiteralPath $absolute){
+    $bepLog=Join-Path $absolute 'BepInEx/LogOutput.log'
+    if(Test-Path -LiteralPath $bepLog){Copy-Item -LiteralPath $bepLog -Destination $loaderLog -Force}
+    if($KeepFixture){Write-Output ('Retained isolated fixture: '+$absolute)}elseif(Test-Path -LiteralPath $absolute){
         foreach($relative in $links){
             $link=Join-Path $absolute $relative
             if(Test-Path -LiteralPath $link){

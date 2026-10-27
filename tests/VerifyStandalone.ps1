@@ -1,4 +1,4 @@
-﻿param([Parameter(Mandatory=$true)][string]$Archive)
+﻿param([Parameter(Mandatory=$true)][string]$Archive,[switch]$WithDps)
 $ErrorActionPreference='Stop'
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 $speakerRoot=Split-Path $PSScriptRoot -Parent
@@ -61,7 +61,7 @@ function New-Fixture([string]$Name){
         [IO.File]::WriteAllText($path,'independent fixture data must survive '+$Name)
         $private[$relative]=Hash $path
     }
-    foreach($relative in @('SpeakerMod/assets/speaker.png','SpeakerMod/assets/speaker-control.png','SpeakerMod/assets/365里路.mp3',('SpeakerMod/payload/'+$pluginRelative),('SpeakerMod/payload/'+$bootstrapRelative))){
+    foreach($relative in @('SpeakerMod/assets/speaker.png','SpeakerMod/assets/speaker-control.png','SpeakerMod/assets/365里路.mp3','SpeakerMod/assets/365里路_王老菊版.mp3','SpeakerMod/assets/365里路_王老菊特别版.mp3',('SpeakerMod/payload/'+$pluginRelative),('SpeakerMod/payload/'+$bootstrapRelative))){
         Assert (Test-Path -LiteralPath (Join-Path $destination $relative) -PathType Leaf) ('Missing independent-package file: '+$relative)
         Assert ((Get-Item -LiteralPath (Join-Path $destination $relative)).Length -gt 0) ('Empty independent-package file: '+$relative)
     }
@@ -74,7 +74,7 @@ function Assert-Invariants($Case){
 function Assert-Dps($Case){foreach($relative in $Case.Dps.Keys){Assert ((Hash (Join-Path $Case.Root $relative)) -eq $Case.Dps[$relative]) ('Speaker changed DPS: '+$relative)}}
 function Assert-Installed($Case){
     $speaker=Get-Content -LiteralPath (Join-Path $Case.Root 'SpeakerMod/standalone-installed.json') -Raw|ConvertFrom-Json
-    Assert ($speaker.version -eq '1.4.0') 'Standalone speaker version is not 1.4.0'
+    Assert ($speaker.version -eq '1.5.1') 'Standalone speaker version is not 1.5.1'
     if($speaker.pluginPath){Assert ($speaker.pluginPath.Replace('\','/') -eq $pluginRelative) 'Standalone manifest has an incorrect plugin path'}
     Assert ($speaker.bootstrapPath.Replace('\','/') -eq $bootstrapRelative) 'Standalone manifest has an incorrect bootstrap path'
     $expected=Hash (Join-Path $Case.Root ('SpeakerMod/payload/'+$pluginRelative))
@@ -98,9 +98,11 @@ try{
     New-Item -ItemType Directory -Path $fixture -Force|Out-Null
     $clean=New-Fixture 'no-dps'
     $entry=Join-Path $clean.Root 'SpeakerMod/Install.ps1'
-    $music=Join-Path $clean.Root 'SpeakerMod/assets/365里路.mp3';$musicBytes=[IO.File]::ReadAllBytes($music)
-    Remove-Item -LiteralPath $music -Force
-    try{Expect-Rejection $entry 'Missing speaker media'}finally{[IO.File]::WriteAllBytes($music,$musicBytes)}
+    foreach($trackFile in @('365里路.mp3','365里路_王老菊版.mp3','365里路_王老菊特别版.mp3')){
+        $music=Join-Path $clean.Root ('SpeakerMod/assets/'+$trackFile);$musicBytes=[IO.File]::ReadAllBytes($music)
+        Remove-Item -LiteralPath $music -Force
+        try{Expect-Rejection $entry ('Missing speaker media '+$trackFile)}finally{[IO.File]::WriteAllBytes($music,$musicBytes)}
+    }
     $world=Join-Path $clean.Managed 'World.dll'
     [IO.File]::WriteAllText($world,'invalid fixture assembly')
     try{Expect-Rejection $entry 'Invalid game assembly'}finally{Copy-Item -LiteralPath (Join-Path $managedSource 'World.dll') -Destination $world -Force}
@@ -121,12 +123,22 @@ try{
     try{Expect-Rejection $entry 'Different shared loader'}finally{[IO.File]::WriteAllBytes($native,$nativeBytes)}
     Uninstall-Speaker $clean
 
+    $canTestDps=(Test-Path -LiteralPath (Join-Path $root 'DPSMod/installed.json')) -and (Test-Path -LiteralPath (Join-Path $root 'BepInEx/patchers/OneWayDps.Preloader.dll'))
+    if($WithDps -and !$canTestDps){throw 'DPS coexistence was requested but no installed DPS test baseline is available'}
+    if($canTestDps){
     $coexist=New-Fixture 'with-dps'
-    foreach($relative in @('winhttp.dll','doorstop_config.ini','.doorstop_version','BepInEx/patchers/OneWayDps.Preloader.dll','BepInEx/plugins/OneWayDps/OneWayDps.dll','BepInEx/plugins/OneWayDps/OneWayDps.Loader.dll','BepInEx/plugins/OneWaySpeaker/OneWaySpeaker.dll','DPSMod/installed.json','SpeakerMod/installed.json')){
+    foreach($relative in @('winhttp.dll','doorstop_config.ini','.doorstop_version','BepInEx/patchers/OneWayDps.Preloader.dll','BepInEx/plugins/OneWayDps/OneWayDps.dll','BepInEx/plugins/OneWayDps/OneWayDps.Loader.dll','DPSMod/installed.json')){
         $target=Join-Path $coexist.Root $relative
         New-Item -ItemType Directory -Path (Split-Path $target -Parent) -Force|Out-Null
         Copy-Item -LiteralPath (Join-Path $root $relative) -Destination $target -Force
         if($relative -like '*OneWayDps*' -or $relative -eq 'DPSMod/installed.json'){$coexist.Dps[$relative]=Hash $target}
+    }
+    foreach($relative in @('BepInEx/plugins/OneWaySpeaker/OneWaySpeaker.dll','SpeakerMod/installed.json')){
+        if(Test-Path -LiteralPath (Join-Path $root $relative)){
+            $target=Join-Path $coexist.Root $relative
+            New-Item -ItemType Directory -Path (Split-Path $target -Parent) -Force|Out-Null
+            Copy-Item -LiteralPath (Join-Path $root $relative) -Destination $target -Force
+        }
     }
     Copy-Item -LiteralPath (Join-Path $root 'BepInEx/core') -Destination (Join-Path $coexist.Root 'BepInEx/core') -Recurse
     foreach($name in @('Uninstall.ps1','UninstallLoader.ps1','GamePaths.ps1')){Copy-Item -LiteralPath (Join-Path $root ('DPSMod/'+$name)) -Destination (Join-Path $coexist.Root 'DPSMod')}
@@ -143,7 +155,9 @@ try{
     Invoke-Entry (Join-Path $coexist.Root 'DPSMod/Uninstall.ps1')|Out-Host
     Assert ((Hash (Join-Path $coexist.Root $pluginRelative)) -eq $speakerHash) 'DPS uninstall changed the independent speaker'
     Uninstall-Speaker $coexist
-    Write-Output 'PASS standalone release: no DPS bundled/installed; fresh/check/update, safe media/assembly/shared-loader rejection, current DPS speaker migration, independent uninstall, official DLLs/private data/other plugins/shared core preserved.'
+    Write-Output 'PASS optional coexistence: DPS-owned files/record preserved during speaker install/update; legacy memory speaker removed when present; DPS can be uninstalled before standalone speaker.'
+    }else{Write-Output 'SKIP optional DPS coexistence: this computer has no installed DPS baseline; the standalone installation tests above do not require DPS.'}
+    Write-Output 'PASS standalone release: no DPS bundled/installed; fresh/check/update, safe media/assembly/shared-loader rejection, independent uninstall, official DLLs/private data/other plugins/shared core preserved.'
 }finally{
     $base=[IO.Path]::GetFullPath((Join-Path $speakerRoot 'build')).TrimEnd('\')+'\';$absolute=[IO.Path]::GetFullPath($fixture)
     if(!$absolute.StartsWith($base,[StringComparison]::OrdinalIgnoreCase) -or [IO.Path]::GetFileName($absolute) -notmatch '^verify-standalone-[0-9a-f]{32}$'){throw 'Unsafe standalone fixture cleanup path'}

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
@@ -6,8 +6,8 @@ using BepInEx;
 using BepInEx.Logging;
 using Mono.Cecil;
 
-[assembly:System.Reflection.AssemblyVersion("1.4.0.0")]
-[assembly:System.Reflection.AssemblyFileVersion("1.4.0.0")]
+[assembly:System.Reflection.AssemblyVersion("1.5.1.0")]
+[assembly:System.Reflection.AssemblyFileVersion("1.5.1.0")]
 
 namespace OneWaySpeaker.Bootstrap {
     // Unity's Mono can assign an invalid CodeBase to byte-loaded assemblies when

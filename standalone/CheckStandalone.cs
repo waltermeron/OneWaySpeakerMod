@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
@@ -50,7 +50,7 @@ class CheckStandalone {
                     var audio=Required(common,"Commons.AudioSystem","Update");if(!audio.Body.Instructions.Any(i=>i.Operand is MethodReference && ((MethodReference)i.Operand).Name=="set_volume"))throw new Exception("Native audio volume update changed");
                     var attack=Required(world,"World.Input.WorldInputController","OnLeftClickPerformedHandler");
                     if(attack.Body.Instructions.Count(i=>i.Operand is MethodReference && ((MethodReference)i.Operand).FullName=="System.Void System.Action::Invoke()")!=1)throw new Exception("Native guarded attack callback changed");
-                    Console.WriteLine("PASS speaker v1.4.0 standalone APIs, lifecycle, guarded attack, UI, audio and localization. No game files modified.");
+                    Console.WriteLine("PASS speaker v1.5.1 standalone APIs, lifecycle, guarded attack, UI, audio and localization. No game files modified.");
                 }
             }
             return 0;

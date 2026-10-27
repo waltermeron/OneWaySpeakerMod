@@ -10,7 +10,7 @@ $pluginRelative='BepInEx/plugins/OneWaySpeaker/OneWaySpeaker.Plugin.dll'
 $bootstrapRelative='BepInEx/patchers/OneWaySpeaker.Bootstrap.dll'
 $manifest=Join-Path $PSScriptRoot 'standalone-installed.json'
 $state=if(Test-Path -LiteralPath $manifest){Get-Content -LiteralPath $manifest -Raw|ConvertFrom-Json}else{$null}
-foreach($asset in @('speaker.png','speaker-control.png','365里路.mp3')){
+foreach($asset in @('speaker.png','speaker-control.png','365里路.mp3','365里路_王老菊版.mp3','365里路_王老菊特别版.mp3')){
     $path=Join-Path $PSScriptRoot ('assets/'+$asset)
     if(!(Test-Path -LiteralPath $path -PathType Leaf) -or (Get-Item -LiteralPath $path).Length -eq 0){throw ('Speaker asset missing or empty: '+$asset)}
 }
@@ -59,7 +59,7 @@ foreach($name in $nativeHashes.Keys){if((Get-FileHash -LiteralPath (Join-Path $g
 $work=Join-Path $PSScriptRoot ('build/install-standalone-'+[Guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Path $work -Force|Out-Null
 try{
-    $next=[ordered]@{version='1.4.0';loadingMode='bepinex-plugin';pluginPath=$pluginRelative;bootstrapPath=$bootstrapRelative;enabled=$true;installedAt=[DateTimeOffset]::Now.ToString('o');files=[ordered]@{};checkedGameAssemblies=$nativeHashes}
+    $next=[ordered]@{version='1.5.1';loadingMode='bepinex-plugin';pluginPath=$pluginRelative;bootstrapPath=$bootstrapRelative;enabled=$true;installedAt=[DateTimeOffset]::Now.ToString('o');files=[ordered]@{};checkedGameAssemblies=$nativeHashes}
     foreach($change in $changes){if(!$change.Delete){$relative=$change.To.Substring($root.Length+1);$next.files[$relative]=(Get-FileHash -LiteralPath $change.From).Hash}}
     $next|ConvertTo-Json -Depth 8|Set-Content -LiteralPath (Join-Path $work 'standalone-installed.json') -Encoding UTF8
     Add-SpeakerChange (Join-Path $work 'standalone-installed.json') $manifest
@@ -79,7 +79,7 @@ try{
         foreach($change in $changes){if($change.Existed){Copy-Item -LiteralPath $change.Backup -Destination $change.To -Force}elseif(Test-Path -LiteralPath $change.To){Remove-Item -LiteralPath $change.To -Force}}
         throw
     }
-    Write-Output 'Installed standalone speaker v1.4.0. No DPS installed or modified; official game DLLs and personal data untouched.'
+    Write-Output 'Installed standalone speaker v1.5.1. No DPS installed or modified; official game DLLs and personal data untouched.'
     Write-Output ('Rollback snapshot: '+$snapshot)
 }finally{
     $bound=[IO.Path]::GetFullPath((Join-Path $PSScriptRoot 'build')).TrimEnd('\')+'\';$absolute=[IO.Path]::GetFullPath($work)

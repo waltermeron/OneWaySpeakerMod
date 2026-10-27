@@ -1,39 +1,123 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using BepInEx;
+using BepInEx.Configuration;
+using BepInEx.Logging;
 using HarmonyLib;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using World.Devices.DeviceViews;
 using World.Devices.DeviceUiViews;
 
-[assembly:AssemblyVersion("1.4.0.0")]
-[assembly:AssemblyFileVersion("1.4.0.0")]
+[assembly:AssemblyVersion("1.5.1.0")]
+[assembly:AssemblyFileVersion("1.5.1.0")]
 
 namespace OneWaySpeaker.Standalone {
-    [BepInPlugin(Owner,"Old Ju Speaker","1.4.0")]
+    [BepInPlugin(Owner,"Old Ju Speaker","1.5.1")]
     [BepInDependency("suika.oneway.dps",BepInDependency.DependencyFlags.SoftDependency)]
     public sealed class Plugin : BaseUnityPlugin {
         public const string Owner="suika.oneway.speaker.standalone";
         Harmony harmony;
-        bool installed;
+        static Harmony runtimeHarmony;
+        static ConfigEntry<bool> runtimeSpeedSetting;
+        static ManualLogSource runtimeLog;
+        static Plugin currentHost;
+        static bool runtimeInstalled,quitting;
+        bool installed,selfTestRequested;
+        ConfigEntry<bool> speedEnabled;
+        bool backquoteHeld;
+        float speedNoticeUntil;
+        GUIStyle speedNoticeStyle;
+        Font speedNoticeFont;
         void Awake(){
+            var arguments=Environment.GetCommandLineArgs();
+            selfTestRequested=Array.IndexOf(arguments,"--speaker-self-test")>=0;
+            if(selfTestRequested){Application.runInBackground=true;Diagnostics.DeferBoot=true;}
+            Logger.LogInfo("Speaker self-test flag="+selfTestRequested+"; managed argument count="+arguments.Length);
+            if(runtimeInstalled){
+                harmony=runtimeHarmony;speedEnabled=runtimeSpeedSetting;installed=true;currentHost=this;
+                Logger.LogInfo("Speaker runtime host restored; existing patches and playback settings retained.");return;
+            }
+            string originalDirectory=Environment.CurrentDirectory;
             try{
+                EnterAsciiDirectory();
+                speedEnabled=Config.Bind<bool>("Playback","SpeedByVehicle",true,"Smoothly change speaker song speed with vehicle m/s. Toggle with the backquote/tilde key.");
+                PlaybackSpeed.Enabled=speedEnabled.Value;
                 RejectLegacyMode();
                 var plan=Prepare();
                 harmony=new Harmony(Owner);
                 foreach(var patch in plan.Values)harmony.Patch(patch.Target,patch.Prefix==null?null:new HarmonyMethod(patch.Prefix),patch.Postfix==null?null:new HarmonyMethod(patch.Postfix),patch.Transpiler==null?null:new HarmonyMethod(patch.Transpiler));
                 installed=true;
-                Logger.LogInfo("Speaker v1.4.0 standalone enabled; "+plan.Count+" Harmony targets. Game DLLs and other mod owners are unchanged.");
-                Hooks.DiagnosticBoot();
+                runtimeHarmony=harmony;runtimeSpeedSetting=speedEnabled;runtimeLog=Logger;runtimeInstalled=true;currentHost=this;
+                SceneManager.sceneLoaded+=OnSceneLoaded;
+                Application.quitting+=Shutdown;
+                Logger.LogInfo("Speaker v1.5.1 standalone enabled; "+plan.Count+" Harmony targets. Game DLLs and other mod owners are unchanged.");
             }catch(Exception e){
                 if(harmony!=null)try{harmony.UnpatchSelf();}catch(Exception rollback){Logger.LogError("Speaker rollback failed: "+rollback);}
                 Logger.LogError("Speaker disabled: compatibility check or patch failed. "+e);
-            }
+            }finally{Environment.CurrentDirectory=originalDirectory;}
         }
-        void OnDestroy(){if(installed){Hooks.End();if(harmony!=null)harmony.UnpatchSelf();installed=false;}}
+        static void OnSceneLoaded(Scene scene,LoadSceneMode mode){EnsureRuntimeHost();}
+        internal static void EnsureRuntimeHost(){
+            if(!runtimeInstalled || quitting || currentHost!=null)return;
+            try{
+                var host=new GameObject("OneWaySpeakerRuntime");DontDestroyOnLoad(host);host.AddComponent<Plugin>();
+                if(runtimeLog!=null)runtimeLog.LogInfo("Speaker persistent runtime host created after scene initialization.");
+            }catch(Exception e){if(runtimeLog!=null)runtimeLog.LogError("Speaker runtime host recovery failed: "+e);}
+        }
+        void Start(){
+            if(!installed || !selfTestRequested)return;
+            Diagnostics.DeferBoot=false;
+            Diagnostics.ExtraTests=FeatureTests.Run;
+            Logger.LogInfo("Speaker self-test scheduled from plugin Start; background="+Application.runInBackground);
+            Hooks.DiagnosticBoot();
+        }
+        public bool HandleSpeedKey(Event input){
+            if(!installed || input==null || input.keyCode!=KeyCode.BackQuote)return false;
+            if(input.type==EventType.KeyUp){backquoteHeld=false;return false;}
+            if(input.type!=EventType.KeyDown || backquoteHeld)return false;
+            backquoteHeld=true;speedEnabled.Value=!speedEnabled.Value;PlaybackSpeed.Enabled=speedEnabled.Value;
+            speedNoticeUntil=Time.realtimeSinceStartup+2;
+            Logger.LogInfo("Speaker vehicle speed playback="+PlaybackSpeed.Enabled);
+            input.Use();return true;
+        }
+        void OnApplicationFocus(bool focused){if(!focused)backquoteHeld=false;}
+        void OnGUI(){
+            if(!installed)return;
+            HandleSpeedKey(Event.current);
+            if(Time.realtimeSinceStartup>=speedNoticeUntil)return;
+            if(speedNoticeStyle==null){
+                speedNoticeFont=Font.CreateDynamicFontFromOSFont(new[]{"Microsoft YaHei","SimHei","Arial"},20);
+                speedNoticeStyle=new GUIStyle(GUI.skin.box);speedNoticeStyle.font=speedNoticeFont;speedNoticeStyle.fontSize=20;speedNoticeStyle.alignment=TextAnchor.MiddleCenter;
+            }
+            GUI.Box(new Rect((Screen.width-340)/2f,16,340,38),"音箱随车速变速："+(PlaybackSpeed.Enabled?"开启":"关闭"),speedNoticeStyle);
+        }
+        static void EnterAsciiDirectory(){
+            // Harmony also emits byte-loaded wrapper assemblies. They need the
+            // same Mono CodeBase workaround as the earlier preloader interval.
+            string safe=Environment.GetFolderPath(Environment.SpecialFolder.System);
+            if(String.IsNullOrEmpty(safe) || safe.Any(c=>c>127) || !System.IO.Directory.Exists(safe))throw new InvalidOperationException("No ASCII system directory is available for Harmony code generation");
+            Environment.CurrentDirectory=safe;
+        }
+        void OnDestroy(){
+            if(speedNoticeFont!=null)Destroy(speedNoticeFont);
+            if(ReferenceEquals(currentHost,this))currentHost=null;
+            installed=false;
+            // Unity can remove the pre-scene BepInEx object while the first Main
+            // scene initializes. Component destruction is not a mod unload.
+            if(runtimeInstalled && !quitting && runtimeLog!=null)runtimeLog.LogInfo("Transient speaker host removed; retaining runtime patches for scene recovery.");
+        }
+        static void Shutdown(){
+            if(quitting)return;quitting=true;
+            SceneManager.sceneLoaded-=OnSceneLoaded;Application.quitting-=Shutdown;
+            Hooks.End();string originalDirectory=Environment.CurrentDirectory;
+            try{EnterAsciiDirectory();if(runtimeHarmony!=null)runtimeHarmony.UnpatchSelf();}
+            catch(Exception e){if(runtimeLog!=null)runtimeLog.LogError("Speaker cleanup failed: "+e);}
+            finally{Environment.CurrentDirectory=originalDirectory;runtimeInstalled=false;}
+        }
         static void RejectLegacyMode(){
             var own=typeof(Plugin).Assembly;
             foreach(var assembly in AppDomain.CurrentDomain.GetAssemblies()){
@@ -129,7 +213,7 @@ namespace OneWaySpeaker.Standalone {
             if(count!=1)throw new InvalidOperationException("Native guarded attack callback changed");
         }
         static void Safe(Action action){try{action();}catch(Exception e){Debug.LogWarning("[OneWaySpeaker] Harmony hook: "+e);}}
-        static void BeginPrefix(){Hooks.Begin();}
+        static void BeginPrefix(){EnsureRuntimeHost();Hooks.Begin();}
         static void EndPrefix(){Hooks.End();}
         static void RestPrefix(){Hooks.EnterRest();}
         static void LeaveRestPrefix(){Hooks.LeaveRest();}
@@ -137,7 +221,7 @@ namespace OneWaySpeaker.Standalone {
         static void UiPostfix(DeviceUiView __instance){Hooks.AttachUi(__instance);}
         static void ViewPostfix(DeviceView __instance){Hooks.Attach(__instance);}
         static void PanelPrefix(Component __instance){Safe(()=>Hooks.PanelAttack(__instance));}
-        static void AudioPostfix(Commons.AudioSystem __instance){Safe(()=>Hooks.AudioUpdated(__instance));}
+        static void AudioPostfix(Commons.AudioSystem __instance){Safe(()=>{EnsureRuntimeHost();Hooks.AudioUpdated(__instance);});}
         static void LocalizePostfix(ref string __result){__result=Hooks.Localize(__result);}
     }
 }

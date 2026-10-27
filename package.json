@@ -1,15 +1,22 @@
 ﻿{
-    "version":  "1.4.0",
-    "testedGameVersion":  "0.8.0.3",
+    "speedTransitionSeconds":  0.6,
+    "version":  "1.5.1",
     "loader":  "BepInEx 5.4.23.6 x64",
-    "testedSteamBuild":  "26211032",
-    "pluginSha256":  "55664A5C53FBF583F04C8E54ED7F2DE5D57197DE68FFE374DC65701CFBF0B6F9",
+    "testedSteamBuild":  "26215488",
+    "speedToggle":  "BackQuote",
+    "pluginSha256":  "5FFE0D79939511501A6C7F753DE86E9E6648A176E50E0DD427603704FDD55C6C",
     "includesGameAssemblies":  false,
     "includesMusic":  true,
     "includesPersonalData":  false,
     "loadingMode":  "bepinex-plugin",
+    "songWeights":  [
+                        75,
+                        20,
+                        5
+                    ],
     "distribution":  "standalone-speaker",
     "includesSpeakerAssets":  true,
+    "maxSpeedMultiplier":  3,
     "includesDps":  false,
     "requiresDps":  false
 }

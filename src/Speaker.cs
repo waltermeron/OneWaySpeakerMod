@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
@@ -82,7 +82,7 @@ namespace OneWaySpeaker {
             if(player==null) {var go=new GameObject("OneWaySpeaker");UnityEngine.Object.DontDestroyOnLoad(go);player=go.AddComponent<Player>();}
             return player;
         }
-        public static void Begin(){try{Active=true;Resting=false;Boot().ResetRun();Debug.Log("[OneWaySpeaker] Run ready v1.3.0");}catch(Exception e){Debug.LogException(e);}}
+        public static void Begin(){try{Active=true;Resting=false;Boot().ResetRun();Debug.Log("[OneWaySpeaker] Run ready v1.5.1");}catch(Exception e){Debug.LogException(e);}}
         public static void End(){Active=false;Resting=false;if(player!=null)player.ResetRun();}
         public static void EnterRest(){Resting=true;if(player!=null)player.EnterRest();Debug.Log("[OneWaySpeaker] Rest area reached; music stopped, native BGM fading in");}
         public static void LeaveRest(){Resting=false;}
@@ -113,6 +113,7 @@ namespace OneWaySpeaker {
             return Addressable_Utility.try_load_asset<Sprite>(key,out result);
         }
         public static string MusicPath {get{return Path.Combine(Root,"assets","365里路.mp3");}}
+        public static string TrackPath(int index){return Path.Combine(Root,"assets",SongCatalog.FileName(index));}
     }
     public sealed class PreviewFraming : MonoBehaviour {
         Camera camera;float originalSize,originalFov;Vector3 originalLocalPosition;
@@ -140,11 +141,15 @@ namespace OneWaySpeaker {
     }
     public sealed class Diagnostics : MonoBehaviour {
         static bool booted;
-        public static void Boot(){if(booted)return;booted=true;if(Array.IndexOf(Environment.GetCommandLineArgs(),"--speaker-self-test")<0)return;var go=new GameObject("SpeakerSelfTest");DontDestroyOnLoad(go);go.AddComponent<Diagnostics>();}
+        public static bool DeferBoot;
+        public static Func<IEnumerator> ExtraTests;
+        public static void Boot(){if(booted || DeferBoot || Array.IndexOf(Environment.GetCommandLineArgs(),"--speaker-self-test")<0)return;booted=true;var go=new GameObject("SpeakerSelfTest");DontDestroyOnLoad(go);var component=go.AddComponent<Diagnostics>();Debug.Log("[OneWaySpeaker TEST] diagnostics object created; active="+go.activeSelf+" enabled="+component.enabled);}
         static void Check(bool value,string label){if(!value)throw new Exception("Self-test failed: "+label);Debug.Log("[OneWaySpeaker TEST] PASS "+label);}
         static void NativeFrame(Player player,AudioSource source,float nativeVolume){source.volume=nativeVolume;player.ApplyBackgroundSource(source,true);}
         IEnumerator Start(){
+            Debug.Log("[OneWaySpeaker TEST] diagnostics Start entered");
             yield return new WaitForSecondsRealtime(8);
+            Debug.Log("[OneWaySpeaker TEST] diagnostics wait completed");
             var routine=Run();bool failed=false;
             while(true){object current=null;bool more=false;try{more=routine.MoveNext();if(more)current=routine.Current;}catch(Exception e){Debug.LogException(e);failed=true;break;}if(!more)break;yield return current;}
             Debug.Log("[OneWaySpeaker TEST] "+(failed?"FAILED":"ALL PASSED"));Application.Quit(failed?1:0);
@@ -188,7 +193,7 @@ namespace OneWaySpeaker {
             var flags=System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic;
             var source=(AudioSource)typeof(Player).GetField("source",flags).GetValue(player);source.volume=0;source.mute=true;
             var playerField=typeof(Hooks).GetField("player",System.Reflection.BindingFlags.Static|System.Reflection.BindingFlags.NonPublic);var previousPlayer=playerField.GetValue(null);playerField.SetValue(null,player);
-            Hooks.Active=true;Hooks.Resting=false;player.StartMusic();
+            Hooks.Active=true;Hooks.Resting=false;player.StartMusicForTest(0);
             float timeout=Time.realtimeSinceStartup+30;
             while(source.clip==null && Time.realtimeSinceStartup<timeout)yield return null;
             Check(source.clip!=null && source.clip.length>30 && source.isPlaying && source.loop,"MP3 decode and loop playback");
@@ -221,11 +226,12 @@ namespace OneWaySpeaker {
             Check(Mathf.Abs(background.volume-.4f)<.001f && !background.mute && alreadyMuted.mute,"recovery reaches current native level without restart or overshoot");
             player.StartMusic();Check(!source.isPlaying,"rest screen cannot restart music");yield return null;
             Check(!wave.enabled,"sound waves stop at rest screen");
-            Hooks.LeaveRest();player.StartMusic();Check(source.isPlaying && source.timeSamples<source.clip.frequency,"next departure first attack starts new song");
+            Hooks.LeaveRest();player.StartMusicForTest(0);Check(source.isPlaying && source.timeSamples<source.clip.frequency,"next departure first attack starts new song");
             Hooks.End();Check(!source.isPlaying,"run end stops music");
             player.EnterRest();NativeFrame(player,background,.4f);Check(Mathf.Abs(background.volume-.4f)<.001f,"rest without a speaker song leaves native BGM untouched");
             playerField.SetValue(null,previousPlayer);Destroy(visual);Destroy(background.gameObject);Destroy(alreadyMuted.gameObject);Destroy(go);
             yield return null;
+            if(ExtraTests!=null){var extra=ExtraTests();while(extra.MoveNext())yield return extra.Current;}
         }
     }
     public static class AudioFade {
@@ -234,9 +240,38 @@ namespace OneWaySpeaker {
         public static float DistanceGain(float metres){if(float.IsNaN(metres))return 1;return Mathf.SmoothStep(0,1,Mathf.Clamp01(metres/FadeDistanceMetres));}
         public static float RecoveryGain(float seconds){return Mathf.SmoothStep(0,1,Mathf.Clamp01(seconds/RecoverySeconds));}
     }
+    public static class SongCatalog {
+        public const int Count=3;
+        public static int Select(int roll){if(roll<0 || roll>=100)throw new ArgumentOutOfRangeException("roll");return roll<75?0:roll<95?1:2;}
+        public static string FileName(int index){switch(index){case 0:return "365里路.mp3";case 1:return "365里路_王老菊版.mp3";case 2:return "365里路_王老菊特别版.mp3";default:throw new ArgumentOutOfRangeException("index");}}
+    }
+    public static class PlaybackSpeed {
+        public static bool Enabled=true;
+        public const float TransitionSeconds=.6f,MaxPitch=3f;
+        public static float MetresPerSecond(float horizontalVelocity){if(float.IsNaN(horizontalVelocity) || float.IsInfinity(horizontalVelocity))return 0;return (float)Math.Min(float.MaxValue,Math.Abs((double)horizontalVelocity)*2);}
+        public static float Target(float metresPerSecond,bool enabled){
+            if(!enabled || float.IsNaN(metresPerSecond) || float.IsInfinity(metresPerSecond) || metresPerSecond<=40)return 1;
+            return Mathf.Min(MaxPitch,1+.2f*(Mathf.Floor((metresPerSecond-40)/20)+1));
+        }
+    }
+    public sealed class PitchRamp {
+        float value=1,start=1,target=1,elapsed;
+        public float Value {get{return value;}}
+        public void Reset(){value=start=target=1;elapsed=0;}
+        public float Advance(float desired,float deltaTime){
+            desired=Mathf.Clamp(desired,1,PlaybackSpeed.MaxPitch);
+            if(desired!=target){start=value;target=desired;elapsed=0;}
+            elapsed=Mathf.Min(PlaybackSpeed.TransitionSeconds,elapsed+Mathf.Max(0,deltaTime));
+            value=Mathf.SmoothStep(start,target,elapsed/PlaybackSpeed.TransitionSeconds);return value;
+        }
+    }
     public sealed class Player : MonoBehaviour {
         AudioSource source;
         AudioClip clip;
+        readonly AudioClip[] clips=new AudioClip[SongCatalog.Count];
+        readonly System.Random random=new System.Random();
+        readonly PitchRamp pitch=new PitchRamp();
+        int selectedIndex=-1;
         Coroutine loading;
         bool requested,paused;
         bool backgroundOwned,recovering;
@@ -246,22 +281,25 @@ namespace OneWaySpeaker {
         static readonly System.Reflection.FieldInfo bgmVolume=typeof(Commons.AudioSystem).GetField("bgm_volume",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Public);
         void Awake(){source=gameObject.AddComponent<AudioSource>();source.playOnAwake=false;source.loop=true;source.spatialBlend=0;source.volume=.8f;}
         public bool IsPlaying {get{return source!=null && source.isPlaying && requested && !paused;}}
-        public void StartMusic(){if(requested || Hooks.Resting)return;requested=true;songGain=1;if(clip!=null)Play();else loading=StartCoroutine(Load());}
-        IEnumerator Load(){
-            var path=Hooks.MusicPath;
-            if(!File.Exists(path)){Debug.LogError("[OneWaySpeaker] Music missing: "+path);requested=false;yield break;}
+        public int SelectedIndex {get{return selectedIndex;}}
+        public void StartMusic(){if(requested || Hooks.Resting)return;StartSelected(SongCatalog.Select(random.Next(100)));}
+        internal void StartMusicForTest(int roll){if(requested || Hooks.Resting)return;StartSelected(SongCatalog.Select(roll));}
+        void StartSelected(int index){requested=true;songGain=1;selectedIndex=index;clip=clips[index];if(clip!=null)Play();else loading=StartCoroutine(Load(index));}
+        IEnumerator Load(int index){
+            var path=Hooks.TrackPath(index);
+            if(!File.Exists(path)){Debug.LogError("[OneWaySpeaker] Music missing: "+path);if(index!=0){selectedIndex=0;yield return Load(0);}else requested=false;yield break;}
             using(var req=UnityWebRequestMultimedia.GetAudioClip(new Uri(path).AbsoluteUri,AudioType.MPEG)){
                 yield return req.SendWebRequest();
-                if(req.result!=UnityWebRequest.Result.Success){Debug.LogError("[OneWaySpeaker] Music load failed: "+req.error);requested=false;}
-                else{clip=DownloadHandlerAudioClip.GetContent(req);if(requested && Hooks.Active)Play();}
+                if(req.result!=UnityWebRequest.Result.Success){Debug.LogError("[OneWaySpeaker] Music load failed: "+req.error);if(index!=0){selectedIndex=0;yield return Load(0);}else requested=false;}
+                else{clips[index]=DownloadHandlerAudioClip.GetContent(req);clip=clips[index];if(requested && Hooks.Active)Play();}
             }
             loading=null;
         }
         float RemainingMetres(){var ctx=WorldContext.instance;return ctx!=null && ctx.r_scene!=null?AudioFade.DisplayMetres(ctx.scene_remain_progress):float.PositiveInfinity;}
         float MusicVolume(){var audio=Commons.AudioSystem.instance;return audio!=null && bgmVolume!=null?Mathf.Clamp01((float)bgmVolume.GetValue(audio)):.8f;}
-        void Play(){recovering=false;backgroundOwned=true;backgroundGain=0;source.clip=clip;ApplyDistanceFade(RemainingMetres(),MusicVolume());ApplyBackgroundGain(Commons.AudioSystem.instance,false);source.Play();Debug.Log("[OneWaySpeaker] Playing 365里路; fade over final 20m");}
-        void StopSong(){requested=false;paused=false;if(loading!=null){StopCoroutine(loading);loading=null;}if(source!=null){source.Stop();source.volume=0;}}
-        public void ResetRun(){StopSong();recovering=false;recoveryElapsed=0;songGain=1;backgroundGain=1;Restore();}
+        void Play(){recovering=false;backgroundOwned=true;backgroundGain=0;source.clip=clip;pitch.Reset();source.pitch=1;ApplyDistanceFade(RemainingMetres(),MusicVolume());ApplyBackgroundGain(Commons.AudioSystem.instance,false);source.Play();Debug.Log("[OneWaySpeaker] Playing "+SongCatalog.FileName(selectedIndex)+"; fade over final 20m");}
+        void StopSong(){requested=false;paused=false;if(loading!=null){StopCoroutine(loading);loading=null;}pitch.Reset();if(source!=null){source.Stop();source.volume=0;source.pitch=1;}}
+        public void ResetRun(){StopSong();selectedIndex=-1;clip=null;recovering=false;recoveryElapsed=0;songGain=1;backgroundGain=1;Restore();}
         public void EnterRest(){
             StopSong();
             if(recovering || !backgroundOwned)return;
@@ -269,6 +307,7 @@ namespace OneWaySpeaker {
         }
         void Restore(){foreach(var kv in muted)if(kv.Key!=null){kv.Key.mute=kv.Value;float native;if(nativeVolumes.TryGetValue(kv.Key,out native))kv.Key.volume=native;}muted.Clear();nativeVolumes.Clear();backgroundOwned=false;}
         public void ApplyDistanceFade(float metres,float configuredVolume){songGain=Mathf.Min(songGain,AudioFade.DistanceGain(metres));source.volume=Mathf.Clamp01(configuredVolume)*songGain;}
+        public void ApplyVehiclePitch(float metresPerSecond,float deltaTime){source.pitch=pitch.Advance(PlaybackSpeed.Target(metresPerSecond,PlaybackSpeed.Enabled),deltaTime);}
         public void AdvanceBackgroundRecovery(float deltaTime){
             if(!recovering)return;
             recoveryElapsed+=Mathf.Max(0,deltaTime);backgroundGain=AudioFade.RecoveryGain(recoveryElapsed);
@@ -289,9 +328,10 @@ namespace OneWaySpeaker {
             if(clip==null)return;
             if(ctx.is_freeze_time){if(!paused){source.Pause();paused=true;}}
             else if(paused){source.UnPause();paused=false;}
+            if(!paused)ApplyVehiclePitch(PlaybackSpeed.MetresPerSecond(ctx.caravan_velocity.x),Time.unscaledDeltaTime);
             ApplyDistanceFade(RemainingMetres(),MusicVolume());
         }
-        void OnDestroy(){Restore();if(clip!=null)Destroy(clip);}
+        void OnDestroy(){Restore();foreach(var cached in clips)if(cached!=null)Destroy(cached);}
     }
     public sealed class SpeakerVisual : MonoBehaviour {
         public const float LoweringRatio=.12f;
